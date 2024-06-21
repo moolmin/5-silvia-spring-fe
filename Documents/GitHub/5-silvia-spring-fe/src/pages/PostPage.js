@@ -17,6 +17,22 @@ const formatDate = (date) => {
     return new Date(date).toLocaleString();
 };
 
+const fetchWithToken = async (url) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(url, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`Network response was not ok for ${url}`);
+    }
+
+    return response.json();
+};
+
 const PostPage = () => {
     const { postId } = useParams();
     const navigate = useNavigate();
@@ -37,21 +53,21 @@ const PostPage = () => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const postResponse = await fetch(`http://localhost:8080/api/posts/${postId}`);
+                const postResponse = await fetchWithToken(`http://localhost:8080/api/posts/${postId}`);
                 if (!postResponse.ok) {
                     throw new Error('Failed to fetch post data');
                 }
                 const postData = await postResponse.json();
                 setPost(postData);
 
-                const usersResponse = await fetch('http://localhost:8080/api/accounts');
+                const usersResponse = await fetchWithToken('http://localhost:8080/api/accounts');
                 if (!usersResponse.ok) {
                     throw new Error('Failed to fetch users data');
                 }
                 const usersData = await usersResponse.json();
                 setUsers(usersData.users);
 
-                const commentsResponse = await fetch(`http://localhost:8080/api/posts/${postId}/comments?include_edited=true`);
+                const commentsResponse = await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments?include_edited=true`);
                 if (!commentsResponse.ok) {
                     throw new Error('Failed to fetch comments data');
                 }
@@ -115,7 +131,7 @@ const PostPage = () => {
     const confirmDelete = async () => {
         try {
             if (commentToDelete) {
-                const response = await fetch(`http://localhost:8080/api/posts/${postId}/comments/${commentToDelete}`, {
+                const response = await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments/${commentToDelete}`, {
                     method: 'DELETE',
                     credentials: 'include',
                 });

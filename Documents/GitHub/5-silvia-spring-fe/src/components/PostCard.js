@@ -4,7 +4,7 @@ import SearchBar from './SearchBar';
 import * as Buttons from '../components/Buttons';
 import { SlCalender } from "react-icons/sl";
 import { IoPersonOutline } from "react-icons/io5";
-import { FaRegHeart } from "react-icons/fa";
+import { FaRegHeart, FaRegEye } from "react-icons/fa";
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import ToastMessage from './ToastMessage';
 
@@ -132,7 +132,7 @@ const PostCard = () => {
             </div>
             <div className="PostCardsContainer">
                 {currentPosts.map((post) => {
-                    const { id, userId, title, article, postPicture, likes, createAt } = post;
+                    const { id, userId, title, article, postPicture, likes, createAt, views } = post;
                     const formattedDate = createAt.split('T')[0];
 
                     const author = Array.isArray(users) ? users.find(user => user.userId === userId) : undefined;
@@ -155,8 +155,8 @@ const PostCard = () => {
                                             <p>{authorName}</p>
                                             <FaRegHeart style={iconStyle}/>
                                             <p>{likes}</p>
-                                            {/*<BiCommentDetail style={iconStyle}/>*/}
-                                            {/*<p>{commentCount}</p>*/}
+                                            <FaRegEye style={iconStyle}/>
+                                            <p>{views}</p>
 
                                         </div>
                                     </div>

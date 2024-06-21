@@ -83,6 +83,7 @@ const LoginForm = () => {
             .then(data => {
                 if (data.token) {
                     localStorage.setItem('token', data.token);
+                    localStorage.setItem('email', email);
                     navigate('/main');
                 } else {
                     toast.error(`Authentication failed: ${data.error}`);
