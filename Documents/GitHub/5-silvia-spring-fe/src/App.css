@@ -1,38 +1,1714 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Gaegu&family=Poor+Story&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Skranji:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kirang+Haerang&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Reddit+Mono:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&family=IBM+Plex+Sans+KR&family=Reddit+Mono:wght@200..900&display=swap');
+
+.custom-cursor {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>🥑</text></svg>") 16 0, auto; /*!emojicursor.app*/
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.landing-background {
+  background-image: url('https://lh3.google.com/u/0/d/1TDP8n3p0V19ToPkTpuS6Om6XHNFAvRhG=w1920-h968-iv1');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+  background-position: left center;
+  /*background-position: center -10%;*/
+  overflow: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.main-background {
+  background-image: url('https://lh3.googleusercontent.com/fife/ALs6j_FmdsUHLyWuW2C8jbjDCTi-97WCPIpoVvOYwxlCqBh0GfttrbD2weMw6WKmQjmmrg41yGoLSZZDX83Nj1vyJiGsOG8gZucs9t-U3c1P0lTZyiDSjDeCd1r9TH8_OJnfne4m8zOUNg_cr-r_l2kiptwnuFtGz3mboYOTwqfvEgGoyt3pob8vm1MqrDKhCKtm5veLsr-5FgLKkcPQmW7KMZPlFmAvV6XujTLmGNNXvP_j0vNzvzounl8QfrsjFzu2WDTtvj_6SWkMc79GlmU82iViL9b4zpprldbxDKGZdG6Vbdmoyjnp3bu3WeslZgwXTyLhABL8V-W_v57box6d6K7o6Mqa6GH-Nr0eu_2c_7Z9MOrJSJc1Lg0O92Q3H1vVyJwvd8TZjzRhHi-vF6BWJJjZ-_-w1VndpGu8Z5Yy1Q-qjgGFT2N2oq6oNctiZXNwMghFfts0o2mQkkAd_pcbagh6d5XG59uOvRP1EB7-Sez8pYGOC5mIGCtrwNjcjhrTEHEi2NnkOU7KcJJJA6IW4QB2pGGw_GhVGUn7PQSG8iF7PumQ5G5HNJghRpI15LXBZm9_uKnld1-zv7Knu6-xLnC_gx0tvnZ7i9GsLOukof9C8TnJmGYr0P6_5MNmkNYSsdzs59KUD2kEiC4HKqxxlGbde19ObuUOsKTxq0sdxFIA_MZQKxi3Tjv5MdPy5VHBF_phZ8IRMjqkPkFXrgvAI68SB8rTTTAVIwg0AH9Q8QJclgt0NQWizLBYRlNg781f0YCZQiDO2xvfkClX6l5-dSsiM0nuKNvQRIEZG1kgBiANQE1yEVhxl8FNf6txhZO5Jvhu_RKnBPtz8MoKTIyOzmWDQfuC-ijPq3fwgCfDabSP99n7FYAuxuD3wfL_QB9an5nJEcGBrrU_F4388uCv8aQU2dNbmuoHf35wu2kf-g9O9qaNTZT6-_24PY0vgwMGEaGy7u5biCqPFthmOZgW2aLVWaXH012p2Ec7mDMW8C9s5Ot6NW1MqnI2gR4Vz2wsByumZuFWAXZu-TtcziNJl-mBYBlHvf6fxSI4tD6O7GHjnmW_6bUTjiSZf5-o1h7_hI_D8RNsdRRoOsGoNzeK5CgiVlDBy7dqlSa1qwuTNwhUcdGvSbLMzvDBrnSvoi_oMEfHwQSOGdlTFRFUNq-FTjUu-Tvl8sNpEeJetFKFnlu4PuO7AOm_6BjynDumi6UBJodDsxgSJ8tMgCuj_IQA2rIKPCi7GjV1by_bxUHBLlaBeQjs1P_MnkU3w3Xix4n9ABaLYuRU5raJcTLoRiWWAfXeuB2OJhUIqc1tUlKSpvgT1VkjoQYRq-MLdkCuo8XuiTflyJD7FEZ4qFbI-1XiRH1yqx7rdASfs0kRG4XRcbCqjBgtAxHR_UvIvfx18mHLBKhYjfVt_PhXlFv2GWtBV2T2Bn3HW-9OCNXFrnHKQnjTEmktnLuOu0zTSRiCiJ7IHpnJQ3Z6oPJleEMEGFXhobQb_sbYqU3GXvm3PGlxhOzA_kav46zGK9_-ks370RT6ngm9P6cFEONckhdATl8x8qY7b6vMDrOQVL7wTlulRSIpWDTbjO9LeBU6betQezoqr8UyuNkMxObbGEVUzdxmZLjTJuRp4NZrtSexJnKfrmzDXkVAUv1aljt6hUlen3eq-wyQP--Y2tcXTLFYgjIN-q0Esf8q-2SLUkgVmNU67QtTb-x-iFp-ifblO-tZ-yBnHA=w3024-h1714');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  /*height: 100vh;*/
+  width: 100%;
+  min-height: 100vh;
+}
+
+.default-background {
+  background-image: url('https://lh3.google.com/u/0/d/1QOl4eWatXl7g-rjCSabt-rw-Uge_Ko3m=w3024-h1714-iv1');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  /*height: 100vh;*/
+  width: 100%;
+  min-height: 100vh;
+}
+
+.LandingPage {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-attachment: fixed;
+  /*background-color: #f0f0f0;*/
+}
+
+
+.LandingText {
+  position: absolute;
+  left: 170px; /* 왼쪽으로 정렬 */
+  top: 300px; /* 수직 중앙 정렬 */
+  transform: translateY(-50%);
+  color: white; /* 텍스트 색상, 필요에 따라 변경 */
+  z-index: 2;
+}
+
+.BlobImg {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 1000px;
+  height: 750px;
+  display: flex;
+  justify-content: center; /* 필요에 따라 조정 */
+  align-items: center; /* 필요에 따라 조정 */
+  animation: slideIn 5s forwards;
+}
+
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
-.App-header {
-  background-color: #282c34;
+/*LandingText {*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  position: relative;*/
+/*}*/
+
+.LandingText img {
+  width: 90%;
+  height: auto;
+  opacity: 0;
+  animation: fadeIn 5s forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.LandingNavigation {
+  position: absolute; /* 부모 컨테이너의 하단에 고정 */
+  bottom: 0;
+  width: 1000px;
+  height: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('https://lh3.google.com/u/0/d/1oxpEV_WJ30edrPYy__dvFI4Pt8oZiAze=w3024-h1714-iv3');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: "Gamja Flower", sans-serif;
+  /*font-size: 80px;*/
+}
+
+nav {
+  display: flex;
+  gap: 80px;
+  margin-top: 80px;
+
+}
+
+.nav-link {
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  /*padding: 10px 20px;*/
+  /*border: 1px solid #007bff;*/
+  /*border-radius: 4px;*/
+  /*transition: background-color 0.3s, color 0.3s;*/
+}
+
+.nav-link:hover {
+  font-size: 25px;
+  font-weight: bold; /* Make text bold */
+  /*text-decoration: underline;*/
+  color: #829577;
+
+}
+
+/*.nav-link:hover {*/
+/*  background-color: #007bff;*/
+/*  color: white;*/
+/*}*/
+
+.LandingNavigation img {
+  width: 100%; /* 컨테이너의 너비에 맞게 조정 */
+  height: auto; /* 자동 높이 */
+  max-width: 1000px; /* 원하는 최대 너비로 조정 */
+  max-height: 1000px; /* 원하는 최대 높이로 조정 */
+  object-fit: cover; /* 이미지가 컨테이너에 맞도록 조정 */
+}
+
+/*.LandingNavigation {*/
+/*  position: absolute;*/
+/*  bottom: 0;*/
+/*  left: 50%;*/
+/*  !*transform: translate(-50%, -50%);*!*/
+/*  width: 700px; !* 원하는 너비로 조정 *!*/
+/*  height: 200px; !* 원하는 높이로 조정 *!*/
+/*  overflow: hidden; !* 이미지가 컨테이너를 넘치지 않도록 설정 *!*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*}*/
+
+/*.LandingNavigation img {*/
+/*  width: 100%;*/
+/*  height: auto;*/
+/*  object-fit: cover; !* 이미지가 컨테이너에 맞도록 조정 *!*/
+/*  object-position: bottom; !* 이미지의 하단이 잘리도록 설정 *!*/
+/*}*/
+
+
+.NaviBackground {
+  width: 1000px;
+  height: 80px;
+  background-color: white;
+  clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
+  z-index: 3;
+  position: relative;
+}
+
+/*.NaviBackground {*/
+/*  position: relative;*/
+/*  width: 700px;*/
+/*  height: 80px;*/
+/*  background-color: white;*/
+/*  clip-path: polygon(5% 10px, 95% 10px, 100% 100%, 0% 100%);*/
+/*  z-index: 3;*/
+/*  overflow: hidden;*/
+/*}*/
+
+/*.NaviBackground::before {*/
+/*  content: '';*/
+/*  position: absolute;*/
+/*  top: -10px;*/
+/*  left: 0;*/
+/*  width: 100%;*/
+/*  height: 20px;*/
+/*  background-color: white;*/
+/*  border-top-left-radius: 20px;*/
+/*  border-top-right-radius: 20px;*/
+/*  z-index: -1; !* Ensure it is behind the main content *!*/
+/*}*/
+
+
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 변경: 가로 중앙 정렬에서 시작 위치로 */
+  align-items: center; /* 세로 중앙 정렬 */
   min-height: 100vh;
+  width: 100%; /* 추가: 너비를 100%로 설정 */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+}
+
+/*.postBackground {*/
+/*  background-image: url('./assets/main_background.png');*/
+/*  background-size: cover;*/
+/*  background-position: center;*/
+/*}*/
+
+body {
+  background-color: #F4F5F7;
+  /*background-image: url('src/assets/main_background.png');*/
+  /*background-size: cover;*/
+  /*background-position: center;*/
+  margin: 0;
+  padding: 0;
+  /*font-family: "Reddit Mono", monospace;*/
+  font-family: "IBM Plex Sans KR", sans-serif;
+  /*font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",*/
+  /*"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",*/
+  /*sans-serif;*/
+}
+
+button {
+  cursor: pointer;
+}
+
+.Header {
+
+  width: 600px;
+  height: 103px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+
+  color: #829577;
+  /*background: rgba(255, 255, 255, 0.5); */
+  margin-top: 20px;
+  border-radius: 20px;
+  /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+}
+
+
+
+.HeaderContent {
+  width: 544px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.HeaderEmptyBox {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.HeaderText {
+  cursor: pointer;
+  font-family: "Kirang Haerang", system-ui;
+}
+
+/*.dropdown-content {*/
+/*  display: none;*/
+/*  position: absolute;*/
+/*  background-color: #d9d9d9;*/
+/*  min-width: 115px;*/
+/*  !*margin: 0px 0px 0px 0px;*!*/
+/*  font-family: 'Noto Sans KR', sans-serif;*/
+/*  right: 0;*/
+/*}*/
+
+/*.dropdown-content a {*/
+/*  color: black;*/
+/*  !*padding: auto;*!*/
+/*  text-decoration: none;*/
+/*  display: block;*/
+/*  font-size: 12px;*/
+/*  font-weight: 400;*/
+/*  height: 35px;*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*}*/
+
+/*.dropdown-content a:hover {*/
+/*  background-color: #e9e9e9;*/
+/*}*/
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  font-family: 'Noto Sans KR', sans-serif;
+  right: 0;
+  top: 50px; /* Adjust to align below the profile image */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 1;
+  padding: 8px 5px;
+  text-align: left;
+}
+
+.dropdown-content::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: 20px; /* Adjust to align the triangle with the profile image */
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #fff transparent;
+}
+
+.dropdown-content a {
+  color: black;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 8px 10px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+
+
+/* 추가 */
+.show {
+  display: block;
+}
+
+
+.profile-circle {
+  cursor: pointer;
+  position: relative;
+}
+
+.BackBtn {
+  background-color: transparent;
+  border: none;
+  color: black;
+  font-size: 20px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 500px;
+}
+
+.UserProfile {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  /*background-image: url('assets/icon.png');*/
+  background-size: cover;
+  border: none;
+  cursor: pointer;
+  /*border: 1px solid #C2CFA5;*/
+}
+
+.SearchContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /*height: 39px;*/
+  margin: 20px 0px;
+}
+
+.Text14 {
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration-line: none;
+  color: black;
+}
+
+.Text15 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.Text18 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.Text24 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.Text32 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.InputField {
+  width: 330px;
+  height: 38px;
+  border: 1.5px solid #C2CFA5;
+  border-radius: 4px;
+  color: black;
+  font-size: 14px;
+  background-color: transparent;
+  margin: 8px 0px 0px 8px;
+  padding-left: 10px;
+  border-radius: 30px;
+}
+
+
+
+.InputField::placeholder {
+  /*margin-left: 20px;*/
+  color: black; /* 플레이스홀더 글자색을 검정색으로 설정 */
+  opacity: 1; /* 브라우저에 따라 플레이스홀더의 투명도가 조정될 수 있으므로, 필요시 명시적으로 1로 설정 */
+  padding: 2px;
+}
+
+.InputWithIcon {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  left: 0;
+}
+
+
+.LoginForm {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.FormInputGroup {
+  position: relative;
+  left: 0;
+  width: auto;
+  /*margin-bottom: 15px;*/
+}
+
+.HelperContainer {
+  margin: 3px 0 5px 30px;
+  width: 338px;
+}
+
+.HelperMessage {
+  /*width: 100%;*/
+  color: red;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+
+
+.LoginPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+}
+
+#upload-btn {
+  width: 149px;
+  height: 149px;
+  border-radius: 100%;
+  margin: 10px auto;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+  transform: translateZ(0);
+  transition: border-color 200ms;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  background-color: #C4C4C4;
+}
+
+#upload-btn input[type='file'] {
+  display: none;
+}
+
+#cross-shape {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+}
+
+#cross-shape::before,
+#cross-shape::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: black;
+}
+
+#cross-shape::before {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#cross-shape::after {
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: 24px;
+  background-color: black;
+  transform: translateY(-50%);
+}
+
+.SignUpPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-top: 0px;
+}
+
+.WelcomeMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  font-size: 24px;
+}
+
+.WelcomeMessage P {
+  margin: 2px 0;
+  font-size: 24px; /* 글자 크기 설정 */
+}
+
+.PostCard {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.postCardContent {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.postCardImgPreview {
+  width: 150px;
+  height: 120%;
+  overflow: hidden;
+}
+
+.postCardImgPreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.SubmitBtnContainer {
+  width: 592px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.CreateBtn {
+  width: 138px;
+  height: 39px;
+  border-radius: 16px;
+  font-size: 16px;
+  background-color: #C2CFA5;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  align-self: flex-end;
+  transition: background-color 0.3s ease;
+}
+
+.CreateBtn:hover {
+  background-color: #829577;
+}
+
+/*.PostBtn {*/
+/*  width: 355px;*/
+/*  height: 33px;*/
+/*  border: none;*/
+/*  border-radius: 6px;*/
+/*  background-color: #ACA0EB;*/
+/*  color: white;*/
+/*  font-size: 14px;*/
+/*}*/
+
+.PostCard {
+  width: 592px;
+  height: 169px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  margin: 10px 0px 16px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.PostCardTopArea {
+  /*width: 544px;*/
+  margin: 0px 0px 5px 20px;
+  padding-right: 50px;
+}
+
+.PostCardTopArea p {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.PostCardMeta {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 12px;
+  margin: 0;
+}
+
+.postCardMetaContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.PostCardLine {
+  width: 592px;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.16);
+  margin: 5px 0px;
+}
+
+/*.navigateButton {*/
+/*  width: 100px;*/
+/*  height: 30px;*/
+/*  background-color: #C2CFA5;*/
+/*  position: absolute;*/
+/*  bottom: -40px;*/
+/*  cursor: pointer;*/
+/*  left: 50%;*/
+/*  transform: translateX(-50%);*/
+/*  padding: 10px 20px;*/
+/*}*/
+
+.navigateButton {
+  position: absolute;
+  bottom: 10px; /* Position 10px below the bottom area */
+  left: 20px;
+  /*transform: translateX(-50%);*/
+  padding: 8px 15px;
+  background-color: #CE9F80;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  font-size: 12px;
+}
+
+.navigateButton:hover {
+  background-color: #834724;
+}
+
+.postCardBottomArea {
+  /*margin: 5px ;*/
+  margin-top: 20px;
+  padding: 0px 20px;
+  /*font-size: 15px;*/
+  /*font-weight: 700;*/
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /*position: relative;*/
+}
+
+
+
+.postCardContentPreview {
+  /*padding: 20px;*/
+}
+
+.postCardContentPreview p {
+  font-size: 10px;
+  margin: 5px 0;
+}
+
+
+
+.AuthorIcon {
+  width: 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  margin: 0px 10px 0px 0px;
+}
+
+.AuthorName {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+.Date {
+  font-size: 14px;
+}
+
+.Post {
+  width: 592px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+}
+
+.PostMetaData {
+  width: 592px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+}
+
+.PostMetaDataInner {
+  width: 544px;
+  margin-top: 24px;
+}
+
+.PostSubContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 15px 0;
+  justify-content: space-between;
+}
+
+.PostSubContainerLeft {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+.PostBtn {
+  width: 46px;
+  height: 26px;
+  font-size: 14px;
+  background-color: transparent;
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: #C2CFA5;
+  background: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  margin-left: 8px;
+  color: black;
+}
+
+.PostDateContainer {
+  margin-left: 24px;
+}
+
+.postCardDate {
+  display: flex;
+  flex-display: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.postCardDetails {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+
+.PostImage {
+  width: 544px;
+  height: 306px;
+  background-color: #D9D9D9;
+  margin: 24px;
+}
+
+.PostContent {
+  width: 544px;
+  font-size: 15px;
+  padding: 0 24px;
+}
+
+.PostBody {
+  width: 592px;
+}
+
+.PostCount {
+  width: 116px;
+  height: 77px;
+  border-radius: 16px;
+  background-color: #D9D9D9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.PostCountNum {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.PostCountLabel {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 5px ;
+}
+
+.PostCountContainer {
+  width: 244px;
+  display: flex;
+  flex-direction: row;
+  margin: 32px 0;
+  justify-content: space-between;
+}
+
+.CommentForm {
+  width: 592px;
+  min-height: 169px;
+  height: auto;
+  background-color: white;
+  margin-top: 32px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  /*align-items: center;*/
+}
+
+/*.CommentInputContainer {*/
+/*  width: 95%;*/
+/*  height: 95%;*/
+/*}*/
+
+.CommentInput {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  background-color: transparent;
+  height: 118px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  resize: none;
+  padding-top: 24px;
+  padding-left: 22px;
+}
+
+.CommentInput::placeholder {
+  position: absolute;
+  top: 23px;
+  left: 25px;
+  color: black;
+  font-size: 15px;
+}
+
+.CommentForm hr {
+  border: none;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.16);
+  margin: 0;
+}
+
+.Comment {
+  width: 544px;
+  padding: 12px 24px;
+}
+
+.CommentBtnContainer {
+  height: 51px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-right: 8px;
+}
+
+.CommentAuthor {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px;
+}
+
+.CommenterName {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.CommentContent {
+  margin-left: 55px;
+  font-size: 15px;
+}
+
+.CommentDateContainer {
+  margin-left: 24px;
+  font-size: 14px;
+}
+
+.CommentTopArea {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.PostForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.PostFormTitleGroup {
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+}
+
+.PostTitleLabel {
+  margin-left: 24px;
+  margin-top: 30px;
+}
+
+.PostTitleInputContainer {
+  width: 592px;
+  height: 64px;
+  background-color: transparent;
+  margin-top: 16px;
+  /*border-top: 1px solid rgba(0, 0, 0, 0.16);*/
+  /*border-bottom: 1px solid rgba(0, 0, 0, 0.16);*/
+
+}
+
+.PostTitleInput {
+  width: 568px;
+  height: 100%;
+  /*padding: 10px;*/
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  /*color: var(--gray-color);*/
+  background-color: transparent;
+  border: none;
+  padding-left: 24px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: rgba(256, 256, 256, 0.8);
+  border: 1.5px solid #C2CFA5;
+}
+
+.PostFormContentGroup {
+  display: flex;
+  flex-direction: column;
+  /*justify-content: flex-start;*/
+  margin-top: 26px
+}
+
+.PostContentLabel {
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 24px;
+}
+
+.PostContentInputContainer {
+  width: 592px;
+  height: 271px;
+  border-top: 1px solid rgba(0, 0, 0, 0.16);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+  margin-top: 16px
+}
+
+
+.PostContentInput {
+  width: 544px;
+  height: 223px;
+  font-size: 15px;
+  display: flex;
+  /*color: var(--gray-color);*/
+  background-color: transparent;
+  resize: none;
+  border: none;
+  padding: 24px;
+  background-color: rgba(256, 256, 256, 0.8);
+  border: 1.5px solid #C2CFA5;
+}
+
+.PostEditPage {
+  margin-top: 24px;
+}
+
+.PostImageLabel {
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 24px;
+}
+
+.PostFormImageContainer {
+  width: 592px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+}
+
+
+button[type='PostImageUploadBtn'] {
+  width: 70px;
+  height: 29px;
+  font-size: 14px;
+  background-color: #d9d9d9;
+  border-radius: 4px;
+  border: 1px solid black;
+  margin-right: 12px;
+}
+
+.image-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.PostImageBtnContainer p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.PostImageBtnContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 8px 0 18px 25px;
+}
+
+
+
+.PostFormBtnContainer {
+  margin: 10px;
+}
+
+.PostCreatePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.PasswordChangePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.ProfileChangePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+
+
+.ProfileEditFormLabel {
+  font-size: 15px;
+  font-weight: 700;
+  /*margin-bottom: 12px;*/
+}
+
+
+
+/*.ProfileEditGroup {*/
+/*  margin-top: 12px;*/
+/*}*/
+
+.ProfileSubmitBtn {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.ProfileSubmitBtn button {
+  margin: 0px;
+}
+
+.ProfileImageEditGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.ToastMessage {
+  width: 102px;
+  height: 46px;
+  font-size: 18px;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  background-color: #ACA0EB;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ToastMessageContainer {
+  margin: 77px 0;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/*프로필 이미지*/
+/*#file-upload {*/
+/*  display: none; !* Hide the default file input *!*/
+/*}*/
+
+/*#upload-btn {*/
+/*  width: 149px;*/
+/*  height: 149px;*/
+/*  border-radius: 100%;*/
+/*  margin: 10px auto;*/
+/*  position: relative;*/
+/*  overflow: hidden;*/
+/*  z-index: 2;*/
+/*  transform: translateZ(0);*/
+/*  transition: border-color 200ms;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  justify-content: center;*/
+/*  cursor: pointer;*/
+/*  background-size: cover;*/
+/*  background-position: center;*/
+/*  background-color: #C4C4C4;*/
+/*}*/
+
+/*!*#cross-shape {*!*/
+/*!*  width: 40px;*!*/
+/*!*  height: 40px;*!*/
+/*!*  border-radius: 50%;*!*/
+/*!*  display: flex;*!*/
+/*!*  align-items: center;*!*/
+/*!*  justify-content: center;*!*/
+/*!*  !*color: white;*!*!*/
+/*!*  font-size: 24px;*!*/
+/*!*}*!*/
+
+/*#image-preview {*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*}*/
+
+/*.avatar {*/
+/*  width: 149px;*/
+/*  height: 149px;*/
+/*  border-radius: 100%;*/
+/*  object-fit: cover;*/
+/*}*/
+
+
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+
+
+/*모달*/
+
+
+.post_modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal_overlay {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+
+.modal_content {
+  width: 408px;
+  height: 242px;
+  background-color: white;
+  text-align: center;
+  position: fixed;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.modal_content h3{
+  font-size: 24px;
+  font-weight: 700;
+  padding: 0px;
+  margin: 0px;
+}
+
+.modal_content p{
+  font-size: 20px;
+  font-weight: 400;
+  margin: 20px 0px;
+}
+
+.modal-buttons button {
+  width: 127px;
+  height: 44px;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: 400;
+  border: none;
+  margin: 0px 5px;
+}
+
+#post-modal-cancel {
+  background-color: #242424;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+#post-modal-submit {
+  background-color: #C2CFA5;
+  color: black;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.hidden {
+  display: none;
 }
+
+.PasswordBtnContainer {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.progileImgUrlContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progileImgUrlContainer button {
+  margin-left: 5px;
+  /*border-radius: 10px;*/
+  /*border: none;*/
+  /*background-color: #ACA0EB;*/
+  /*padding: 5px;*/
+  /*color: white;*/
+  /*font-size: 12px;*/
+}
+
+.ProfileImagePickerContainer {
+  margin-top: 10px;
+}
+
+.SignupForm {
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.SignUpProfileLabel {
+  width: 100%;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.SignUpProfilePickerContainer {
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.FormImgInputGroup {
+  width: 95%;
+  padding: 20px;
+}
+
+.PostFormImgLabel {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.ImageUrlInput {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.profileImgUrlContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.ProfileImgInput {
+  width: 149px;
+  height: 149px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  border: none;
+}
+
+.profile-img-picker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+.img-picker-button {
+  width: 149px;
+  height: 149px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #ccc;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: all 0.3s ease;
+  flex-direction: column;
+}
+
+
+
+
+/*.img-picker-button:hover .overlay {*/
+/*  opacity: 1;*/
+/*}*/
+
+/*.img-picker-button:hover span {*/
+/*  opacity: 1;*/
+/*}*/
+
+
+/*.overlayText {*/
+/*  font-size: 30px;*/
+/*}*/
+
+/*.img-picker-button span {*/
+/*  width: 52px;*/
+/*  height: 27px;*/
+/*  border-radius: 18px;*/
+/*  border: 1px solid white;*/
+/*  background-color: rgba(0, 0, 0, 0.45);*/
+/*  font-size: 17px;*/
+/*  font-weight: 700;*/
+/*  color: #fff;*/
+/*  text-align: center;*/
+/*  !*line-height: 1.2;*!*/
+/*  position: absolute;*/
+/*  opacity: 0;*/
+/*  transition: opacity 0.3s ease;*/
+/*  padding-top: 5px;*/
+/*}*/
+
+
+.profile-img-picker .upload-button {
+  display: inline-block;
+  width: 149px;
+  height: 149px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  line-height: 149px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+}
+
+.ImgBlackFilter{
+  width: 149px;
+  height: 149px;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+
+.ImgBlackFilter:hover {
+  background-color: rgba(0, 0, 0, 0.35);
+  opacity: 1;
+}
+
+.ProfilePickerLabel {
+  opacity: 0;
+  visibility: hidden;
+  font-size: 18px;
+  font-weight: 700;
+  width: 52px;
+  height: 27px;
+  border-radius: 25px;
+  border: 1px solid white;
+  padding: 5px 13px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.upload-button:hover .ProfilePickerLabel {
+  opacity: 1;
+  visibility: visible;
+}
+
+.postCardShareBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #CE9F80;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 10px;
+  position: absolute;
+  bottom: 10px; /* Position 10px below the bottom area */
+  left: 360px;
+}
+
+
+.postCardShareBtn:hover {
+  background-color: #f0f0f0;
+}
+
+
+/*.icon-share {*/
+/*  color: #96A98B;*/
+/*  margin: 0px 10px 0px 25px;*/
+/*  font-size: 50px;*/
+/*}*/
+
+.postCardShareBtn img {
+  width: 50%;
+  height: auto;
+}
+
+.PasswordChangeContainer {
+  margin: 80px 0 20px 0;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(256, 256, 256, 0.5);
+  padding: 35px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.07),
+  0 2px 4px rgba(0,0,0,0.07),
+  0 4px 8px rgba(0,0,0,0.07),
+  0 8px 16px rgba(0,0,0,0.07),
+  0 16px 32px rgba(0,0,0,0.07),
+  0 32px 64px rgba(0,0,0,0.07);
+  border-radius: 10px;
+}
+
+.LoginContainer {
+  position: relative;
+  background-color: rgba(256, 256, 256, 0.5);
+  padding: 35px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.07),
+  0 2px 4px rgba(0,0,0,0.07),
+  0 4px 8px rgba(0,0,0,0.07),
+  0 8px 16px rgba(0,0,0,0.07),
+  0 16px 32px rgba(0,0,0,0.07),
+  0 32px 64px rgba(0,0,0,0.07);
+  border-radius: 10px;
+}
+
+.SignUpContainer {
+  background-color: rgba(256, 256, 256, 0.5);
+  padding: 35px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.07),
+  0 2px 4px rgba(0,0,0,0.07),
+  0 4px 8px rgba(0,0,0,0.07),
+  0 8px 16px rgba(0,0,0,0.07),
+  0 16px 32px rgba(0,0,0,0.07),
+  0 32px 64px rgba(0,0,0,0.07);
+  border-radius: 10px;
+}
+
+.ProfileEditFormContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 12px;
+  background-color: rgba(256, 256, 256, 0.5);
+  padding: 35px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.07),
+  0 2px 4px rgba(0,0,0,0.07),
+  0 4px 8px rgba(0,0,0,0.07),
+  0 8px 16px rgba(0,0,0,0.07),
+  0 16px 32px rgba(0,0,0,0.07),
+  0 32px 64px rgba(0,0,0,0.07);
+  border-radius: 10px;
+}
+
+
+
+
+.LoginSubmitBtn {
+  width: 150px;
+  height: 40px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 30px;
+  background-color: #C2CFA5;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.SubmitBtn {
+  width: 150px;
+  height: 40px;
+  margin-top: 30px;
+  border: none;
+  border-radius: 30px;
+  background-color: #C2CFA5;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.SubmitBtn:hover {
+  background-color: #96A98B; /* Hover color */
+}
+
+.signUpTextContainer p {
+  font-size: 16px;
+}
+
+
+.Pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 50px;
+  margin-left: 240px;
+}
+
+.arrowButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #96A98B;
+  font-size: 24px;
+  margin: 0 10px;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  margin: 0 5px;
+  background-color: #C2CFA5;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.dot.active {
+  background-color: #f39c12;
+  transform: scale(1.3);
+}
+
+
+.HeaderProfile {
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  color: black;
+
+
+
+
+}
+
+.HeaderProfile span {
+  margin: 7px 0px 0px 7px;
+  /*font-size: 40px;*/
+}
+
+.dropboxUserInfo {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.dropboxUserInfoTop {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: "Reddit Mono", monospace;
+}
+
+.dropboxUserInfoBottom {
+  /*margin-right: 8px;*/
+  padding-right: 24px;
+  font-size: 14px;
+}
+
+.dropboxUserInfoBottom span {
+  margin: 0;
+}
+
