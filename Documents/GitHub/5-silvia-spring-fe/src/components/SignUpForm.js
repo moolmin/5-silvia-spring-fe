@@ -67,7 +67,7 @@ const SignUpForm = () => {
         formData.append('profileimg', file);
 
         try {
-            const response = await fetch('http://localhost:3001/api/register/profileimg', {
+            const response = await fetch('http://localhost:8080/api/register/profileimg', {
                 method: 'POST',
                 body: formData,
             });
@@ -94,7 +94,7 @@ const SignUpForm = () => {
         } else {
             // Check for duplicate email
             try {
-                const response = await fetch('http://localhost:3001/api/accounts');
+                const response = await fetch('http://localhost:8080/api/accounts');
                 const data = await response.json();
                 const isDuplicate = data.users.some(user => user.email === email);
                 if (isDuplicate) {
@@ -152,7 +152,7 @@ const SignUpForm = () => {
 
         if (!emailError && !passwordError && !confirmPasswordError && !nicknameError) {
             try {
-                const response = await fetch('http://localhost:3001/api/register', {
+                const response = await fetch('http://localhost:8080/api/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

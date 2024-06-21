@@ -14,7 +14,7 @@ function Header({ showBackButton, showUserProfile }) {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/accounts', {
+                const response = await fetch('http://localhost:8080/api/accounts', {
                     credentials: 'include'
                 });
                 if (!response.ok) {
@@ -73,7 +73,7 @@ function Header({ showBackButton, showUserProfile }) {
 
     const handleLogout = async () => {
         try {
-            const response = await fetch('http://localhost:3001/logout', {
+            const response = await fetch('http://localhost:8080/logout', {
                 method: 'POST',
                 credentials: 'include'
             });

@@ -22,7 +22,7 @@ const PostCard = () => {
         // Fetch posts data
         const fetchPosts = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/posts');
+                const response = await fetch('http://localhost:8080/api/posts');
                 const postsData = await response.json();
                 const postsArray = Object.keys(postsData).map(key => ({
                     postId: key,
@@ -38,7 +38,7 @@ const PostCard = () => {
         // Fetch users data
         const fetchUsers = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/accounts');
+                const response = await fetch('http://localhost:8080/api/accounts');
                 const usersData = await response.json();
                 setUsers(usersData.users);
             } catch (error) {

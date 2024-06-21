@@ -64,7 +64,7 @@ const PasswordChangeForm = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:3001/api/accounts/${userId}/password`, {
+            const response = await fetch(`http://localhost:8080/api/accounts/${userId}/password`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

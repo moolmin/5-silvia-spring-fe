@@ -8,7 +8,7 @@ const useUserData = (userId) => {
     useMemo(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/api/accounts/${userId}`, {
+                const response = await fetch(`http://localhost:8080/api/accounts/${userId}`, {
                     credentials: 'include'
                 });
                 if (!response.ok) {
@@ -30,7 +30,7 @@ const useUserData = (userId) => {
 
     const updateNickname = async (newNickname) => {
         try {
-            const response = await fetch(`http://localhost:3001/api/accounts/${userId}/nickname`, {
+            const response = await fetch(`http://localhost:8080/api/accounts/${userId}/nickname`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

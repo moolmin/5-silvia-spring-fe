@@ -6,7 +6,7 @@ const ProfileImgPicker = ({ userId, onImageUrlChange }) => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/accounts', {
+                const response = await fetch('http://localhost:8080/api/accounts', {
                     credentials: 'include'
                 });
                 if (!response.ok) {
@@ -38,7 +38,7 @@ const ProfileImgPicker = ({ userId, onImageUrlChange }) => {
             formData.append('profileimg', file);
 
             try {
-                const response = await fetch(`http://localhost:3001/api/accounts/${userId}/profileimg`, {
+                const response = await fetch(`http://localhost:8080/api/accounts/${userId}/profileimg`, {
                     method: 'POST',
                     body: formData,
                     credentials: 'include',

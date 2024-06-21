@@ -35,7 +35,7 @@ const PostCard = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/posts');
+                const response = await fetch('http://localhost:8080/api/posts');
                 const postsData = await response.json();
                 setPosts(postsData);
                 setFilteredPosts(postsData);
@@ -47,7 +47,7 @@ const PostCard = () => {
 
         const fetchUsers = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/accounts');
+                const response = await fetch('http://localhost:8080/api/accounts');
                 const usersData = await response.json();
                 setUsers(usersData.users);
             } catch (error) {
@@ -58,7 +58,7 @@ const PostCard = () => {
 
         const fetchComments = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/comments');
+                const response = await fetch('http://localhost:8080/api/comments');
                 const commentsData = await response.json();
                 if (Array.isArray(commentsData)) {
                     setComments(commentsData);

@@ -73,20 +73,24 @@ const LoginForm = () => {
         console.log('Sending login request with email:', email);
         console.log('Sending login request with password:', password);
 
-        fetch('http://localhost:3001/login', options)
-            .then(response => response.json())
+        fetch('http://localhost:8080/api/login', options)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
-                if (data.success) {
-                    localStorage.setItem('nickname', data.nickname);
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
                     navigate('/main');
-
                 } else {
-                    toast.error(`인증 실패: ${data.message}`);
+                    toast.error(`Authentication failed: ${data.error}`);
                 }
             })
             .catch(error => {
-                console.error('로그인 오류:', error);
-                toast.error('로그인 중 오류가 발생했습니다.');
+                console.error('Login error:', error);
+                toast.error('An error occurred during login.');
             });
     };
 

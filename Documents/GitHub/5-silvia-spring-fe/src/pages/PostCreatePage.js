@@ -29,7 +29,7 @@ const PostCreatePage = () => {
 
         try {
             setUploading(true);
-            const response = await axios.post('http://localhost:3001/api/posts/image', formData);
+            const response = await axios.post('http://localhost:8080/api/posts/image', formData);
             handleImageUrlChange(response.data.postImage);
             setUploading(false);
         } catch (error) {
@@ -52,7 +52,7 @@ const PostCreatePage = () => {
         }
 
         try {
-            await axios.post('http://localhost:3001/api/posts', {
+            await axios.post('http://localhost:8080/api/posts', {
                 postTitle: title,
                 postContents: content,
                 postImage: imageUrl

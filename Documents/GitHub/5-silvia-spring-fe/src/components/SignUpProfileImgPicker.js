@@ -6,7 +6,7 @@
 //     useEffect(() => {
 //         const fetchUserData = async () => {
 //             try {
-//                 const response = await fetch('http://localhost:3001/api/accounts', {
+//                 const response = await fetch('http://localhost:8080/api/accounts', {
 //                     credentials: 'include'
 //                 });
 //                 if (!response.ok) {
@@ -41,7 +41,7 @@
 //         formData.append('profileimg', file);
 //
 //         try {
-//             const response = await fetch(`http://localhost:3001/api/register`, {
+//             const response = await fetch(`http://localhost:8080/api/register`, {
 //                 method: 'POST',
 //                 body: formData,
 //                 credentials: 'include',
@@ -83,7 +83,7 @@
 //     useEffect(() => {
 //         const fetchUserData = async () => {
 //             try {
-//                 const response = await fetch('http://localhost:3001/api/accounts', {
+//                 const response = await fetch('http://localhost:8080/api/accounts', {
 //                     credentials: 'include'
 //                 });
 //                 if (!response.ok) {
@@ -115,7 +115,7 @@
 //             formData.append('profileimg', file);
 //
 //             try {
-//                 const response = await fetch(`http://localhost:3001/api/register/image`, {
+//                 const response = await fetch(`http://localhost:8080/api/register/image`, {
 //                     method: 'POST',
 //                     body: formData,
 //                     credentials: 'include',
@@ -178,7 +178,7 @@ import React, { useState } from 'react';
 //         formData.append('profileimg', selectedFile);
 //
 //         try {
-//             const response = await fetch('http://localhost:3001/api/register/profileimg', {
+//             const response = await fetch('http://localhost:8080/api/register/profileimg', {
 //                 method: 'POST',
 //                 body: formData,
 //             });
@@ -225,7 +225,7 @@ import React, { useState } from 'react';
 //         formData.append('profileimg', selectedFile);
 //
 //         try {
-//             const response = await fetch('http://localhost:3001/api/register', {
+//             const response = await fetch('http://localhost:8080/api/register', {
 //                 method: 'POST',
 //                 body: formData,
 //             });

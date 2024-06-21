@@ -17,7 +17,7 @@ const PostEditPage = () => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/posts/${postId}`);
+                const response = await axios.get(`http://localhost:8080/api/posts/${postId}`);
                 setPost(response.data);
                 setTitle(response.data.title);
                 setContent(response.data.article);
@@ -43,7 +43,7 @@ const PostEditPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`http://localhost:3001/api/posts/${postId}`, {
+            const response = await axios.put(`http://localhost:8080/api/posts/${postId}`, {
                 postTitle: title,
                 postContents: content,
                 postImage: imageUrl
@@ -71,7 +71,7 @@ const PostEditPage = () => {
 
             setUploading(true);
             try {
-                const response = await axios.put(`http://localhost:3001/api/posts/${postId}/image`, formData, {
+                const response = await axios.put(`http://localhost:8080/api/posts/${postId}/image`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
