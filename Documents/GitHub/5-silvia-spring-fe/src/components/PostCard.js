@@ -4,16 +4,30 @@ import SearchBar from './SearchBar';
 import * as Buttons from '../components/Buttons';
 import { SlCalender } from "react-icons/sl";
 import { IoPersonOutline } from "react-icons/io5";
-import { BiCommentDetail } from "react-icons/bi";
 import { FaRegHeart } from "react-icons/fa";
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-import ToastMessage from './ToastMessage'; // Import the ToastMessage component
+import ToastMessage from './ToastMessage';
+
+const fetchWithToken = async (url) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(url, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`Network response was not ok for ${url}`);
+    }
+
+    return response.json();
+};
 
 const PostCard = () => {
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [users, setUsers] = useState([]);
-    const [comments, setComments] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [successLabel, setSuccessLabel] = useState(''); // State for success toast label
@@ -35,8 +49,7 @@ const PostCard = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/posts');
-                const postsData = await response.json();
+                const postsData = await fetchWithToken('http://localhost:8080/api/posts');
                 setPosts(postsData);
                 setFilteredPosts(postsData);
             } catch (error) {
@@ -47,32 +60,15 @@ const PostCard = () => {
 
         const fetchUsers = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/accounts');
-                const usersData = await response.json();
-                setUsers(usersData.users);
+                const usersData = await fetchWithToken('http://localhost:8080/api/accounts');
+                setUsers(usersData);
             } catch (error) {
                 console.error('Error fetching users:', error);
                 setErrorLabel('사용자 정보를 가져오는 중 오류가 발생했습니다.');
             }
         };
-
-        const fetchComments = async () => {
-            try {
-                const response = await fetch('http://localhost:8080/api/comments');
-                const commentsData = await response.json();
-                if (Array.isArray(commentsData)) {
-                    setComments(commentsData);
-                } else {
-                    setComments([]);
-                }
-            } catch (error) {
-                console.error('Error fetching comments:', error);
-                setErrorLabel('댓글을 가져오는 중 오류가 발생했습니다.');
-            }
-        };
         fetchPosts();
         fetchUsers();
-        fetchComments();
     }, []);
 
     useEffect(() => {
@@ -136,21 +132,18 @@ const PostCard = () => {
             </div>
             <div className="PostCardsContainer">
                 {currentPosts.map((post) => {
-                    const { id, user_id, title, article, post_picture, likes, create_at } = post;
-                    const formattedDate = create_at.split('T')[0];
+                    const { id, userId, title, article, postPicture, likes, createAt } = post;
+                    const formattedDate = createAt.split('T')[0];
 
-                    const author = users.find(user => user.user_id === user_id);
+                    const author = Array.isArray(users) ? users.find(user => user.userId === userId) : undefined;
                     const authorName = author ? author.nickname : 'Unknown';
-
-                    const postComments = comments.filter(comment => comment.post_id === id); // Ensure comments are filtered correctly
-                    const commentCount = postComments.length;
 
                     return (
                         <div key={id} className="PostCard">
                             <div className="postCardContent">
                                 <div className="postCardImgPreviewContainer">
                                     <div className="postCardImgPreview">
-                                        <img src={post_picture} alt="CardPreview"/>
+                                        <img src={postPicture} alt="CardPreview"/>
                                     </div>
                                 </div>
                                 <div className="postCardDetails">
@@ -160,10 +153,11 @@ const PostCard = () => {
                                             <p>{formattedDate}</p>
                                             <IoPersonOutline style={iconStyle}/>
                                             <p>{authorName}</p>
-                                            <BiCommentDetail style={iconStyle}/>
-                                            <p>{commentCount}</p>
                                             <FaRegHeart style={iconStyle}/>
                                             <p>{likes}</p>
+                                            {/*<BiCommentDetail style={iconStyle}/>*/}
+                                            {/*<p>{commentCount}</p>*/}
+
                                         </div>
                                     </div>
                                     <div className="PostCardTopArea">
