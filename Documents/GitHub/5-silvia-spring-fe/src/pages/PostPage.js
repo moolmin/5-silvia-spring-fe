@@ -77,22 +77,12 @@ const PostPage = () => {
         return user ? user.userId : null;
     };
 
-    const handleEdit = async () => {
-        try {
-            const response = await axios.get(`http://localhost:8080/api/posts/${postId}/checkEditPermission`, {
-                withCredentials: true
-            });
-
-            if (response.status === 200) {
-                navigate(`/post/edit/${postId}`);
-            }
-        } catch (error) {
-            if (error.response && error.response.status === 403) {
-                setErrorLabel('🥑 수정 권한이 없습니다');
-            } else {
-                console.error('Error checking edit permission:', error);
-                alert('권한 확인 중 오류가 발생했습니다.');
-            }
+    const handleEdit = () => {
+        const userId = getLoggedInUserId(users);
+        if (userId && userId === post.userId) {
+            navigate(`/post/edit/${postId}`);
+        } else {
+            setErrorLabel('🥑 수정 권한이 없습니다');
         }
     };
 
