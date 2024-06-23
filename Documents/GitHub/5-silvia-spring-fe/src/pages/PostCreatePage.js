@@ -1,8 +1,26 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import PostForm from '../components/PostForm';
 import { useNavigate } from 'react-router-dom';
 import ToastMessage from "../components/ToastMessage";
+
+const fetchWithToken = async (url, options = {}) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(url, {
+        ...options,
+        headers: {
+            ...options.headers,
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`Network response was not ok for ${url}`);
+    }
+
+    return response.json();
+};
 
 const PostCreatePage = () => {
     const [successLabel, setSuccessLabel] = useState('');
@@ -11,7 +29,27 @@ const PostCreatePage = () => {
     const [content, setContent] = useState('');
     const [file, setFile] = useState(null);
     const [uploading, setUploading] = useState(false);
+    const [users, setUsers] = useState([]);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchAccount = async () => {
+            try {
+                const usersResponse = await fetchWithToken('http://localhost:8080/api/accounts');
+                setUsers(usersResponse || []);
+            } catch (error) {
+                setError(error.message);
+            }
+        };
+        fetchAccount();
+    }, []);
+
+    const getLoggedInUserId = (users) => {
+        const email = localStorage.getItem('email');
+        const user = users.find(user => user.email === email);
+        return user ? user.userId : null;
+    };
 
     const handleTitleChange = (e) => setTitle(e.target.value);
     const handleContentChange = (e) => setContent(e.target.value);
@@ -45,7 +83,7 @@ const PostCreatePage = () => {
         const data = {
             title: title,
             article: content,
-            userId: 1,
+            userId: getLoggedInUserId(users),
             createAt: new Date().toISOString(),
             views: 0,
             likes: 0

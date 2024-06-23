@@ -4,26 +4,7 @@ import * as PostComponents from '../components/PostComponents';
 import * as Buttons from '../components/Buttons';
 import Modal from '../components/Modal';
 import axios from 'axios';
-import ToastMessage from "../components/ToastMessage";
-
-const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const options = {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true
-    };
-
-    let formattedDate = date.toLocaleString('ko-KR', options);
-
-    formattedDate = formattedDate.replace(/\./g, '/').replace(/ /g, '').replace('오후', 'PM ').replace('오전', 'AM ');
-
-    return formattedDate;
-};
+import ToastMessage from '../components/ToastMessage';
 
 const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
@@ -66,7 +47,6 @@ const PostPage = () => {
 
                 const usersResponse = await fetchWithToken('http://localhost:8080/api/accounts');
                 setUsers(usersResponse || []);
-                console.log(usersResponse);
 
                 const commentsResponse = await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments?include_edited=true`);
                 setComments(commentsResponse);

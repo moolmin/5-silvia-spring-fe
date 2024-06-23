@@ -64,7 +64,7 @@ function Header({ showBackButton, showUserProfile }) {
     };
 
     const goToMainPage = () => {
-        navigate('/');
+        navigate('/main');
     };
 
     const handleLogout = async () => {
