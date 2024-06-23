@@ -103,7 +103,7 @@ const PostCreatePage = () => {
             });
 
             if (response.status === 200) {
-                setSuccessLabel('게시글이 작성되었습니다.');
+                setSuccessLabel('🥑 게시글이 작성되었습니다.');
                 setTimeout(() => {
                     navigate('/main');
                 }, 2000);

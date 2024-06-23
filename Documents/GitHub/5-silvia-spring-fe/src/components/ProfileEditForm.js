@@ -5,7 +5,7 @@ import ProfileImgPicker from "./ProfileImgPicker";
 import * as Buttons from "./Buttons";
 import ToastMessage from "./ToastMessage";
 import Modal from '../components/Modal';
-import useUserData from '../hooks/useUserData';
+import useUserProfile from "../hooks/useUserProfile";
 
 const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
@@ -26,17 +26,18 @@ const fetchWithToken = async (url, options = {}) => {
 };
 
 const ProfileEditForm = () => {
+    const { userId } = useParams();
     const [successLabel, setSuccessLabel] = useState('');
     const [errorLabel, setErrorLabel] = useState('');
-    const { userId } = useParams();
-    const {
-        nickname,
-        // showToast,
-        setNickname,
-        updateNickname
-    } = useUserData(userId);
-
     const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const email = localStorage.getItem('email');
+    const { profileImage, nickname, setNickname, userId: fetchedUserId, error: profileError } = useUserProfile(email);
+
+    const clearLabels = () => {
+        setSuccessLabel('');
+        setErrorLabel('');
+    };
 
     const handleNicknameChange = (e) => {
         setNickname(e.target.value);
@@ -44,19 +45,15 @@ const ProfileEditForm = () => {
 
     const handleImageUrlChange = (newImageUrl) => {
         if (newImageUrl) {
-            console.log('New Image URL:', newImageUrl);
+            // Handle the new image URL
         } else {
             console.error("Received undefined image URL");
         }
     };
 
-    const clearLabels = () => {
-        setSuccessLabel('');
-        setErrorLabel('');
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
+        clearLabels();
 
         if (!nickname) {
             setErrorLabel('🥑 닉네임을 입력해주세요.');
@@ -64,11 +61,16 @@ const ProfileEditForm = () => {
         }
 
         try {
-            await updateNickname(nickname);
-            setSuccessLabel('🥑 닉네임 수정이 완료되었습니다.');
-            // setTimeout(() => {
-            //     window.location.reload();
-            // }, 2000);
+            const response = await fetchWithToken(`http://localhost:8080/api/accounts/${userId}/nickname`, {
+                method: 'PUT',
+                body: JSON.stringify({ nickname })
+            });
+
+            if (response.ok) {
+                setSuccessLabel('🥑 닉네임 수정이 완료되었습니다.');
+            } else {
+                throw new Error('Failed to update nickname');
+            }
         } catch (error) {
             setErrorLabel(`Error: ${error.message}`);
         }
@@ -90,6 +92,7 @@ const ProfileEditForm = () => {
                 method: 'DELETE',
                 credentials: 'include'
             });
+
             if (response.ok) {
                 alert('계정이 삭제되었습니다 (҂ ꒦ິヮ꒦ິ)');
                 console.log('User and associated posts deleted successfully');
@@ -104,14 +107,15 @@ const ProfileEditForm = () => {
         }
     };
 
-    const email = localStorage.getItem('email')
-
+    if (profileError) {
+        return <p>Error: {profileError.message}</p>;
+    }
 
     return (
         <form className="ProfileEditGroup-Img" onSubmit={handleSubmit}>
             <div className="ProfileEditGroup">
                 <div className="ProfileEditFormLabel" style={{ marginTop: '20px' }}>프로필 사진*</div>
-                <ProfileImgPicker userId={userId} onImageUrlChange={handleImageUrlChange} />
+                <ProfileImgPicker userId={fetchedUserId} onImageUrlChange={handleImageUrlChange} />
             </div>
             <div className="ProfileEditGroup">
                 <div className="ProfileEditFormLabel" style={{ marginTop: '36px' }}>이메일</div>
@@ -121,7 +125,7 @@ const ProfileEditForm = () => {
             <NicknameInputField
                 value={nickname}
                 onChange={handleNicknameChange}
-                placeholder="닉네임을 입력해주세요"
+                placeholder={nickname}
             />
             <div className="ProfileSubmitBtn">
                 <Buttons.SubmitBtn
@@ -132,11 +136,6 @@ const ProfileEditForm = () => {
             <div className="Text14" onClick={showModal}
                  style={{ marginTop: '12px', display: 'block', textAlign: 'center', cursor: 'pointer', fontWeight: '500' }}>회원 탈퇴
             </div>
-            {/*{showToast && (*/}
-            {/*    <div className="ToastMessageContainer">*/}
-            {/*        <ToastMessage successLabel={successLabel} errorLabel={errorLabel} clearLabels={clearLabels} />*/}
-            {/*    </div>*/}
-            {/*)}*/}
             <Modal
                 isVisible={isModalVisible}
                 ModalLabel="회원탈퇴 하시겠습니까?"

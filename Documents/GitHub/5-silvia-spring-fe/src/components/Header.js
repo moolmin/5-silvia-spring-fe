@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUserEdit, FaKey, FaSignOutAlt } from 'react-icons/fa';
+import useUserProfile from "../hooks/useUserProfile";
 
 const fetchWithToken = async (url) => {
     const token = localStorage.getItem('token');
@@ -20,28 +21,10 @@ const fetchWithToken = async (url) => {
 
 function Header({ showBackButton, showUserProfile }) {
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-    const [profileImage, setProfileImage] = useState(null);
-    const [nickname, setNickname] = useState('Guest');
     const userEmail = localStorage.getItem('email');
+    const { profileImage, nickname, userId, error } = useUserProfile(userEmail);
     const navigate = useNavigate();
     const defaultProfileImage = "https://lh3.google.com/u/0/d/1ra2p2F4dl1ITC1r3M2ORKyqjt-O00EgE=w3024-h1714-iv2";
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const usersData = await fetchWithToken('http://localhost:8080/api/accounts');
-                const currentUser = usersData.find(user => user.email === userEmail);
-
-                if (currentUser) {
-                    setProfileImage(currentUser.profilePicture);
-                    setNickname(currentUser.nickname);
-                }
-            } catch (error) {
-                console.error('Error fetching users:', error);
-            }
-        };
-        fetchUser();
-    }, [userEmail]); // Added userEmail as a dependency
 
     const toggleDropdown = () => {
         setIsDropdownVisible(!isDropdownVisible);
@@ -106,7 +89,7 @@ function Header({ showBackButton, showUserProfile }) {
                         <div className="UserProfile" onClick={toggleDropdown}>
                             <img src={profileImage || defaultProfileImage} alt="User Profile" className="UserProfile"/>
                             <div id="myDropdown" className={`dropdown-content ${isDropdownVisible ? 'show' : ''}`}>
-                                <a href={userEmail ? `/profile/edit/${userEmail}` : '#'} className="dropboxUserInfo">
+                                <a href={userId ? `/profile/edit/${userId}` : '#'} className="dropboxUserInfo">
                                     <div className="dropboxUserInfoTop">
                                         <span className="UserNickname">{nickname}</span>
                                     </div>
@@ -115,7 +98,7 @@ function Header({ showBackButton, showUserProfile }) {
                                         <FaUserEdit style={iconStyle} /> <span>회원정보 수정</span>
                                     </div>
                                 </a>
-                                <a href={userEmail ? `/users/${userEmail}/password` : '#'} style={{ borderTop: '1.5px solid #ccc', paddingTop: '10px'}} >
+                                <a href={userId ? `/users/${userId}/password` : '#'} style={{ borderTop: '1.5px solid #ccc', paddingTop: '10px'}} >
                                     <FaKey style={iconStyle}/>  <span>비밀번호 수정</span>
                                 </a>
                                 <a href="/" onClick={handleLogout} style={{ borderTop: '1.5px solid #ccc', paddingTop: '10px'}} >

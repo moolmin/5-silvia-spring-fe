@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
@@ -7,8 +8,7 @@ const fetchWithToken = async (url, options = {}) => {
         headers: {
             ...options.headers,
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
+        },
     });
 
     if (!response.ok) {
@@ -18,23 +18,21 @@ const fetchWithToken = async (url, options = {}) => {
     return response.json();
 };
 
-const ProfileImgPicker = ({ userId, onImageUrlChange }) => {
+const ProfileImgPicker = ({ onImageUrlChange }) => {
     const [profileImage, setProfileImage] = useState(null);
-    const [users, setUsers] = useState([]);
+    const { userId } = useParams();
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
                 const usersResponse = await fetchWithToken('http://localhost:8080/api/accounts');
-                setUsers(usersResponse || []);
-
                 const email = localStorage.getItem('email');
-                const user = users.find(user => user.email === email);
+                const user = usersResponse.find(user => user.email === email);
 
                 if (user) {
-                    const profileImageUrl = user.profilePicture ? encodeURI(user.profilePicture) : null;
+                    const profileImageUrl = user.profilePicture;
                     setProfileImage(profileImageUrl);
-                    onImageUrlChange(profileImageUrl); // Notify parent component
+                    onImageUrlChange(profileImageUrl);
                 } else {
                     console.error('Logged in user not found');
                 }
@@ -50,6 +48,7 @@ const ProfileImgPicker = ({ userId, onImageUrlChange }) => {
         const file = e.target.files[0];
         if (file && userId) {
             const formData = new FormData();
+            const token = localStorage.getItem('token');
             formData.append('profileimg', file);
 
             try {
@@ -57,15 +56,23 @@ const ProfileImgPicker = ({ userId, onImageUrlChange }) => {
                     method: 'POST',
                     body: formData,
                     credentials: 'include',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
                 });
 
                 if (!response.ok) {
                     throw new Error('Failed to upload image');
                 }
-                const result = await response.json();
-                const imageUrl = encodeURI(result.profileimg); // Assuming the backend sends the full URL
-                setProfileImage(imageUrl); // Update the profile image after successful upload
-                onImageUrlChange(imageUrl); // Notify parent component
+
+                // const result = await response.json();
+                // const updatedUserResponse = await fetchWithToken(`http://localhost:8080/api/accounts/${userId}`);
+                // const updatedUser = await updatedUserResponse.json();
+                // const profileImageUrl = updatedUser.profilePicture;
+                //
+                //
+                // setProfileImage(profileImageUrl);
+                // onImageUrlChange(profileImageUrl);
             } catch (error) {
                 console.error('Error uploading image:', error);
             }

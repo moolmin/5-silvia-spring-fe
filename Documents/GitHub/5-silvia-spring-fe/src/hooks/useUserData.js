@@ -29,11 +29,14 @@ const useUserData = (userId) => {
     }, [userId]);
 
     const updateNickname = async (newNickname) => {
+        const token = localStorage.getItem('token');
         try {
             const response = await fetch(`http://localhost:8080/api/accounts/${userId}/nickname`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+
                 },
                 body: JSON.stringify({ nickname: newNickname }),
                 credentials: 'include'
