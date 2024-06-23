@@ -1,27 +1,42 @@
 import React, { useState, useEffect } from 'react';
 
+const fetchWithToken = async (url, options = {}) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(url, {
+        ...options,
+        headers: {
+            ...options.headers,
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`Network response was not ok for ${url}`);
+    }
+
+    return response.json();
+};
+
 const ProfileImgPicker = ({ userId, onImageUrlChange }) => {
     const [profileImage, setProfileImage] = useState(null);
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/accounts', {
-                    credentials: 'include'
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch user data');
-                }
-                const data = await response.json();
-                if (!userId) {
-                    console.error('userId is not set');
-                    return;
-                }
-                const user = data.users.find(u => u.user_id.toString() === userId);
+                const usersResponse = await fetchWithToken('http://localhost:8080/api/accounts');
+                setUsers(usersResponse || []);
+
+                const email = localStorage.getItem('email');
+                const user = users.find(user => user.email === email);
+
                 if (user) {
-                    const profileImageUrl = user.profile_picture ? encodeURI(user.profile_picture) : null;
+                    const profileImageUrl = user.profilePicture ? encodeURI(user.profilePicture) : null;
                     setProfileImage(profileImageUrl);
                     onImageUrlChange(profileImageUrl); // Notify parent component
+                } else {
+                    console.error('Logged in user not found');
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -29,7 +44,7 @@ const ProfileImgPicker = ({ userId, onImageUrlChange }) => {
         };
 
         fetchUserData();
-    }, [userId, onImageUrlChange]);
+    }, [onImageUrlChange]);
 
     const handleFileChange = async (e) => {
         const file = e.target.files[0];

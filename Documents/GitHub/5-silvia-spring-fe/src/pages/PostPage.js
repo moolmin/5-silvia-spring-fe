@@ -24,6 +24,19 @@ const fetchWithToken = async (url, options = {}) => {
     return response.json();
 };
 
+const formatDate = (isoString) => {
+    const date = new Date(isoString);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더해줍니다.
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+};
+
+
 const PostPage = () => {
     const { postId } = useParams();
     const navigate = useNavigate();
@@ -88,7 +101,7 @@ const PostPage = () => {
         if (userId && userId === post.userId) {
             navigate(`/post/edit/${postId}`);
         } else {
-            setErrorLabel('🥑 수정 권한이 없습니다');
+            setErrorLabel('🥑 게시글 수정 권한이 없습니다');
         }
     };
 
@@ -250,7 +263,7 @@ const PostPage = () => {
                                     </>
                                 )}
                                 <div className="PostDateContainer">
-                                    <PostComponents.Date date={post.createAt} />
+                                    <PostComponents.Date date={formatDate(post.createAt)} />
                                 </div>
                             </div>
                             <div className="PostBtnContainer">
@@ -301,7 +314,7 @@ const PostPage = () => {
                                             <div className="CommenterName">{commentAuthor.nickname}</div>
                                         </>
                                     )}
-                                    <div className="CommentDateContainer">{comment.createAt}</div>
+                                    <div className="CommentDateContainer">{formatDate(comment.createAt)}</div>
                                 </div>
                                 {comment.userId && comment.userId.toString() === getLoggedInUserId(users).toString() && (
                                     <div className="CommentBtn">

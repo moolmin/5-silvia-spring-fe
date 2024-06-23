@@ -7,13 +7,30 @@ import ToastMessage from "./ToastMessage";
 import Modal from '../components/Modal';
 import useUserData from '../hooks/useUserData';
 
+const fetchWithToken = async (url, options = {}) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(url, {
+        ...options,
+        headers: {
+            ...options.headers,
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`Network response was not ok for ${url}`);
+    }
+
+    return response.json();
+};
+
 const ProfileEditForm = () => {
     const [successLabel, setSuccessLabel] = useState('');
     const [errorLabel, setErrorLabel] = useState('');
     const { userId } = useParams();
     const {
         nickname,
-        email,
         // showToast,
         setNickname,
         updateNickname
@@ -69,7 +86,7 @@ const ProfileEditForm = () => {
 
     const handleAccountDelete = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/api/accounts/${userId}`, {
+            const response = await fetchWithToken(`http://localhost:8080/api/accounts/${userId}`, {
                 method: 'DELETE',
                 credentials: 'include'
             });
@@ -86,6 +103,8 @@ const ProfileEditForm = () => {
             setErrorLabel(`Error: ${error.message}`);
         }
     };
+
+    const email = localStorage.getItem('email')
 
 
     return (
