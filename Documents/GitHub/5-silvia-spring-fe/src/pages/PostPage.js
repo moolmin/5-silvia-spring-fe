@@ -66,6 +66,7 @@ const PostPage = () => {
 
                 const usersResponse = await fetchWithToken('http://localhost:8080/api/accounts');
                 setUsers(usersResponse || []);
+                console.log(usersResponse);
 
                 const commentsResponse = await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments?include_edited=true`);
                 setComments(commentsResponse);
@@ -75,7 +76,6 @@ const PostPage = () => {
                 setLoading(false);
             }
         };
-
         fetchPost();
     }, [postId]);
 
@@ -90,6 +90,12 @@ const PostPage = () => {
     if (!post) {
         return <p>Post not found</p>;
     }
+
+    const getLoggedInUserId = (users) => {
+        const email = localStorage.getItem('email');
+        const user = users.find(user => user.email === email);
+        return user ? user.userId : null;
+    };
 
     const handleEdit = async () => {
         try {
@@ -142,9 +148,6 @@ const PostPage = () => {
         } catch (error) {
             if (error.message.includes('403')) {
                 setErrorLabel(commentToDelete ? '🥑 댓글 삭제 권한이 없습니다' : '🥑 게시글 삭제 권한이 없습니다');
-            } else {
-                console.error('삭제 중 오류 발생:', error);
-                alert('삭제 중 오류가 발생했습니다.');
             }
         } finally {
             closeModal();
@@ -166,12 +169,13 @@ const PostPage = () => {
     };
 
     const handleCommentRegister = async () => {
+        const userId = getLoggedInUserId(users);
         if (editingCommentId) {
             // Update existing comment
             try {
                 const response = await axios.put(
                     `http://localhost:8080/api/posts/${postId}/comments/${editingCommentId}`,
-                    { comment_content: commentText },
+                    { commentContent: commentText },
                     {
                         headers: {
                             'Content-Type': 'application/json'
@@ -183,12 +187,9 @@ const PostPage = () => {
                 if (response.status === 200) {
                     const commentsResponse = await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments?include_edited=true`);
                     setComments(commentsResponse);
-                } else {
-                    throw new Error('Failed to update comment');
                 }
             } catch (error) {
                 console.error('Error updating comment:', error.response?.data || error.message);
-                alert('An error occurred while updating the comment. Please try again later.');
             } finally {
                 setEditingCommentId(null);
                 setCommentText('');
@@ -198,7 +199,7 @@ const PostPage = () => {
             try {
                 const response = await axios.post(
                     `http://localhost:8080/api/posts/${postId}/comments`,
-                    { comment_content: commentText, userId: post.userId },
+                    { commentContent: commentText, userId: userId },
                     {
                         headers: {
                             'Content-Type': 'application/json'
@@ -305,7 +306,7 @@ const PostPage = () => {
                                     )}
                                     <div className="CommentDateContainer">{comment.createAt}</div>
                                 </div>
-                                {comment.userId && comment.userId.toString() === post.userId.toString() && (
+                                {comment.userId && comment.userId.toString() === getLoggedInUserId(users).toString() && (
                                     <div className="CommentBtn">
                                         <Buttons.PostBtn label="수정"
                                                          onClick={() => handleCommentEdit(comment.id, comment.commentContent)} />

@@ -13,9 +13,9 @@
   background-image: url('https://lh3.google.com/u/0/d/1TDP8n3p0V19ToPkTpuS6Om6XHNFAvRhG=w1920-h968-iv1');
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
   height: 100vh;
   width: 100%;
-  background-position: left center;
   /*background-position: center -10%;*/
   overflow: hidden;
 }
@@ -40,50 +40,132 @@
   min-height: 100vh;
 }
 
+/*.LandingPage {*/
+/*  !*width: 100%;*!*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  height: 100vh;*/
+/*  padding: 20px;*/
+/*  box-sizing: border-box;*/
+/*  !*background-color: black;*!*/
+/*  !*background-attachment: fixed;*!*/
+/*  !*background-color: #f0f0f0;*!*/
+/*}*/
+
 .LandingPage {
-  width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 100vh;
-  background-attachment: fixed;
-  /*background-color: #f0f0f0;*/
+  padding-top: 80px;
+}
+
+/*.LandingWelcome {*/
+/*  display: flex;*/
+/*  flex-direction: row;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*  width: 100%;*/
+/*  !*margin-bottom: 20px; *!*/
+/*}*/
+
+.LandingText, .LandingLoginContainer {
+  flex: 1;
+}
+
+.LandingWelcome {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 100%;
+}
+
+
+.LandingText img {
+  width: 100%;
+  height: auto;
 }
 
 
 .LandingText {
-  position: absolute;
-  left: 170px; /* 왼쪽으로 정렬 */
-  top: 300px; /* 수직 중앙 정렬 */
-  transform: translateY(-50%);
-  color: white; /* 텍스트 색상, 필요에 따라 변경 */
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*margin: 100px;*/
   z-index: 2;
 }
 
-.BlobImg {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 1000px;
-  height: 750px;
+.LandingLoginContainer {
+  /*position: fixed;*/
+  /*top: 200px;*/
+  /*right: 200px;*/
   display: flex;
-  justify-content: center; /* 필요에 따라 조정 */
-  align-items: center; /* 필요에 따라 조정 */
-  animation: slideIn 5s forwards;
+  justify-content: center;
+  max-width: 400px;
+  background-color: rgba(256, 256, 256, 0.85);
+  padding: 30px 50px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.07),
+  0 2px 4px rgba(0,0,0,0.07),
+  0 4px 8px rgba(0,0,0,0.07),
+  0 8px 16px rgba(0,0,0,0.07),
+  0 16px 32px rgba(0,0,0,0.07),
+  0 32px 64px rgba(0,0,0,0.07);
+  border-radius: 10px;
+  margin: 10px 100px;
+  /*margin: 0px 0px 200px 700px;*/
+  /*margin: 200px 20px 0px 0px;*/
 }
 
-
-@keyframes slideIn {
-  0% {
-    opacity: 0;
-    transform: translateX(20%);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
+@media (min-width: 769px) {
+  .LandingWelcome {
+    /*flex-direction: column;*/
+    /*align-items: center;*/
+    /*max-width: 350px;*/
+    margin-bottom: 200px;
   }
 }
+
+@media (max-width: 768px) {
+  .LandingWelcome {
+    flex-direction: column;
+    align-items: center;
+    max-width: 350px;
+  }
+
+  .LandingText, .LandingLoginContainer {
+    width: 100%;
+    margin-bottom: 20px; /* 필요에 따라 간격 조정 */
+  }
+}
+
+/*.BlobImg {*/
+/*  position: absolute;*/
+/*  z-index: 1;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  width: 50vw; !* 페이지 창 너비의 50%로 설정 *!*/
+/*  height: 37.5vh; !* 페이지 창 높이의 37.5%로 설정 *!*/
+/*  max-width: 1000px; !* 최대 너비를 1000px로 제한 *!*/
+/*  max-height: 750px; !* 최대 높이를 750px로 제한 *!*/
+/*  display: flex;*/
+/*  justify-content: center; !* 필요에 따라 조정 *!*/
+/*  align-items: center; !* 필요에 따라 조정 *!*/
+/*  !*animation: slideIn 5s forwards;*!*/
+/*}*/
+
+
+/*@keyframes slideIn {*/
+/*  0% {*/
+/*    opacity: 0;*/
+/*    transform: translateX(20%);*/
+/*  }*/
+/*  100% {*/
+/*    opacity: 1;*/
+/*    transform: translateX(0);*/
+/*  }*/
+/*}*/
 
 /*LandingText {*/
 /*  width: 100%;*/
@@ -94,23 +176,19 @@
 /*  position: relative;*/
 /*}*/
 
-.LandingText img {
-  width: 90%;
-  height: auto;
-  opacity: 0;
-  animation: fadeIn 5s forwards;
-}
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+
+
+/*@keyframes fadeIn {*/
+/*  0% {*/
+/*    opacity: 0;*/
+/*    transform: translateY(50px);*/
+/*  }*/
+/*  100% {*/
+/*    opacity: 1;*/
+/*    transform: translateY(0);*/
+/*  }*/
+/*}*/
 
 .LandingNavigation {
   position: absolute; /* 부모 컨테이너의 하단에 고정 */
@@ -1567,6 +1645,8 @@ button[type='PostImageUploadBtn'] {
   0 32px 64px rgba(0,0,0,0.07);
   border-radius: 10px;
 }
+
+
 
 .SignUpContainer {
   background-color: rgba(256, 256, 256, 0.5);
