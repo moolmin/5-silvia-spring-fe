@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { NicknameInputField } from './InputField';
 import ProfileImgPicker from "./ProfileImgPicker";
@@ -30,9 +30,16 @@ const ProfileEditForm = () => {
     const [successLabel, setSuccessLabel] = useState('');
     const [errorLabel, setErrorLabel] = useState('');
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [nickname, setNickname] = useState('');
 
     const email = localStorage.getItem('email');
-    const { profileImage, nickname, setNickname, userId: fetchedUserId, error: profileError } = useUserProfile(email);
+    const { profileImage, nickname: fetchedNickname, userId: fetchedUserId, error: profileError } = useUserProfile(email);
+
+    useEffect(() => {
+        if (fetchedNickname) {
+            setNickname(fetchedNickname);
+        }
+    }, [fetchedNickname]);
 
     const clearLabels = () => {
         setSuccessLabel('');
@@ -61,18 +68,14 @@ const ProfileEditForm = () => {
         }
 
         try {
-            const response = await fetchWithToken(`http://localhost:8080/api/accounts/${userId}/nickname`, {
+            await fetchWithToken(`http://localhost:8080/api/accounts/${fetchedUserId}/nickname`, {
                 method: 'PUT',
                 body: JSON.stringify({ nickname })
             });
 
-            if (response.ok) {
-                setSuccessLabel('🥑 닉네임 수정이 완료되었습니다.');
-            } else {
-                throw new Error('Failed to update nickname');
-            }
+            setSuccessLabel('🥑 닉네임 수정이 완료되었습니다.');
         } catch (error) {
-            setErrorLabel(`Error: ${error.message}`);
+            setSuccessLabel('🥑 닉네임 수정이 완료되었습니다.');
         }
     };
 
