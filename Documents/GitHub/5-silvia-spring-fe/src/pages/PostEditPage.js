@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import PostForm from '../components/PostForm';
-import axios from "axios";
+import axios from 'axios';
+import ToastMessage from '../components/ToastMessage';
 
 const PostEditPage = () => {
     const { postId } = useParams();
@@ -11,8 +12,10 @@ const PostEditPage = () => {
     const [error, setError] = useState(null);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
+    const [file, setFile] = useState(null);
     const [uploading, setUploading] = useState(false);
+    const [successLabel, setSuccessLabel] = useState('');
+    const [errorLabel, setErrorLabel] = useState('');
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -21,7 +24,6 @@ const PostEditPage = () => {
                 setPost(response.data);
                 setTitle(response.data.title);
                 setContent(response.data.article);
-                setImageUrl(response.data.post_picture);
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -32,6 +34,11 @@ const PostEditPage = () => {
         fetchPost();
     }, [postId]);
 
+    const clearLabels = () => {
+        setSuccessLabel('');
+        setErrorLabel('');
+    };
+
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
     };
@@ -40,53 +47,76 @@ const PostEditPage = () => {
         setContent(e.target.value);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.put(`http://localhost:8080/api/posts/${postId}`, {
-                postTitle: title,
-                postContents: content,
-                postImage: imageUrl
-            }, {
-                withCredentials: true,
-            });
-
-            if (response.status !== 200) {
-                throw new Error('Failed to update post');
-            }
-
-            alert('게시글이 업데이트되었습니다.');
-            navigate(`/post/${postId}`);
-        } catch (error) {
-            console.error('Error updating post:', error);
-            alert('게시글 업데이트 중 오류가 발생했습니다.');
-        }
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
     };
 
-    const handleImageUpload = async (e) => {
-        const file = e.target.files[0];
-        if (file && postId) {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        clearLabels();
+
+        if (!title || !content) {
+            setErrorLabel('🥑 제목과 내용을 모두 입력해주세요.');
+            return;
+        }
+
+        const token = localStorage.getItem('token');
+
+        const updateData = {
+            title: title,
+            article: content,
+        };
+
+        if (file) {
             const formData = new FormData();
-            formData.append('postImage', file);
+            formData.append('file', file);
+            formData.append('data', new Blob([JSON.stringify(updateData)], { type: 'application/json' }));
 
             setUploading(true);
+
             try {
-                const response = await axios.put(`http://localhost:8080/api/posts/${postId}/image`, formData, {
+                const response = await axios.put(`http://localhost:8080/api/posts/${postId}`, formData, {
                     headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                    withCredentials: true,
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json',
+                        'Content-Type': 'multipart/form-data'
+                    }
                 });
 
-                if (response.status !== 200) {
-                    throw new Error('Failed to upload image');
+                if (response.status === 200) {
+                    setSuccessLabel('🥑 게시글이 업데이트되었습니다.');
+                    setTimeout(() => {
+                        navigate(`/post/${postId}`);
+                    }, 2000);
+                } else {
+                    setErrorLabel(`🥑 게시글 업데이트 실패: ${response.data}`);
                 }
-                setImageUrl(response.data.post_picture);
             } catch (error) {
-                console.error('Error uploading image:', error);
-                alert('이미지 업로드 중 오류가 발생했습니다.');
+                console.error('Error updating post:', error);
+                setErrorLabel('게시글 업데이트 중 오류가 발생했습니다.');
             } finally {
                 setUploading(false);
+            }
+        } else {
+            try {
+                const response = await axios.put(`http://localhost:8080/api/posts/${postId}`, updateData, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.status === 200) {
+                    setSuccessLabel('🥑 게시글이 업데이트되었습니다.');
+                    setTimeout(() => {
+                        navigate(`/post/${postId}`);
+                    }, 2000);
+                } else {
+                    setErrorLabel(`🥑 게시글 업데이트 실패: ${response.data}`);
+                }
+            } catch (error) {
+                console.error('Error updating post:', error);
+                setErrorLabel('게시글 업데이트 중 오류가 발생했습니다.');
             }
         }
     };
@@ -105,17 +135,18 @@ const PostEditPage = () => {
 
     return (
         <div className="PostEditPage">
+            <div className="Text24">게시글 수정</div>
             <PostForm
-                postId={postId}
                 TitleValue={title}
                 ContentValue={content}
-                ImageUrlValue={imageUrl}
                 onTitleChange={handleTitleChange}
                 onContentChange={handleContentChange}
+                onImageUpload={handleFileChange}
                 onSubmit={handleSubmit}
-                onImageUpload={handleImageUpload}
                 isUploading={uploading}
             />
+            {uploading && <div>Uploading...</div>}
+            <ToastMessage successLabel={successLabel} errorLabel={errorLabel} clearLabels={clearLabels} />
         </div>
     );
 };

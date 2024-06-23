@@ -52,6 +52,7 @@ const PasswordChangeForm = () => {
     };
 
     const handleSubmit = async (e) => {
+        const token = localStorage.getItem('token');
         e.preventDefault();
 
         // Validate before submitting
@@ -67,6 +68,7 @@ const PasswordChangeForm = () => {
             const response = await fetch(`http://localhost:8080/api/accounts/${userId}/password`, {
                 method: 'PUT',
                 headers: {
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ password }), // Update the password in the request body
