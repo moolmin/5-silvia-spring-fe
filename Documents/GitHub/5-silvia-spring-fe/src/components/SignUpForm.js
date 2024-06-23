@@ -9,13 +9,12 @@ const SignUpForm = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [nickname, setNickname] = useState('');
-    const [profileImg, setProfileImg] = useState('');
+    const [profileImg, setProfileImg] = useState(null);
 
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [nicknameError, setNicknameError] = useState('');
-    const [uploadError, setUploadError] = useState('');
     const [previewSrc, setPreviewSrc] = useState('');
 
     const handleEmailChange = (e) => {
@@ -38,52 +37,20 @@ const SignUpForm = () => {
         validateNickname(e.target.value);
     };
 
-    const handleFileChange = async (e) => {
+    const handleFileChange = (e) => {
         const file = e.target.files[0];
+        setProfileImg(file);
 
-        // Display a preview of the selected image
         const reader = new FileReader();
         reader.onloadend = () => {
             setPreviewSrc(reader.result);
         };
         reader.readAsDataURL(file);
-
-        // Automatically upload the image
-        await handleUpload(file);
     };
 
     const clearLabels = () => {
         setSuccessLabel('');
         setErrorLabel('');
-    }
-
-    const handleUpload = async (file) => {
-        if (!file) {
-            setUploadError('파일을 선택해주세요.');
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('profileimg', file);
-
-        try {
-            const response = await fetch('http://localhost:8080/api/register/profileimg', {
-                method: 'POST',
-                body: formData,
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setProfileImg(data.profileimg);
-                setUploadError('');
-            } else {
-                const errorText = await response.text();
-                setUploadError(`이미지 업로드 실패: ${errorText}`);
-            }
-        } catch (error) {
-            console.error('Error uploading the image:', error);
-            setUploadError('이미지 업로드 중 오류가 발생했습니다.');
-        }
     };
 
     const validateEmail = async (email) => {
@@ -92,11 +59,16 @@ const SignUpForm = () => {
         } else if (!/\S+@\S+\.\S+/.test(email)) {
             setEmailError('*올바른 이메일 주소 형식을 입력해주세요. (예: 123@example.com)');
         } else {
-            // Check for duplicate email
             try {
-                const response = await fetch('http://localhost:8080/api/accounts');
-                const data = await response.json();
-                const isDuplicate = data.users.some(user => user.email === email);
+                const response = await fetch('http://localhost:8080/api/accounts/check-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const isDuplicate = await response.json();
                 if (isDuplicate) {
                     setEmailError('*중복된 이메일입니다.');
                 } else {
@@ -108,6 +80,7 @@ const SignUpForm = () => {
             }
         }
     };
+
 
     const validatePassword = (password) => {
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,20}$/;
@@ -145,41 +118,63 @@ const SignUpForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        clearLabels();
+
         await validateEmail(email);
-        validatePassword(password);
-        validateConfirmPassword(password, confirmPassword);
-        validateNickname(nickname);
+        await validatePassword(password);
+        await validateConfirmPassword(password, confirmPassword);
+        await validateNickname(nickname);
+
+        console.log("Email:", email);
+        console.log("Password:", password);
+        console.log("Nickname:", nickname);
 
         if (!emailError && !passwordError && !confirmPasswordError && !nicknameError) {
+            const formData = new FormData();
+            formData.append('file', profileImg);
+
+            const data = {
+                email,
+                password,
+                nickname
+            };
+
+            formData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+
+            // FormData entries 출력
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ', ' + (pair[1] instanceof Blob ? 'Blob' : pair[1]));
+            }
+
             try {
-                const response = await fetch('http://localhost:8080/api/register', {
+                const response = await fetch('http://localhost:8080/api/join', {
                     method: 'POST',
+                    body: formData,
                     headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email, password, nickname, profileimg: profileImg }),
+                        'Accept': 'application/json',
+                    }
                 });
 
                 if (response.ok) {
                     setSuccessLabel('🥑 회원가입 성공!');
-                    // alert('회원가입 성공!');
                 } else {
-                    // const errorText = await response.text();
-                    setErrorLabel(`🥑 회원가입 실패`);
-                    // alert(`회원가입 실패: ${errorText}`);
+                    const errorText = await response.text();
+                    setErrorLabel(`🥑 회원가입 실패: ${errorText}`);
                 }
             } catch (error) {
                 console.error('Error during registration:', error);
-                alert('회원가입 중 오류가 발생했습니다.');
+                setErrorLabel('회원가입 중 오류가 발생했습니다.');
             }
         } else {
-            alert('입력 정보를 확인해주세요.');
+            setErrorLabel('입력 정보를 확인해주세요.');
         }
     };
 
+
+
     return (
         <form className="SignupForm" onSubmit={handleSubmit}>
-            <div className="Text32" style={{marginBottom: '51px'}}>Sign Up</div>
+            <div className="Text32" style={{ marginBottom: '51px' }}>Sign Up</div>
 
             <div className="SignUpProfilePickerContainer">
                 <div className="SignUpProfileLabel"><span>프로필 사진</span></div>
@@ -189,7 +184,7 @@ const SignUpForm = () => {
                         accept="image/*"
                         id="profileImgInput"
                         onChange={handleFileChange}
-                        style={{display: 'none'}}
+                        style={{ display: 'none' }}
                     />
                     <label htmlFor="profileImgInput" style={{
                         width: '149px',
@@ -215,7 +210,7 @@ const SignUpForm = () => {
                                 }}
                             />
                         ) : (
-                            <div style={{width: '24px', height: '24px', position: 'relative'}}>
+                            <div style={{ width: '24px', height: '24px', position: 'relative' }}>
                                 <div style={{
                                     position: 'absolute',
                                     top: '50%',
@@ -237,43 +232,38 @@ const SignUpForm = () => {
                             </div>
                         )}
                     </label>
-                    {uploadError && <div style={{color: 'red', marginTop: '10px'}}>{uploadError}</div>}
                 </div>
             </div>
 
             <EmailInputField
-                // label="이메일*"
                 value={email}
                 onChange={handleEmailChange}
                 error={emailError}
-                labelStyle={{fontSize: '15px'}}
+                labelStyle={{ fontSize: '15px' }}
             />
             <PasswordInputField
-                // label="비밀번호*"
                 value={password}
                 onChange={handlePasswordChange}
                 error={passwordError}
-                labelStyle={{fontSize: '15px'}}
+                labelStyle={{ fontSize: '15px' }}
             />
             <PasswordConfirmInputField
-                // label="비밀번호 확인*"
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
                 error={confirmPasswordError}
-                labelStyle={{fontSize: '15px'}}
+                labelStyle={{ fontSize: '15px' }}
             />
             <NicknameInputField
-                // label="닉네임*"
                 value={nickname}
                 onChange={handleNicknameChange}
                 error={nicknameError}
-                labelStyle={{fontSize: '15px'}}
+                labelStyle={{ fontSize: '15px' }}
             />
             <button className="SubmitBtn">회원가입</button>
             <div className="signUpTextContainer"
-                 style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '12px'}}>
-                <p style={{margin: 0, fontSize: '14px'}}>이미 계정이 있나요? </p>
-                <a href="/login" className="Text14" style={{marginLeft: '5px', fontWeight: '650'}}> 로그인하기</a>
+                 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '12px' }}>
+                <p style={{ margin: 0, fontSize: '14px' }}>이미 계정이 있나요? </p>
+                <a href="/login" className="Text14" style={{ marginLeft: '5px', fontWeight: '650' }}> 로그인하기</a>
             </div>
             <ToastMessage
                 successLabel={successLabel}
