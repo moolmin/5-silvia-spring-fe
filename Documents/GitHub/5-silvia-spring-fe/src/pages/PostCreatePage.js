@@ -44,6 +44,8 @@ const PostCreatePage = () => {
         setErrorLabel('');
     };
 
+    const token = localStorage.getItem('token');
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!title || !content) {
@@ -57,6 +59,10 @@ const PostCreatePage = () => {
                 postContents: content,
                 postImage: imageUrl
             }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
                 withCredentials: true
             });
 

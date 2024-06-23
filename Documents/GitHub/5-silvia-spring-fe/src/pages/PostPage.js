@@ -17,10 +17,12 @@ const formatDate = (date) => {
     return new Date(date).toLocaleString();
 };
 
-const fetchWithToken = async (url) => {
+const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
     const response = await fetch(url, {
+        ...options,
         headers: {
+            ...options.headers,
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         }
@@ -54,27 +56,15 @@ const PostPage = () => {
         const fetchPost = async () => {
             try {
                 const postResponse = await fetchWithToken(`http://localhost:8080/api/posts/${postId}`);
-                if (!postResponse.ok) {
-                    throw new Error('Failed to fetch post data');
-                }
-                const postData = await postResponse.json();
-                setPost(postData);
+                setPost(postResponse);
 
                 const usersResponse = await fetchWithToken('http://localhost:8080/api/accounts');
-                if (!usersResponse.ok) {
-                    throw new Error('Failed to fetch users data');
-                }
-                const usersData = await usersResponse.json();
-                setUsers(usersData.users);
+                setUsers(usersResponse.users || []);
 
                 const commentsResponse = await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments?include_edited=true`);
-                if (!commentsResponse.ok) {
-                    throw new Error('Failed to fetch comments data');
-                }
-                const commentsData = await commentsResponse.json();
-                setComments(commentsData);
+                setComments(commentsResponse);
 
-                await axios.put(`http://localhost:8080/api/posts/${postId}/views`);
+                // await axios.put(`http://localhost:8080/api/posts/${postId}/views`);
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -131,39 +121,27 @@ const PostPage = () => {
     const confirmDelete = async () => {
         try {
             if (commentToDelete) {
-                const response = await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments/${commentToDelete}`, {
+                await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments/${commentToDelete}`, {
                     method: 'DELETE',
                     credentials: 'include',
                 });
-                if (!response.ok) {
-                    if (response.status === 403) {
-                        setErrorLabel('🥑 댓글 삭제 권한이 없습니다');
-                    } else {
-                        throw new Error('Failed to delete comment');
-                    }
-                } else {
-                    setComments(prevComments => prevComments.filter(comment => comment.id !== commentToDelete));
-                    setSuccessLabel('🥑 댓글이 삭제되었습니다.');
-                }
+                setComments(prevComments => prevComments.filter(comment => comment.id !== commentToDelete));
+                setSuccessLabel('🥑 댓글이 삭제되었습니다.');
             } else {
-                const response = await fetch(`http://localhost:8080/api/posts/${postId}`, {
+                await fetchWithToken(`http://localhost:8080/api/posts/${postId}`, {
                     method: 'DELETE',
                     credentials: 'include',
                 });
-                if (!response.ok) {
-                    if (response.status === 403) {
-                        setErrorLabel('🥑 게시글 삭제 권한이 없습니다');
-                    } else {
-                        throw new Error('Failed to delete post');
-                    }
-                } else {
-                    setSuccessLabel('🥑 게시글이 삭제되었습니다.');
-                    window.location.href = '/main';
-                }
+                setSuccessLabel('🥑 게시글이 삭제되었습니다.');
+                navigate('/main');
             }
         } catch (error) {
-            console.error('삭제 중 오류 발생:', error);
-            alert('삭제 중 오류가 발생했습니다.');
+            if (error.message.includes('403')) {
+                setErrorLabel(commentToDelete ? '🥑 댓글 삭제 권한이 없습니다' : '🥑 게시글 삭제 권한이 없습니다');
+            } else {
+                console.error('삭제 중 오류 발생:', error);
+                alert('삭제 중 오류가 발생했습니다.');
+            }
         } finally {
             closeModal();
         }
@@ -187,7 +165,6 @@ const PostPage = () => {
         if (editingCommentId) {
             // Update existing comment
             try {
-                console.log('Updating comment:', { postId, editingCommentId, commentText });
                 const response = await axios.put(
                     `http://localhost:8080/api/posts/${postId}/comments/${editingCommentId}`,
                     { comment_content: commentText },
@@ -200,13 +177,8 @@ const PostPage = () => {
                 );
 
                 if (response.status === 200) {
-                    // Re-fetch comments with include_edited=true
-                    const commentsResponse = await fetch(`http://localhost:8080/api/posts/${postId}/comments?include_edited=true`);
-                    if (!commentsResponse.ok) {
-                        throw new Error('Failed to fetch comments data');
-                    }
-                    const commentsData = await commentsResponse.json();
-                    setComments(commentsData);
+                    const commentsResponse = await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments?include_edited=true`);
+                    setComments(commentsResponse);
                 } else {
                     throw new Error('Failed to update comment');
                 }
@@ -220,10 +192,9 @@ const PostPage = () => {
         } else {
             // Add new comment
             try {
-                console.log('Adding new comment:', { postId, commentText, userId });
                 const response = await axios.post(
                     `http://localhost:8080/api/posts/${postId}/comments`,
-                    { comment_content: commentText, user_id: userId },
+                    { comment_content: commentText, userId: userId },
                     {
                         headers: {
                             'Content-Type': 'application/json'
@@ -260,7 +231,7 @@ const PostPage = () => {
         }
     }
 
-    const author = users.find(user => user.user_id === post.user_id);
+    const author = users.length > 0 ? users.find(user => user.userId === post.userId) : null;
 
     return (
         <div className="PostPage">
@@ -272,12 +243,12 @@ const PostPage = () => {
                             <div className="PostSubContainerLeft">
                                 {author && (
                                     <>
-                                        <PostComponents.AuthorIcon AuthorImg={author.profile_picture} />
+                                        <PostComponents.AuthorIcon AuthorImg={author.profilePicture} />
                                         <PostComponents.AuthorName AuthorName={author.nickname} />
                                     </>
                                 )}
                                 <div className="PostDateContainer">
-                                    <PostComponents.Date date={post.create_at} />
+                                    <PostComponents.Date date={formatDate(post.createAt)} />
                                 </div>
                             </div>
                             <div className="PostBtnContainer">
@@ -288,7 +259,7 @@ const PostPage = () => {
                     </div>
                 </div>
                 <div className="PostBody">
-                    <PostComponents.PostImage PostImg={post.post_picture} />
+                    <PostComponents.PostImage PostImg={post.postPicture} />
                     <PostComponents.PostContent label={post.article} />
                 </div>
                 <div className="PostCountContainer">
@@ -320,19 +291,19 @@ const PostPage = () => {
                     <div key={comment.id} className="Comment">
                         <div className="CommentTopArea">
                             <div className="CommentAuthor">
-                                <img src={comment.profile_picture} alt="Author" className="AuthorIcon" />
+                                <img src={comment.profilePicture} alt="Author" className="AuthorIcon" />
                                 <div className="CommenterName">{comment.nickname}</div>
-                                <div className="CommentDateContainer">{formatDate(comment.create_at)}</div>
+                                <div className="CommentDateContainer">{formatDate(comment.createAt)}</div>
                             </div>
-                            {comment.user_id && comment.user_id.toString() === userId && (
+                            {comment.userId && comment.userId.toString() === userId && (
                                 <div className="CommentBtn">
                                     <Buttons.PostBtn label="수정"
-                                                     onClick={() => handleCommentEdit(comment.id, comment.comment_content)} />
+                                                     onClick={() => handleCommentEdit(comment.id, comment.commentContent)} />
                                     <Buttons.PostBtn label="삭제" onClick={() => showModal(comment.id)} />
                                 </div>
                             )}
                         </div>
-                        <div className="CommentContent">{comment.comment_content}</div>
+                        <div className="CommentContent">{comment.commentContent}</div>
                     </div>
                 ))}
             </div>
