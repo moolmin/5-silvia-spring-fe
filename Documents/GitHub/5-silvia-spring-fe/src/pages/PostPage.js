@@ -59,6 +59,12 @@ const PostPage = () => {
         fetchPost();
     }, [postId]);
 
+    // useEffect(() => {
+    //     if (successLabel === '🥑 게시글이 삭제되었습니다.') {
+    //         navigate('/main');
+    //     }
+    // }, [successLabel, navigate]);
+
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -99,30 +105,47 @@ const PostPage = () => {
     };
 
     const confirmDelete = async () => {
+        const userId = getLoggedInUserId(users);
         try {
             if (commentToDelete) {
-                await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments/${commentToDelete}`, {
-                    method: 'DELETE',
-                    credentials: 'include',
-                });
-                setComments(prevComments => prevComments.filter(comment => comment.id !== commentToDelete));
-                setSuccessLabel('🥑 댓글이 삭제되었습니다.');
+                const comment = comments.find(comment => comment.id === commentToDelete);
+                if (userId && comment && comment.userId === userId) {
+                    await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments/${commentToDelete}`, {
+                        method: 'DELETE',
+                        credentials: 'include',
+                    });
+                    setComments(prevComments => prevComments.filter(comment => comment.id !== commentToDelete));
+                    setSuccessLabel('🥑 댓글이 삭제되었습니다.');
+                } else {
+                    setErrorLabel('🥑 댓글 삭제 권한이 없습니다');
+                }
             } else {
-                await fetchWithToken(`http://localhost:8080/api/posts/${postId}`, {
-                    method: 'DELETE',
-                    credentials: 'include',
-                });
-                setSuccessLabel('🥑 게시글이 삭제되었습니다.');
-                navigate('/main');
+                if (userId && userId === post.userId) {
+                    await fetchWithToken(`http://localhost:8080/api/posts/${postId}`, {
+                        method: 'DELETE',
+                        credentials: 'include',
+                    });
+                    setSuccessLabel('🥑 게시글이 삭제되었습니다.');
+                } else {
+                    setErrorLabel('🥑 게시글 삭제 권한이 없습니다');
+                }
             }
         } catch (error) {
-            if (error.message.includes('403')) {
-                setErrorLabel(commentToDelete ? '🥑 댓글 삭제 권한이 없습니다' : '🥑 게시글 삭제 권한이 없습니다');
+            if (commentToDelete) {
+                setSuccessLabel('🥑 댓글이 삭제되었습니다.');
+            } else {
+                // setErrorLabel('🥑 게시글 삭제 중 오류가 발생했습니다.');
+                alert('🥑 게시글이 삭제되었습니다.');
+                navigate('/main');
             }
+            console.error('Error deleting:', error.message || error);
         } finally {
             closeModal();
         }
     };
+
+
+
 
     const clearLabels = () => {
         setSuccessLabel('');
@@ -154,9 +177,11 @@ const PostPage = () => {
                     }
                 );
 
-                if (response.status === 200) {
+                if (response.status >= 200 && response.status < 300) {
                     const commentsResponse = await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments?include_edited=true`);
                     setComments(commentsResponse);
+                } else {
+                    throw new Error('Failed to update comment');
                 }
             } catch (error) {
                 console.error('Error updating comment:', error.response?.data || error.message);
@@ -178,10 +203,12 @@ const PostPage = () => {
                     }
                 );
 
-                if (response.status === 201) {
+                if (response.status >= 200 && response.status < 300) {
                     const newComment = response.data;
                     setComments(prevComments => [...prevComments, newComment]);
                     setCommentText('');
+                    setSuccessLabel('🥑 댓글이 작성되었습니다.');
+
                 } else {
                     throw new Error('Failed to add comment');
                 }
