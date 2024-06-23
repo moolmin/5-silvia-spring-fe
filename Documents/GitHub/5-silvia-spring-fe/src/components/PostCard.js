@@ -133,8 +133,7 @@ const PostCard = () => {
             <div className="PostCardsContainer">
                 {currentPosts.map((post) => {
                     const { id, userId, title, article, postPicture, likes, createAt, views } = post;
-                    const formattedDate = createAt.split('T')[0];
-
+                    const formattedDate = (createAt && typeof createAt === 'string') ? createAt.split('T')[0] : '알 수 없음';
                     const author = Array.isArray(users) ? users.find(user => user.userId === userId) : undefined;
                     const authorName = author ? author.nickname : 'Unknown';
 

@@ -6,15 +6,23 @@ import Modal from '../components/Modal';
 import axios from 'axios';
 import ToastMessage from "../components/ToastMessage";
 
-const getCookieValue = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-    return null;
-};
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    };
 
-const formatDate = (date) => {
-    return new Date(date).toLocaleString();
+    let formattedDate = date.toLocaleString('ko-KR', options);
+
+    formattedDate = formattedDate.replace(/\./g, '/').replace(/ /g, '').replace('오후', 'PM ').replace('오전', 'AM ');
+
+    return formattedDate;
 };
 
 const fetchWithToken = async (url, options = {}) => {
@@ -50,8 +58,6 @@ const PostPage = () => {
     const [successLabel, setSuccessLabel] = useState('');
     const [errorLabel, setErrorLabel] = useState('');
 
-    const userId = getCookieValue('userId');
-
     useEffect(() => {
         const fetchPost = async () => {
             try {
@@ -59,12 +65,10 @@ const PostPage = () => {
                 setPost(postResponse);
 
                 const usersResponse = await fetchWithToken('http://localhost:8080/api/accounts');
-                setUsers(usersResponse.users || []);
+                setUsers(usersResponse || []);
 
                 const commentsResponse = await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments?include_edited=true`);
                 setComments(commentsResponse);
-
-                // await axios.put(`http://localhost:8080/api/posts/${postId}/views`);
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -194,7 +198,7 @@ const PostPage = () => {
             try {
                 const response = await axios.post(
                     `http://localhost:8080/api/posts/${postId}/comments`,
-                    { comment_content: commentText, userId: userId },
+                    { comment_content: commentText, userId: post.userId },
                     {
                         headers: {
                             'Content-Type': 'application/json'
@@ -231,7 +235,7 @@ const PostPage = () => {
         }
     }
 
-    const author = users.length > 0 ? users.find(user => user.userId === post.userId) : null;
+    const author = users.find(user => user.userId === post.userId);
 
     return (
         <div className="PostPage">
@@ -248,7 +252,7 @@ const PostPage = () => {
                                     </>
                                 )}
                                 <div className="PostDateContainer">
-                                    <PostComponents.Date date={formatDate(post.createAt)} />
+                                    <PostComponents.Date date={post.createAt} />
                                 </div>
                             </div>
                             <div className="PostBtnContainer">
@@ -287,25 +291,32 @@ const PostPage = () => {
                 </div>
             </div>
             <div className="CommentsArea">
-                {comments.map((comment) => (
-                    <div key={comment.id} className="Comment">
-                        <div className="CommentTopArea">
-                            <div className="CommentAuthor">
-                                <img src={comment.profilePicture} alt="Author" className="AuthorIcon" />
-                                <div className="CommenterName">{comment.nickname}</div>
-                                <div className="CommentDateContainer">{formatDate(comment.createAt)}</div>
-                            </div>
-                            {comment.userId && comment.userId.toString() === userId && (
-                                <div className="CommentBtn">
-                                    <Buttons.PostBtn label="수정"
-                                                     onClick={() => handleCommentEdit(comment.id, comment.commentContent)} />
-                                    <Buttons.PostBtn label="삭제" onClick={() => showModal(comment.id)} />
+                {comments.map((comment) => {
+                    const commentAuthor = users.find(user => user.userId === comment.userId);
+                    return (
+                        <div key={comment.id} className="Comment">
+                            <div className="CommentTopArea">
+                                <div className="CommentAuthor">
+                                    {commentAuthor && (
+                                        <>
+                                            <img src={commentAuthor.profilePicture} alt="Author" className="AuthorIcon" />
+                                            <div className="CommenterName">{commentAuthor.nickname}</div>
+                                        </>
+                                    )}
+                                    <div className="CommentDateContainer">{comment.createAt}</div>
                                 </div>
-                            )}
+                                {comment.userId && comment.userId.toString() === post.userId.toString() && (
+                                    <div className="CommentBtn">
+                                        <Buttons.PostBtn label="수정"
+                                                         onClick={() => handleCommentEdit(comment.id, comment.commentContent)} />
+                                        <Buttons.PostBtn label="삭제" onClick={() => showModal(comment.id)} />
+                                    </div>
+                                )}
+                            </div>
+                            <div className="CommentContent">{comment.commentContent}</div>
                         </div>
-                        <div className="CommentContent">{comment.commentContent}</div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
             <Modal
                 isVisible={isModalVisible}

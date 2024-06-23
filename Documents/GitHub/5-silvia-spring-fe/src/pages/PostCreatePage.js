@@ -23,7 +23,6 @@ const PostCreatePage = () => {
     };
 
     const token = localStorage.getItem('token');
-    // const userId = localStorage.getItem('userId');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,12 +40,12 @@ const PostCreatePage = () => {
         }
 
         const formData = new FormData();
-        formData.append('file', file); // 이미지 파일 추가
+        formData.append('file', file);
 
         const data = {
             title: title,
             article: content,
-            userId: 1, // userId 동적으로 설정
+            userId: 1,
             createAt: new Date().toISOString(),
             views: 0,
             likes: 0
@@ -54,10 +53,7 @@ const PostCreatePage = () => {
 
         formData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }));
 
-        // FormData entries 출력
-        for (let pair of formData.entries()) {
-            console.log(pair[0] + ', ' + (pair[1] instanceof Blob ? 'Blob' : pair[1]));
-        }
+        setUploading(true); // Set uploading to true before starting the upload process
 
         try {
             const response = await axios.post('http://localhost:8080/api/posts', formData, {
@@ -80,6 +76,8 @@ const PostCreatePage = () => {
         } catch (error) {
             console.error('Error creating post:', error);
             setErrorLabel('게시글 작성 중 오류가 발생했습니다.');
+        } finally {
+            setUploading(false); // Set uploading to false after the upload process is finished
         }
     };
 
@@ -91,10 +89,11 @@ const PostCreatePage = () => {
                 ContentValue={content}
                 onTitleChange={handleTitleChange}
                 onContentChange={handleContentChange}
-                onImageUpload={handleFileChange} // 파일 변경 핸들러 추가
+                onImageUpload={handleFileChange}
                 onSubmit={handleSubmit}
                 isUploading={uploading}
             />
+            {uploading && <div>Uploading...</div>}
             <ToastMessage successLabel={successLabel} errorLabel={errorLabel} clearLabels={clearLabels} />
         </div>
     );
