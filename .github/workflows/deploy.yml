@@ -5,14 +5,14 @@ on:
     branches: 
       - deploy-to-s3
     paths:
-      - 'Documents/GitHub/5-silvia-spring-fe/src/**'
-      - 'Documents/GitHub/5-silvia-spring-fe/public/**'
+      - './Documents/GitHub/5-silvia-spring-fe/src/**'
+      - './Documents/GitHub/5-silvia-spring-fe/public/**'
   pull_request:
     branches: 
       - deploy-to-s3
     paths:
-      - 'Documents/GitHub/5-silvia-spring-fe/src/**'
-      - 'Documents/GitHub/5-silvia-spring-fe/public/**'
+      - './Documents/GitHub/5-silvia-spring-fe/src/**'
+      - './Documents/GitHub/5-silvia-spring-fe/public/**'
       - '.github/workflows/deploy.yml'
 
 jobs:
