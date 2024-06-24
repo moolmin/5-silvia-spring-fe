@@ -1,5 +1,5 @@
 // App.js
-import { Routes, Route, useLocation } from 'react-router-dom';
+import {Routes, Route, useLocation, Navigate} from 'react-router-dom';
 import LANDING from "./pages/LandingPage";
 import Home from "./pages/MainPage";
 import Board from "./pages/PostPage";
@@ -60,6 +60,7 @@ function App() {
             <Route path={ROUTES.PROFILE_EDIT} element={<Profile />} />
             <Route path={ROUTES.BOARD_EDIT} element={<Edit />} />
             <Route path={ROUTES.BOARD_CREATE} element={<Create />} />
+            <Route path="/index.html" element={<Navigate to={ROUTES.LANDING} />} />
           </Routes>
         </div>
       </div>
