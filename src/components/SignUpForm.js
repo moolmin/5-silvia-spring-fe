@@ -81,7 +81,6 @@ const SignUpForm = () => {
         }
     };
 
-
     const validatePassword = (password) => {
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,20}$/;
         if (!password) {
@@ -121,13 +120,9 @@ const SignUpForm = () => {
         clearLabels();
 
         await validateEmail(email);
-        await validatePassword(password);
-        await validateConfirmPassword(password, confirmPassword);
-        await validateNickname(nickname);
-
-        console.log("Email:", email);
-        console.log("Password:", password);
-        console.log("Nickname:", nickname);
+        validatePassword(password);
+        validateConfirmPassword(password, confirmPassword);
+        validateNickname(nickname);
 
         if (!emailError && !passwordError && !confirmPasswordError && !nicknameError) {
             const formData = new FormData();
@@ -141,11 +136,6 @@ const SignUpForm = () => {
 
             formData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }));
 
-            // FormData entries 출력
-            for (let pair of formData.entries()) {
-                console.log(pair[0] + ', ' + (pair[1] instanceof Blob ? 'Blob' : pair[1]));
-            }
-
             try {
                 const response = await fetch('http://localhost:8080/api/join', {
                     method: 'POST',
@@ -158,8 +148,7 @@ const SignUpForm = () => {
                 if (response.ok) {
                     setSuccessLabel('🥑 회원가입 성공!');
                 } else {
-                    const errorText = await response.text();
-                    setErrorLabel(`🥑 모든 정보를 입력해주세요`);
+                    setErrorLabel('🥑 모든 정보를 입력해주세요');
                 }
             } catch (error) {
                 console.error('Error during registration:', error);
@@ -169,8 +158,6 @@ const SignUpForm = () => {
             setErrorLabel('🥑 입력 정보를 확인해주세요.');
         }
     };
-
-
 
     return (
         <form className="SignupForm" onSubmit={handleSubmit}>

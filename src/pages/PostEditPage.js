@@ -4,24 +4,6 @@ import PostForm from '../components/PostForm';
 import axios from 'axios';
 import ToastMessage from '../components/ToastMessage';
 
-const fetchWithToken = async (url, options = {}) => {
-    const token = localStorage.getItem('token');
-    const response = await fetch(url, {
-        ...options,
-        headers: {
-            ...options.headers,
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
-    });
-
-    if (!response.ok) {
-        throw new Error(`Network response was not ok for ${url}`);
-    }
-
-    return response.json();
-};
-
 const PostEditPage = () => {
     const { postId } = useParams();
     const navigate = useNavigate();
@@ -95,12 +77,6 @@ const PostEditPage = () => {
             } else {
                 formData.append('file', new Blob()); // Ensure 'file' is always present
             }
-            console.log(file);
-            console.log(post.postPicture);
-
-            // if (post.postPicture && !file) {
-            //     formData.append('file', post.postPicture);
-            // }
 
             formData.append('data', JSON.stringify(updateData));
 
@@ -127,9 +103,6 @@ const PostEditPage = () => {
             setUploading(false);
         }
     };
-
-
-
 
     if (loading) {
         return <p>Loading...</p>;

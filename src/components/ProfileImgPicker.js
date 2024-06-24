@@ -23,7 +23,7 @@ const fetchWithToken = async (url, options = {}) => {
 const ProfileImgPicker = ({ onImageUrlChange }) => {
     const { userId } = useParams();
     const userEmail = localStorage.getItem('email');
-    const { profileImage, nickname, error } = useUserProfile(userEmail);
+    const { profileImage, error } = useUserProfile(userEmail);
     const [localProfileImage, setLocalProfileImage] = useState(profileImage);
     const [successLabel, setSuccessLabel] = useState('');
     const [errorLabel, setErrorLabel] = useState('');
@@ -62,8 +62,6 @@ const ProfileImgPicker = ({ onImageUrlChange }) => {
 
                 setLocalProfileImage(profileImageUrl);
                 onImageUrlChange(profileImageUrl);
-                // window.location.reload();
-                // 대기!!
                 setSuccessLabel('🥑 프로필 이미지가 변경되었습니다!');
             } catch (error) {
                 setErrorLabel('🥑 이미지 업로드 중 오류가 발생했습니다.');

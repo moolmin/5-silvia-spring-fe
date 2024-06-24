@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PostForm from '../components/PostForm';
 import { useNavigate } from 'react-router-dom';
@@ -30,7 +30,6 @@ const PostCreatePage = () => {
     const [file, setFile] = useState(null);
     const [uploading, setUploading] = useState(false);
     const [users, setUsers] = useState([]);
-    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -39,7 +38,7 @@ const PostCreatePage = () => {
                 const usersResponse = await fetchWithToken('http://localhost:8080/api/accounts');
                 setUsers(usersResponse || []);
             } catch (error) {
-                setError(error.message);
+                setErrorLabel(`Error fetching users: ${error.message}`);
             }
         };
         fetchAccount();
@@ -59,8 +58,6 @@ const PostCreatePage = () => {
         setSuccessLabel('');
         setErrorLabel('');
     };
-
-    const token = localStorage.getItem('token');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -91,12 +88,12 @@ const PostCreatePage = () => {
 
         formData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }));
 
-        setUploading(true); // Set uploading to true before starting the upload process
+        setUploading(true);
 
         try {
             const response = await axios.post('http://localhost:8080/api/posts', formData, {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Accept': 'application/json',
                     'Content-Type': 'multipart/form-data'
                 }
@@ -108,14 +105,13 @@ const PostCreatePage = () => {
                     navigate('/main');
                 }, 2000);
             } else {
-                const errorText = response.data;
-                setErrorLabel(`🥑 게시글 작성 실패: ${errorText}`);
+                setErrorLabel(`🥑 게시글 작성 실패: ${response.data}`);
             }
         } catch (error) {
             console.error('Error creating post:', error);
             setErrorLabel('게시글 작성 중 오류가 발생했습니다.');
         } finally {
-            setUploading(false); // Set uploading to false after the upload process is finished
+            setUploading(false);
         }
     };
 
