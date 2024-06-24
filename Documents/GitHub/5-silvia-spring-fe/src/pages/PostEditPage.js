@@ -87,27 +87,30 @@ const PostEditPage = () => {
         setUploading(true);
 
         try {
-            let response;
+            const formData = new FormData();
             if (file) {
-                const formData = new FormData();
                 formData.append('file', file);
-                formData.append('data', new Blob([JSON.stringify(updateData)], { type: 'application/json' }));
-
-                response = await axios.put(`http://localhost:8080/api/posts/${postId}`, formData, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/json',
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
+            } else if (post.postPicture) {
+                formData.append('postPicture', post.postPicture); // Append the post picture URL
             } else {
-                response = await axios.put(`http://localhost:8080/api/posts/${postId}`, JSON.stringify({ ...updateData, postPicture: post.postPicture }), {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
+                formData.append('file', new Blob()); // Ensure 'file' is always present
             }
+            console.log(file);
+            console.log(post.postPicture);
+
+            // if (post.postPicture && !file) {
+            //     formData.append('file', post.postPicture);
+            // }
+
+            formData.append('data', JSON.stringify(updateData));
+
+            const response = await axios.put(`http://localhost:8080/api/posts/${postId}`, formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
 
             if (response.status === 200) {
                 setSuccessLabel('🥑 게시글이 업데이트되었습니다.');
@@ -124,6 +127,7 @@ const PostEditPage = () => {
             setUploading(false);
         }
     };
+
 
 
 
