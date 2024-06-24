@@ -3,13 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { FaUserEdit, FaKey, FaSignOutAlt } from 'react-icons/fa';
 import useUserProfile from "../hooks/useUserProfile";
 
-const fetchWithToken = async (url) => {
+const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
     const response = await fetch(url, {
+        ...options,
         headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
+            'Content-Type': 'application/json',
+            ...options.headers,
+        },
     });
 
     if (!response.ok) {
@@ -22,7 +24,7 @@ const fetchWithToken = async (url) => {
 function Header({ showBackButton, showUserProfile }) {
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const userEmail = localStorage.getItem('email');
-    const { profileImage, nickname, userId, error } = useUserProfile(userEmail);
+    const { profileImage, nickname, userId } = useUserProfile(userEmail);
     const navigate = useNavigate();
     const defaultProfileImage = "https://lh3.google.com/u/0/d/1ra2p2F4dl1ITC1r3M2ORKyqjt-O00EgE=w3024-h1714-iv2";
 
@@ -50,29 +52,23 @@ function Header({ showBackButton, showUserProfile }) {
         navigate('/main');
     };
 
-    const handleLogout = async () => {
+    const handleLogout = async (event) => {
+        event.preventDefault();
         try {
-            const response = await fetchWithToken('http://localhost:8080/logout', {
+            await fetchWithToken('http://localhost:8080/api/logout', {
                 method: 'POST',
-                credentials: 'include'
+                credentials: 'include',
             });
 
-            if (response.ok) {
-                console.log('Logout successful');
-                console.log('Before clearing localStorage:', localStorage.getItem('token')); // Debug log before clearing
-                localStorage.clear();
-                console.log('After clearing localStorage:', localStorage.getItem('token')); // Debug log after clearing
-
-                window.location.href = '/';
-            } else {
-                console.error('Logout failed with status:', response.status);
-            }
+            // console.log('Logout successful');
+            localStorage.removeItem('token');
+            localStorage.removeItem('email');
+            window.location.href = '/';
         } catch (error) {
             console.error('Error during logout:', error);
+            window.location.href = '/';
         }
     };
-
-
 
     const iconStyle = {
         margin: '0px 10px 0px 5px',

@@ -4,9 +4,9 @@ import SearchBar from './SearchBar';
 import * as Buttons from '../components/Buttons';
 import { SlCalender } from "react-icons/sl";
 import { IoPersonOutline } from "react-icons/io5";
-import { FaRegHeart, FaRegEye } from "react-icons/fa";
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaRegHeart, FaRegEye, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ToastMessage from './ToastMessage';
+import Pagination from './Pagination';
 
 const fetchWithToken = async (url) => {
     const token = localStorage.getItem('token');
@@ -101,17 +101,6 @@ const PostCard = () => {
         });
     };
 
-    const handlePrevPage = () => {
-        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
-    };
-
-    const handleNextPage = () => {
-        setCurrentPage((prevPage) => {
-            const maxPage = Math.ceil(filteredPosts.length / postsPerPage);
-            return Math.min(prevPage + 1, maxPage);
-        });
-    };
-
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
@@ -182,23 +171,12 @@ const PostCard = () => {
                     );
                 })}
             </div>
-            <div className="Pagination">
-                <button onClick={handlePrevPage} disabled={currentPage === 1} className="arrowButton">
-                    <FaArrowLeft />
-                </button>
-                <div className="dots">
-                    {Array.from({ length: Math.ceil(filteredPosts.length / postsPerPage) }, (_, index) => (
-                        <span
-                            key={index}
-                            className={`dot ${currentPage === index + 1 ? 'active' : ''}`}
-                            onClick={() => setCurrentPage(index + 1)}
-                        />
-                    ))}
-                </div>
-                <button onClick={handleNextPage} disabled={currentPage === Math.ceil(filteredPosts.length / postsPerPage)} className="arrowButton">
-                    <FaArrowRight />
-                </button>
-            </div>
+            <Pagination
+                postsPerPage={postsPerPage}
+                totalPosts={filteredPosts.length}
+                currentPage={currentPage}
+                paginate={setCurrentPage}
+            />
             <ToastMessage successLabel={successLabel} errorLabel={errorLabel} clearLabels={clearLabels} /> {/* Use the ToastMessage component */}
         </div>
     );

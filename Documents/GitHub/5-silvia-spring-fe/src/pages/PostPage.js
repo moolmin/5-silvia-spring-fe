@@ -283,7 +283,7 @@ const PostPage = () => {
                     <PostComponents.PostContent label={post.article} />
                 </div>
                 <div className="PostCountContainer">
-                    <PostComponents.PostCount num={formatViews(post.views)} label="조회수" />
+                    <PostComponents.PostCount num={formatViews(post.likes)} label="좋아요" />
                     <PostComponents.PostCount num={formatViews(comments.length)} label="댓글" />
                 </div>
             </div>

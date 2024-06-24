@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
+import useUserProfile from '../hooks/useUserProfile';
+import ToastMessage from './ToastMessage';
 
 const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
@@ -19,30 +21,19 @@ const fetchWithToken = async (url, options = {}) => {
 };
 
 const ProfileImgPicker = ({ onImageUrlChange }) => {
-    const [profileImage, setProfileImage] = useState(null);
     const { userId } = useParams();
+    const userEmail = localStorage.getItem('email');
+    const { profileImage, nickname, error } = useUserProfile(userEmail);
+    const [localProfileImage, setLocalProfileImage] = useState(profileImage);
+    const [successLabel, setSuccessLabel] = useState('');
+    const [errorLabel, setErrorLabel] = useState('');
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const usersResponse = await fetchWithToken('http://localhost:8080/api/accounts');
-                const email = localStorage.getItem('email');
-                const user = usersResponse.find(user => user.email === email);
-
-                if (user) {
-                    const profileImageUrl = user.profilePicture;
-                    setProfileImage(profileImageUrl);
-                    onImageUrlChange(profileImageUrl);
-                } else {
-                    console.error('Logged in user not found');
-                }
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
-
-        fetchUserData();
-    }, [onImageUrlChange]);
+        if (profileImage) {
+            setLocalProfileImage(profileImage);
+            onImageUrlChange(profileImage);
+        }
+    }, [profileImage, onImageUrlChange]);
 
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
@@ -65,28 +56,40 @@ const ProfileImgPicker = ({ onImageUrlChange }) => {
                     throw new Error('Failed to upload image');
                 }
 
-                // const result = await response.json();
-                // const updatedUserResponse = await fetchWithToken(`http://localhost:8080/api/accounts/${userId}`);
-                // const updatedUser = await updatedUserResponse.json();
-                // const profileImageUrl = updatedUser.profilePicture;
-                //
-                //
-                // setProfileImage(profileImageUrl);
-                // onImageUrlChange(profileImageUrl);
+                // Refresh user profile to get the updated image
+                const updatedUser = await fetchWithToken(`http://localhost:8080/api/accounts/${userId}`);
+                const profileImageUrl = updatedUser.profilePicture;
+
+                setLocalProfileImage(profileImageUrl);
+                onImageUrlChange(profileImageUrl);
+                // window.location.reload();
+                // 대기!!
+                setSuccessLabel('🥑 프로필 이미지가 변경되었습니다!');
             } catch (error) {
+                setErrorLabel('🥑 이미지 업로드 중 오류가 발생했습니다.');
                 console.error('Error uploading image:', error);
             }
         }
     };
 
+    const clearLabels = useCallback(() => {
+        setSuccessLabel('');
+        setErrorLabel('');
+    }, []);
+
+    if (error) {
+        return <div>Error loading user profile: {error.message}</div>;
+    }
+
     return (
         <div className="profile-img-picker">
-            <label className="upload-button" style={{ backgroundImage: `url(${profileImage})` }}>
+            <label className="upload-button" style={{ backgroundImage: `url(${localProfileImage})` }}>
                 <div className="ImgBlackFilter">
                     <input type="file" onChange={handleFileChange} style={{ display: 'none' }} />
                     <span className="ProfilePickerLabel">변경</span>
                 </div>
             </label>
+            <ToastMessage successLabel={successLabel} errorLabel={errorLabel} clearLabels={clearLabels} />
         </div>
     );
 };

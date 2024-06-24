@@ -95,6 +95,7 @@
   align-items: center;
   /*margin: 100px;*/
   z-index: 2;
+  margin-right: 100px;
 }
 
 .LandingLoginContainer {
@@ -113,12 +114,12 @@
   0 16px 32px rgba(0,0,0,0.07),
   0 32px 64px rgba(0,0,0,0.07);
   border-radius: 10px;
-  margin: 40px 100px 100px 180px;
+  margin: 40px;
   /*margin: 0px 0px 200px 700px;*/
   /*margin: 200px 20px 0px 0px;*/
 }
 
-@media (min-width: 769px) {
+@media (min-width: 871px) {
   .LandingWelcome {
     /*flex-direction: column;*/
     /*align-items: center;*/
@@ -130,7 +131,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 870px) {
   .LandingWelcome {
     flex-direction: column;
     align-items: center;
@@ -560,6 +561,7 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 390px;
 }
 
 .FormInputGroup {
@@ -1720,45 +1722,160 @@ button[type='PostImageUploadBtn'] {
 }
 
 
-.Pagination {
+/*.Pagination {*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  position: fixed;*/
+/*  bottom: 50px;*/
+/*  margin-left: 240px;*/
+/*}*/
+
+/*.numbers {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  margin: 0 10px;*/
+/*}*/
+
+/*!*.pageButton {*!*/
+/*!*  border: none;*!*/
+/*!*  background: none;*!*/
+/*!*  cursor: pointer;*!*/
+/*!*  margin: 0 5px;*!*/
+/*!*  padding: 5px 10px;*!*/
+/*!*  font-size: 14px;*!*/
+/*!*  transition: background-color 0.3s ease, color 0.3s ease;*!*/
+/*!*  opacity: 0;*!*/
+/*!*}*!*/
+
+/*!*.pageButton.active {*!*/
+/*!*  background-color: #007bff;*!*/
+/*!*  color: white;*!*/
+/*!*  border-radius: 50%;*!*/
+/*!*}*!*/
+
+/*!*.pageEllipsis {*!*/
+/*!*  margin: 0 5px;*!*/
+/*!*  color: #999;*!*/
+/*!*}*!*/
+
+/*.pageButton.enter {*/
+/*  opacity: 1;*/
+/*}*/
+
+
+/*.arrowButton {*/
+/*  background: none;*/
+/*  border: none;*/
+/*  cursor: pointer;*/
+/*  color: #96A98B;*/
+/*  font-size: 24px;*/
+/*  margin: 0 10px;*/
+/*}*/
+
+/*.dots {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*}*/
+
+/*.dot {*/
+/*  height: 10px;*/
+/*  width: 10px;*/
+/*  margin: 0 5px;*/
+/*  background-color: #C2CFA5;*/
+/*  border-radius: 50%;*/
+/*  display: inline-block;*/
+/*  cursor: pointer;*/
+/*  !*transition: transform 0.3s ease, background-color 0.3s ease;*!*/
+/*  transition: opacity 0.3s ease;*/
+/*  opacity: 0;*/
+/*}*/
+
+/*.dot.active {*/
+/*  background-color: #f39c12;*/
+/*  transform: scale(1.3);*/
+/*}*/
+
+/*.dot.enter {*/
+/*  opacity: 1;*/
+/*}*/
+
+.pagination-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  bottom: 50px;
-  margin-left: 240px;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #DFD3C3;
+  border-radius: 40px;
+  padding: 0px 30px;
 }
 
-.arrowButton {
-  background: none;
+.pagination {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
   border: none;
+  background: none;
+  font-size: 1rem;
   cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.page-item.active .page-link {
+  background-color: #96A98B;
+  color: white;
+}
+
+.pagination-arrow {
+  border: none;
+  background: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0px 10px;
+  display: flex;
+  align-items: center;
   color: #96A98B;
-  font-size: 24px;
-  margin: 0 10px;
 }
 
 .dots {
   display: flex;
   align-items: center;
+  justify-content: center;
+  padding: 0px 10px;
+
 }
 
-.dot {
-  height: 10px;
-  width: 10px;
-  margin: 0 5px;
-  background-color: #C2CFA5;
-  border-radius: 50%;
-  display: inline-block;
-  cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+.fade-enter {
+  opacity: 0;
+  transform: translateY(-20px);
 }
 
-.dot.active {
-  background-color: #f39c12;
-  transform: scale(1.3);
+.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
 }
 
+
+/*///*/
 
 .HeaderProfile {
   display: flex;

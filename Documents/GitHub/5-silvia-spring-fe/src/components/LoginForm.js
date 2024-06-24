@@ -111,7 +111,7 @@ const LoginForm = () => {
                 error={passwordError}
             />
 
-            <button className="SubmitBtn" style={{marginTop: '5px'}}>로그인</button>
+            <button className="SubmitBtn" style={{marginTop: '25px'}}>로그인</button>
 
             <div className="signUpTextContainer"
                  style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '12px'}}>
