@@ -1,23 +1,19 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Deploy React App to S3
 
 on:
   push:
     branches: 
-      - main
+      - deploy-to-s3
     paths:
       - 'src/**'
       - 'public/**'
   pull_request:
     branches: 
-      - main
+      - deploy-to-s3
     paths:
       - 'src/**'
       - 'public/**'
-      - .github/workflows/deploy.yml
-
+      - '.github/workflows/deploy.yml'
 
 jobs:
   deploy:
@@ -26,7 +22,6 @@ jobs:
     strategy:
       matrix:
         node-version: [20.x]
-    
 
     steps:
       - name: Checkout repository
@@ -44,7 +39,7 @@ jobs:
       - name: Build React app
         run: npm run build 
         
-      - name: run tests
+      - name: Run tests
         run: npm test
         
       - name: Deploy to S3
@@ -56,4 +51,4 @@ jobs:
           AWS_REGION: 'ap-northeast-2'
           AWS_S3_BUCKET: 'avoworld-bucket'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}   
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
