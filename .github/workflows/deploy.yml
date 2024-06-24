@@ -4,16 +4,6 @@ on:
   push:
     branches: 
       - deploy-to-s3
-    paths:
-      - /src/**'
-      - '/public/**'
-  pull_request:
-    branches: 
-      - deploy-to-s3
-    paths:
-      - '/src/**'
-      - '/public/**'
-      - '.github/workflows/deploy.yml'
 
 jobs:
   deploy:
