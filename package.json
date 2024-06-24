@@ -49,14 +49,32 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.24.7",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.24.7",
+    "@babel/preset-react": "^7.24.7",
+    "babel-jest": "^29.7.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-import": "^1.13.8",
     "eslint": "^8.57.0",
-    "react-scripts": "latest",
     "html-webpack-plugin": "^5.6.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest-css-modules-transform": "^4.4.2",
     "react-app-rewired": "^2.2.1",
+    "react-scripts": "latest",
     "webpack": "^5.91.0",
     "webpack-dev-server": "^5.0.4"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    },
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest",
+      "^.+\\.css$": "jest-css-modules-transform"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!axios)"
+    ]
   }
 }

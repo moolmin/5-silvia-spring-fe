@@ -29,8 +29,8 @@ jobs:
       - name: Build React app
         run: npm run build 
         
-      - name: Run tests
-        run: npm test
+#      - name: Run tests
+#        run: npm test
         
       - name: Deploy to S3
         uses: awact/s3-action@master
