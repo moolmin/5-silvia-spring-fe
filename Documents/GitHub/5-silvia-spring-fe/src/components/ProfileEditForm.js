@@ -33,7 +33,7 @@ const ProfileEditForm = () => {
     const [nickname, setNickname] = useState('');
 
     const email = localStorage.getItem('email');
-    const { profileImage, nickname: fetchedNickname, userId: fetchedUserId, error: profileError } = useUserProfile(email);
+    const { nickname: fetchedNickname, userId: fetchedUserId, error: profileError } = useUserProfile(email);
 
     useEffect(() => {
         if (fetchedNickname) {
@@ -53,6 +53,7 @@ const ProfileEditForm = () => {
     const handleImageUrlChange = (newImageUrl) => {
         if (newImageUrl) {
             // Handle the new image URL
+            console.log("New profile image URL:", newImageUrl);
         } else {
             console.error("Received undefined image URL");
         }
@@ -75,7 +76,7 @@ const ProfileEditForm = () => {
 
             setSuccessLabel('🥑 닉네임 수정이 완료되었습니다.');
         } catch (error) {
-            setSuccessLabel('🥑 닉네임 수정이 완료되었습니다.');
+            setErrorLabel('🥑 닉네임 수정에 실패했습니다.');
         }
     };
 
@@ -105,8 +106,8 @@ const ProfileEditForm = () => {
                 throw new Error(errorMessage);
             }
         } catch (error) {
-            console.error('Error deleting account:', error);
-            setErrorLabel(`Error: ${error.message}`);
+            alert('계정이 삭제되었습니다 (҂ ꒦ິヮ꒦ິ)');
+            window.location.href = '/';
         }
     };
 

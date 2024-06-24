@@ -59,16 +59,20 @@ function Header({ showBackButton, showUserProfile }) {
 
             if (response.ok) {
                 console.log('Logout successful');
+                console.log('Before clearing localStorage:', localStorage.getItem('token')); // Debug log before clearing
                 localStorage.clear();
-                console.log('localStorage cleared');
+                console.log('After clearing localStorage:', localStorage.getItem('token')); // Debug log after clearing
+
                 window.location.href = '/';
             } else {
-                console.error('Logout failed');
+                console.error('Logout failed with status:', response.status);
             }
         } catch (error) {
             console.error('Error during logout:', error);
         }
     };
+
+
 
     const iconStyle = {
         margin: '0px 10px 0px 5px',

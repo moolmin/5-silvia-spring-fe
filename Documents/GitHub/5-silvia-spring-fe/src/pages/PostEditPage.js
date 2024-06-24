@@ -4,6 +4,24 @@ import PostForm from '../components/PostForm';
 import axios from 'axios';
 import ToastMessage from '../components/ToastMessage';
 
+const fetchWithToken = async (url, options = {}) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(url, {
+        ...options,
+        headers: {
+            ...options.headers,
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`Network response was not ok for ${url}`);
+    }
+
+    return response.json();
+};
+
 const PostEditPage = () => {
     const { postId } = useParams();
     const navigate = useNavigate();
@@ -61,65 +79,53 @@ const PostEditPage = () => {
         }
 
         const token = localStorage.getItem('token');
-
         const updateData = {
             title: title,
             article: content,
         };
 
-        if (file) {
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('data', new Blob([JSON.stringify(updateData)], { type: 'application/json' }));
+        setUploading(true);
 
-            setUploading(true);
+        try {
+            let response;
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('data', new Blob([JSON.stringify(updateData)], { type: 'application/json' }));
 
-            try {
-                const response = await axios.put(`http://localhost:8080/api/posts/${postId}`, formData, {
+                response = await axios.put(`http://localhost:8080/api/posts/${postId}`, formData, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Accept': 'application/json',
                         'Content-Type': 'multipart/form-data'
                     }
                 });
-
-                if (response.status === 200) {
-                    setSuccessLabel('🥑 게시글이 업데이트되었습니다.');
-                    setTimeout(() => {
-                        navigate(`/post/${postId}`);
-                    }, 2000);
-                } else {
-                    setErrorLabel(`🥑 게시글 업데이트 실패: ${response.data}`);
-                }
-            } catch (error) {
-                console.error('Error updating post:', error);
-                setErrorLabel('게시글 업데이트 중 오류가 발생했습니다.');
-            } finally {
-                setUploading(false);
-            }
-        } else {
-            try {
-                const response = await axios.put(`http://localhost:8080/api/posts/${postId}`, updateData, {
+            } else {
+                response = await axios.put(`http://localhost:8080/api/posts/${postId}`, JSON.stringify({ ...updateData, postPicture: post.postPicture }), {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     }
                 });
-
-                if (response.status === 200) {
-                    setSuccessLabel('🥑 게시글이 업데이트되었습니다.');
-                    setTimeout(() => {
-                        navigate(`/post/${postId}`);
-                    }, 2000);
-                } else {
-                    setErrorLabel(`🥑 게시글 업데이트 실패: ${response.data}`);
-                }
-            } catch (error) {
-                console.error('Error updating post:', error);
-                setErrorLabel('게시글 업데이트 중 오류가 발생했습니다.');
             }
+
+            if (response.status === 200) {
+                setSuccessLabel('🥑 게시글이 업데이트되었습니다.');
+                setTimeout(() => {
+                    navigate(`/post/${postId}`);
+                }, 2000);
+            } else {
+                setErrorLabel(`🥑 게시글 업데이트 실패: ${response.data}`);
+            }
+        } catch (error) {
+            console.error('Error updating post:', error);
+            setErrorLabel('게시글 업데이트 중 오류가 발생했습니다.');
+        } finally {
+            setUploading(false);
         }
     };
+
+
 
     if (loading) {
         return <p>Loading...</p>;

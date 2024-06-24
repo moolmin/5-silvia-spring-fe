@@ -175,6 +175,11 @@ const PostPage = () => {
     };
 
     const handleCommentRegister = async () => {
+        if (!commentText.trim()) {
+            setErrorLabel('🥑 댓글을 작성해주세요.');
+            return;
+        }
+
         const userId = getLoggedInUserId(users);
         if (editingCommentId) {
             // Update existing comment

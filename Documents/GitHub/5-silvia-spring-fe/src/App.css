@@ -58,7 +58,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 80px;
+  padding: 30px;
 }
 
 /*.LandingWelcome {*/
@@ -105,7 +105,7 @@
   justify-content: center;
   max-width: 400px;
   background-color: rgba(256, 256, 256, 0.85);
-  padding: 30px 50px;
+  padding: 30px 40px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.07),
   0 2px 4px rgba(0,0,0,0.07),
   0 4px 8px rgba(0,0,0,0.07),
@@ -113,7 +113,7 @@
   0 16px 32px rgba(0,0,0,0.07),
   0 32px 64px rgba(0,0,0,0.07);
   border-radius: 10px;
-  margin: 10px 100px;
+  margin: 40px 100px 100px 180px;
   /*margin: 0px 0px 200px 700px;*/
   /*margin: 200px 20px 0px 0px;*/
 }
@@ -123,7 +123,10 @@
     /*flex-direction: column;*/
     /*align-items: center;*/
     /*max-width: 350px;*/
-    margin-bottom: 200px;
+    margin-bottom: 100px;
+  }
+  .LandingLoginContainer {
+    margin-top: 120px;
   }
 }
 
@@ -1133,6 +1136,10 @@ button {
 
 .PostEditPage {
   margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .PostImageLabel {

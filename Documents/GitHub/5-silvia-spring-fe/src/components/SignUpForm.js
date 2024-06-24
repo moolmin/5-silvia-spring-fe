@@ -159,14 +159,14 @@ const SignUpForm = () => {
                     setSuccessLabel('🥑 회원가입 성공!');
                 } else {
                     const errorText = await response.text();
-                    setErrorLabel(`🥑 회원가입 실패: ${errorText}`);
+                    setErrorLabel(`🥑 모든 정보를 입력해주세요`);
                 }
             } catch (error) {
                 console.error('Error during registration:', error);
-                setErrorLabel('회원가입 중 오류가 발생했습니다.');
+                setErrorLabel('🥑 회원가입 중 오류가 발생했습니다.');
             }
         } else {
-            setErrorLabel('입력 정보를 확인해주세요.');
+            setErrorLabel('🥑 입력 정보를 확인해주세요.');
         }
     };
 
