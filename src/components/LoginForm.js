@@ -4,6 +4,8 @@ import { EmailInputField, PasswordInputField } from './InputField';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const API_ENDPOINT = process.env.API_ENDPOINT
+
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -73,7 +75,7 @@ const LoginForm = () => {
         console.log('Sending login request with email:', email);
         console.log('Sending login request with password:', password);
 
-        fetch('http://localhost:8080/api/login', options)
+        fetch(`${API_ENDPOINT}/api/login`, options)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');

@@ -1,5 +1,7 @@
 import { useState, useMemo } from 'react';
 
+const API_ENDPOINT = process.env.API_ENDPOINT
+
 const useUserData = (userId) => {
     const [nickname, setNickname] = useState('');
     const [email, setEmail] = useState('');
@@ -8,7 +10,7 @@ const useUserData = (userId) => {
     useMemo(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/accounts/${userId}`, {
+                const response = await fetch(`${API_ENDPOINT}/api/accounts/${userId}`, {
                     credentials: 'include'
                 });
                 if (!response.ok) {
@@ -31,7 +33,7 @@ const useUserData = (userId) => {
     const updateNickname = async (newNickname) => {
         const token = localStorage.getItem('token');
         try {
-            const response = await fetch(`http://localhost:8080/api/accounts/${userId}/nickname`, {
+            const response = await fetch(`${API_ENDPOINT}/api/accounts/${userId}/nickname`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

@@ -4,6 +4,8 @@ import { PasswordConfirmInputField, PasswordInputField } from './InputField';
 import ToastMessage from './ToastMessage';
 import * as Buttons from "./Buttons";
 
+const API_ENDPOINT = process.env.API_ENDPOINT
+
 const PasswordChangeForm = () => {
     const [successLabel, setSuccessLabel] = useState('');
     const [errorLabel, setErrorLabel] = useState('');
@@ -65,7 +67,7 @@ const PasswordChangeForm = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:8080/api/accounts/${userId}/password`, {
+            const response = await fetch(`${API_ENDPOINT}/api/accounts/${userId}/password`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,

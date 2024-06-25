@@ -8,6 +8,8 @@ import { FaRegHeart, FaRegEye } from "react-icons/fa";
 import ToastMessage from './ToastMessage';
 import Pagination from './Pagination';
 
+const API_ENDPOINT = process.env.API_ENDPOINT
+
 const fetchWithToken = async (url) => {
     const token = localStorage.getItem('token');
     const response = await fetch(url, {
@@ -49,7 +51,7 @@ const PostCard = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const postsData = await fetchWithToken('http://localhost:8080/api/posts');
+                const postsData = await fetchWithToken(`${API_ENDPOINT}/api/posts`);
                 const sortedPosts = postsData.sort((a, b) => b.id - a.id);
                 setPosts(sortedPosts);
                 setFilteredPosts(sortedPosts);
@@ -61,7 +63,7 @@ const PostCard = () => {
 
         const fetchUsers = async () => {
             try {
-                const usersData = await fetchWithToken('http://localhost:8080/api/accounts');
+                const usersData = await fetchWithToken(`${API_ENDPOINT}/api/accounts`);
                 setUsers(usersData);
             } catch (error) {
                 console.error('Error fetching users:', error);

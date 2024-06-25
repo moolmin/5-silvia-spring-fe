@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUserEdit, FaKey, FaSignOutAlt } from 'react-icons/fa';
 import useUserProfile from "../hooks/useUserProfile";
+const API_ENDPOINT = process.env.API_ENDPOINT
 
 const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
@@ -55,7 +56,7 @@ function Header({ showBackButton, showUserProfile }) {
     const handleLogout = async (event) => {
         event.preventDefault();
         try {
-            await fetchWithToken('http://localhost:8080/api/logout', {
+            await fetchWithToken(`${API_ENDPOINT}/api/logout`, {
                 method: 'POST',
                 credentials: 'include',
             });

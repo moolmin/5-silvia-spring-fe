@@ -6,6 +6,8 @@ import Modal from '../components/Modal';
 import axios from 'axios';
 import ToastMessage from '../components/ToastMessage';
 
+const API_ENDPOINT = process.env.API_ENDPOINT
+
 const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
     const response = await fetch(url, {
@@ -55,13 +57,13 @@ const PostPage = () => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const postResponse = await fetchWithToken(`http://localhost:8080/api/posts/${postId}`);
+                const postResponse = await fetchWithToken(`${API_ENDPOINT}/api/posts/${postId}`);
                 setPost(postResponse);
 
-                const usersResponse = await fetchWithToken('http://localhost:8080/api/accounts');
+                const usersResponse = await fetchWithToken(`${API_ENDPOINT}/api/accounts`);
                 setUsers(usersResponse || []);
 
-                const commentsResponse = await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments?include_edited=true`);
+                const commentsResponse = await fetchWithToken(`${API_ENDPOINT}/api/posts/${postId}/comments?include_edited=true`);
                 setComments(commentsResponse);
             } catch (error) {
                 setError(error.message);
@@ -123,7 +125,7 @@ const PostPage = () => {
             if (commentToDelete) {
                 const comment = comments.find(comment => comment.id === commentToDelete);
                 if (userId && comment && comment.userId === userId) {
-                    await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments/${commentToDelete}`, {
+                    await fetchWithToken(`${API_ENDPOINT}/api/posts/${postId}/comments/${commentToDelete}`, {
                         method: 'DELETE',
                         credentials: 'include',
                     });
@@ -134,7 +136,7 @@ const PostPage = () => {
                 }
             } else {
                 if (userId && userId === post.userId) {
-                    await fetchWithToken(`http://localhost:8080/api/posts/${postId}`, {
+                    await fetchWithToken(`${API_ENDPOINT}/api/posts/${postId}`, {
                         method: 'DELETE',
                         credentials: 'include',
                     });
@@ -185,7 +187,7 @@ const PostPage = () => {
             // Update existing comment
             try {
                 const response = await axios.put(
-                    `http://localhost:8080/api/posts/${postId}/comments/${editingCommentId}`,
+                    `${API_ENDPOINT}/api/posts/${postId}/comments/${editingCommentId}`,
                     { commentContent: commentText },
                     {
                         headers: {
@@ -196,7 +198,7 @@ const PostPage = () => {
                 );
 
                 if (response.status >= 200 && response.status < 300) {
-                    const commentsResponse = await fetchWithToken(`http://localhost:8080/api/posts/${postId}/comments?include_edited=true`);
+                    const commentsResponse = await fetchWithToken(`${API_ENDPOINT}/api/posts/${postId}/comments?include_edited=true`);
                     setComments(commentsResponse);
                 } else {
                     throw new Error('Failed to update comment');
@@ -211,7 +213,7 @@ const PostPage = () => {
             // Add new comment
             try {
                 const response = await axios.post(
-                    `http://localhost:8080/api/posts/${postId}/comments`,
+                    `${API_ENDPOINT}/api/posts/${postId}/comments`,
                     { commentContent: commentText, userId: userId },
                     {
                         headers: {
