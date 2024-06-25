@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUserEdit, FaKey, FaSignOutAlt } from 'react-icons/fa';
 import useUserProfile from "../hooks/useUserProfile";
+
 const api_endpoint = process.env.REACT_APP_API_ENDPOINT
 
 const fetchWithToken = async (url, options = {}) => {
