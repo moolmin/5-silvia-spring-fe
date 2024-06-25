@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import useUserProfile from '../hooks/useUserProfile';
 import ToastMessage from './ToastMessage';
 
-const API_ENDPOINT = process.env.API_ENDPOINT
+const api_endpoint = process.env.REACT_APP_API_ENDPOINT
 
 const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
@@ -45,7 +45,7 @@ const ProfileImgPicker = ({ onImageUrlChange }) => {
             formData.append('profileimg', file);
 
             try {
-                const response = await fetch(`${API_ENDPOINT}/api/accounts/${userId}/profileimg`, {
+                const response = await fetch(`${api_endpoint}/api/accounts/${userId}/profileimg`, {
                     method: 'POST',
                     body: formData,
                     credentials: 'include',
@@ -59,7 +59,7 @@ const ProfileImgPicker = ({ onImageUrlChange }) => {
                 }
 
                 // Refresh user profile to get the updated image
-                const updatedUser = await fetchWithToken(`${API_ENDPOINT}/api/accounts/${userId}`);
+                const updatedUser = await fetchWithToken(`${api_endpoint}/api/accounts/${userId}`);
                 const profileImageUrl = updatedUser.profilePicture;
 
                 setLocalProfileImage(profileImageUrl);

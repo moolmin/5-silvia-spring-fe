@@ -7,7 +7,7 @@ import ToastMessage from "./ToastMessage";
 import Modal from '../components/Modal';
 import useUserProfile from "../hooks/useUserProfile";
 
-const API_ENDPOINT = process.env.API_ENDPOINT
+const api_endpoint = process.env.REACT_APP_API_ENDPOINT
 
 const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
@@ -71,7 +71,7 @@ const ProfileEditForm = () => {
         }
 
         try {
-            await fetchWithToken(`${API_ENDPOINT}/api/accounts/${fetchedUserId}/nickname`, {
+            await fetchWithToken(`${api_endpoint}/api/accounts/${fetchedUserId}/nickname`, {
                 method: 'PUT',
                 body: JSON.stringify({ nickname })
             });
@@ -95,7 +95,7 @@ const ProfileEditForm = () => {
 
     const handleAccountDelete = async () => {
         try {
-            const response = await fetchWithToken(`${API_ENDPOINT}/api/accounts/${userId}`, {
+            const response = await fetchWithToken(`${api_endpoint}/api/accounts/${userId}`, {
                 method: 'DELETE',
                 credentials: 'include'
             });

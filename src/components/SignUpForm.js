@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { EmailInputField, PasswordInputField, PasswordConfirmInputField, NicknameInputField } from './InputField';
 import ToastMessage from "./ToastMessage";
 
-const API_ENDPOINT = process.env.API_ENDPOINT
+const api_endpoint = process.env.REACT_APP_REACT_APP_API_ENDPOINT
 
 const SignUpForm = () => {
     const [successLabel, setSuccessLabel] = useState('');
@@ -62,7 +62,7 @@ const SignUpForm = () => {
             setEmailError('*올바른 이메일 주소 형식을 입력해주세요. (예: 123@example.com)');
         } else {
             try {
-                const response = await fetch(`${API_ENDPOINT}/api/accounts/check-email`, {
+                const response = await fetch(`${api_endpoint}/api/accounts/check-email`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
@@ -139,7 +139,7 @@ const SignUpForm = () => {
             formData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }));
 
             try {
-                const response = await fetch(`${API_ENDPOINT}/api/join`, {
+                const response = await fetch(`${api_endpoint}/api/join`, {
                     method: 'POST',
                     body: formData,
                     headers: {

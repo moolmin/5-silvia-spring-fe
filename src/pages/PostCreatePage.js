@@ -4,7 +4,7 @@ import PostForm from '../components/PostForm';
 import { useNavigate } from 'react-router-dom';
 import ToastMessage from "../components/ToastMessage";
 
-const API_ENDPOINT = process.env.API_ENDPOINT
+const api_endpoint = process.env.REACT_APP_API_ENDPOINT
 
 const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
@@ -37,7 +37,7 @@ const PostCreatePage = () => {
     useEffect(() => {
         const fetchAccount = async () => {
             try {
-                const usersResponse = await fetchWithToken(`${API_ENDPOINT}/api/accounts`);
+                const usersResponse = await fetchWithToken(`${api_endpoint}/api/accounts`);
                 setUsers(usersResponse || []);
             } catch (error) {
                 setErrorLabel(`Error fetching users: ${error.message}`);
@@ -93,7 +93,7 @@ const PostCreatePage = () => {
         setUploading(true);
 
         try {
-            const response = await axios.post(`${API_ENDPOINT}/api/posts`, formData, {
+            const response = await axios.post(`${api_endpoint}/api/posts`, formData, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Accept': 'application/json',
