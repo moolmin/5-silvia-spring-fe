@@ -76,5 +76,6 @@
     "transformIgnorePatterns": [
       "/node_modules/(?!axios)"
     ]
-  }
+  },
+  "proxy": "https://port-0-s3-avoworld-spring-lxu3vq0xec595b66.sel5.cloudtype.app"
 }

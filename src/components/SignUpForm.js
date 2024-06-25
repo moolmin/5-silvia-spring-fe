@@ -65,6 +65,7 @@ const SignUpForm = () => {
                 const response = await fetch(`${api_endpoint}/api/accounts/check-email`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    mode: 'no-cors',
                     body: JSON.stringify({ email })
                 });
                 if (!response.ok) {
