@@ -74,6 +74,7 @@ const LoginForm = () => {
 
         console.log('Sending login request with email:', email);
         console.log('Sending login request with password:', password);
+        console.log(`${api_endpoint}`)
 
         fetch(`${api_endpoint}/api/login`, options)
             .then(response => {
