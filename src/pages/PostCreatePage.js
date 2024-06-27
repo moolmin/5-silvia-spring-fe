@@ -4,7 +4,7 @@ import PostForm from '../components/PostForm';
 import { useNavigate } from 'react-router-dom';
 import ToastMessage from "../components/ToastMessage";
 
-const api_endpoint = process.env.REACT_APP_API_ENDPOINT
+// const api_endpoint = process.env.REACT_APP_API_ENDPOINT
 
 const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');

@@ -4,7 +4,7 @@ import { PasswordConfirmInputField, PasswordInputField } from './InputField';
 import ToastMessage from './ToastMessage';
 import * as Buttons from "./Buttons";
 
-const api_endpoint = process.env.REACT_APP_API_ENDPOINT
+// // const api_endpoint = process.env.REACT_APP_API_ENDPOINT
 
 const PasswordChangeForm = () => {
     const [successLabel, setSuccessLabel] = useState('');
@@ -67,7 +67,7 @@ const PasswordChangeForm = () => {
         }
 
         try {
-            const response = await fetch(`${api_endpoint}/api/accounts/${userId}/password`, {
+            const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/accounts/${userId}/password`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,

@@ -6,7 +6,7 @@ import Modal from '../components/Modal';
 import axios from 'axios';
 import ToastMessage from '../components/ToastMessage';
 
-const api_endpoint = process.env.REACT_APP_API_ENDPOINT
+// const api_endpoint = process.env.REACT_APP_API_ENDPOINT
 
 const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
@@ -57,13 +57,13 @@ const PostPage = () => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const postResponse = await fetchWithToken(`${api_endpoint}/api/posts/${postId}`);
+                const postResponse = await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}`);
                 setPost(postResponse);
 
-                const usersResponse = await fetchWithToken(`${api_endpoint}/api/accounts`);
+                const usersResponse = await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/accounts`);
                 setUsers(usersResponse || []);
 
-                const commentsResponse = await fetchWithToken(`${api_endpoint}/api/posts/${postId}/comments?include_edited=true`);
+                const commentsResponse = await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments?include_edited=true`);
                 setComments(commentsResponse);
             } catch (error) {
                 setError(error.message);
@@ -125,7 +125,7 @@ const PostPage = () => {
             if (commentToDelete) {
                 const comment = comments.find(comment => comment.id === commentToDelete);
                 if (userId && comment && comment.userId === userId) {
-                    await fetchWithToken(`${api_endpoint}/api/posts/${postId}/comments/${commentToDelete}`, {
+                    await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments/${commentToDelete}`, {
                         method: 'DELETE',
                         credentials: 'include',
                     });
@@ -136,7 +136,7 @@ const PostPage = () => {
                 }
             } else {
                 if (userId && userId === post.userId) {
-                    await fetchWithToken(`${api_endpoint}/api/posts/${postId}`, {
+                    await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}`, {
                         method: 'DELETE',
                         credentials: 'include',
                     });
@@ -187,7 +187,7 @@ const PostPage = () => {
             // Update existing comment
             try {
                 const response = await axios.put(
-                    `${api_endpoint}/api/posts/${postId}/comments/${editingCommentId}`,
+                    `${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments/${editingCommentId}`,
                     { commentContent: commentText },
                     {
                         headers: {
@@ -198,7 +198,7 @@ const PostPage = () => {
                 );
 
                 if (response.status >= 200 && response.status < 300) {
-                    const commentsResponse = await fetchWithToken(`${api_endpoint}/api/posts/${postId}/comments?include_edited=true`);
+                    const commentsResponse = await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments?include_edited=true`);
                     setComments(commentsResponse);
                 } else {
                     throw new Error('Failed to update comment');
@@ -213,7 +213,7 @@ const PostPage = () => {
             // Add new comment
             try {
                 const response = await axios.post(
-                    `${api_endpoint}/api/posts/${postId}/comments`,
+                    `${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments`,
                     { commentContent: commentText, userId: userId },
                     {
                         headers: {

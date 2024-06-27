@@ -4,7 +4,7 @@ import { EmailInputField, PasswordInputField } from './InputField';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const api_endpoint = process.env.REACT_APP_API_ENDPOINT
+// const api_endpoint = process.env.REACT_APP_API_ENDPOINT
 
 
 const LoginForm = () => {
@@ -69,15 +69,14 @@ const LoginForm = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            mode: 'no-cors',
             body: JSON.stringify({ email, password })
         };
 
         console.log('Sending login request with email:', email);
         console.log('Sending login request with password:', password);
-        console.log(`${api_endpoint}`)
+        // console.log(`${api_endpoint}`)
 
-        fetch(`${api_endpoint}/api/login`, options)
+        fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/login`, options)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');

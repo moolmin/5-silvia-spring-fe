@@ -4,8 +4,6 @@ import PostForm from '../components/PostForm';
 import axios from 'axios';
 import ToastMessage from '../components/ToastMessage';
 
-const api_endpoint = process.env.REACT_APP_API_ENDPOINT
-
 const PostEditPage = () => {
     const { postId } = useParams();
     const navigate = useNavigate();
@@ -22,7 +20,7 @@ const PostEditPage = () => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const response = await axios.get(`${api_endpoint}/api/posts/${postId}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}`);
                 setPost(response.data);
                 setTitle(response.data.title);
                 setContent(response.data.article);
@@ -82,7 +80,7 @@ const PostEditPage = () => {
 
             formData.append('data', JSON.stringify(updateData));
 
-            const response = await axios.put(`${api_endpoint}/api/posts/${postId}`, formData, {
+            const response = await axios.put(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}`, formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Accept': 'application/json',

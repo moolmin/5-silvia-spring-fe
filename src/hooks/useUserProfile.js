@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const api_endpoint = process.env.REACT_APP_API_ENDPOINT
+// const api_endpoint = process.env.REACT_APP_API_ENDPOINT
 
 const useUserProfile = (userEmail) => {
     const [profileImage, setProfileImage] = useState(null);
@@ -11,7 +11,7 @@ const useUserProfile = (userEmail) => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await fetch(`${api_endpoint}/api/accounts`, {
+                const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/accounts`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
