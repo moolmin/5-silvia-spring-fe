@@ -37,7 +37,7 @@ const PostCreatePage = () => {
     useEffect(() => {
         const fetchAccount = async () => {
             try {
-                const usersResponse = await fetchWithToken(`${api_endpoint}/api/accounts`);
+                const usersResponse = await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/accounts`);
                 setUsers(usersResponse || []);
             } catch (error) {
                 setErrorLabel(`Error fetching users: ${error.message}`);
@@ -93,7 +93,7 @@ const PostCreatePage = () => {
         setUploading(true);
 
         try {
-            const response = await axios.post(`${api_endpoint}/api/posts`, formData, {
+            const response = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/posts`, formData, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Accept': 'application/json',
