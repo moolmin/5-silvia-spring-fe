@@ -136,8 +136,8 @@ const PostCard = () => {
             await navigator.clipboard.writeText(postUrl);
             setSuccessLabel('🥑 게시글 주소가 복사되었습니다.');
         } catch (err) {
-            console.error('Error copying to clipboard', err);
-            setErrorLabel('게시글 주소 복사 중 오류가 발생했습니다.');
+            // console.error('Error copying to clipboard', err);
+            // setErrorLabel('게시글 주소 복사 중 오류가 발생했습니다.');
             // Fallback for insecure context or other errors
             const textArea = document.createElement('textarea');
             textArea.value = postUrl;
@@ -148,10 +148,10 @@ const PostCard = () => {
             textArea.select();
             try {
                 document.execCommand('copy');
-                setSuccessLabel('🥑 게시글 주소가 복사되었습니다. (Fallback method)');
+                setSuccessLabel('🥑 게시글 주소가 복사되었습니다.');
             } catch (fallbackErr) {
-                console.error('Fallback error copying to clipboard', fallbackErr);
-                setErrorLabel('게시글 주소 복사 중 오류가 발생했습니다. (Fallback method)');
+                // console.error('Fallback error copying to clipboard', fallbackErr);
+                // setErrorLabel('게시글 주소 복사 중 오류가 발생했습니다. (Fallback method)');
             }
             document.body.removeChild(textArea);
         }
