@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import * as Buttons from '../components/Buttons';
 import { SlCalender } from "react-icons/sl";
@@ -31,12 +31,16 @@ const PostCard = () => {
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
     const [successLabel, setSuccessLabel] = useState(''); // State for success toast label
     const [errorLabel, setErrorLabel] = useState(''); // State for error toast label
     const postsPerPage = 3;
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const currentPageParam = queryParams.get('page');
+    const [currentPage, setCurrentPage] = useState(currentPageParam ? Number(currentPageParam) : 1);
+
     const createClick = () => {
         navigate('/post/create');
         setSuccessLabel("새 게시글 작성 페이지로 이동했습니다.");
@@ -82,8 +86,14 @@ const PostCard = () => {
         setCurrentPage(1);
     }, [searchTerm, posts]);
 
+    useEffect(() => {
+        const url = new URL(window.location);
+        url.searchParams.set('page', currentPage);
+        window.history.pushState({}, '', url);
+    }, [currentPage]);
+
     const navigateToPost = (postId) => {
-        navigate(`/post/${postId}`);
+        navigate(`/post/${postId}`, { state: { page: currentPage } });
     };
 
     const truncateContent = (content, length) => {
@@ -94,15 +104,59 @@ const PostCard = () => {
         return content.substring(0, length) + '...';
     };
 
-    const handleShare = (postId) => {
+    // const handleShare = (postId) => {
+    //     const postUrl = `${window.location.origin}/post/${postId}`;
+    //     navigator.clipboard.writeText(postUrl).then(() => {
+    //         setSuccessLabel('🥑 게시글 주소가 복사되었습니다.');
+    //     }).catch(err => {
+    //         console.error('Error copying to clipboard', err);
+    //         setErrorLabel('게시글 주소 복사 중 오류가 발생했습니다.');
+    //     });
+    // };
+
+    const formatDate = (isoString) => {
+        if (!isoString) return 'Loading ..';
+
+        const date = new Date(isoString);
+
+        if (isNaN(date)) return 'Loading ..';
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        // const hours = String(date.getHours()).padStart(2, '0');
+        // const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        return `${year}-${month}-${day}`;
+    };
+
+    const handleShare = async (postId) => {
         const postUrl = `${window.location.origin}/post/${postId}`;
-        navigator.clipboard.writeText(postUrl).then(() => {
+        try {
+            await navigator.clipboard.writeText(postUrl);
             setSuccessLabel('🥑 게시글 주소가 복사되었습니다.');
-        }).catch(err => {
+        } catch (err) {
             console.error('Error copying to clipboard', err);
             setErrorLabel('게시글 주소 복사 중 오류가 발생했습니다.');
-        });
+            // Fallback for insecure context or other errors
+            const textArea = document.createElement('textarea');
+            textArea.value = postUrl;
+            textArea.style.position = 'fixed'; // Avoid scrolling to bottom
+            textArea.style.opacity = 0; // Hidden element
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                setSuccessLabel('🥑 게시글 주소가 복사되었습니다. (Fallback method)');
+            } catch (fallbackErr) {
+                console.error('Fallback error copying to clipboard', fallbackErr);
+                setErrorLabel('게시글 주소 복사 중 오류가 발생했습니다. (Fallback method)');
+            }
+            document.body.removeChild(textArea);
+        }
     };
+
 
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -125,7 +179,8 @@ const PostCard = () => {
             <div className="PostCardsContainer">
                 {currentPosts.map((post) => {
                     const { id, userId, title, article, postPicture, likes, createAt, views } = post;
-                    const formattedDate = (createAt && typeof createAt === 'string') ? createAt.split('T')[0] : '알 수 없음';
+                    // const formattedDate = (createAt && typeof createAt === 'string') ? createAt.split('T')[0] : '알 수 없음';
+                    const postcardDate = formatDate(createAt)
                     const author = Array.isArray(users) ? users.find(user => user.userId === userId) : undefined;
                     const authorName = author ? author.nickname : 'Unknown';
 
@@ -141,7 +196,7 @@ const PostCard = () => {
                                     <div className="PostCardMeta">
                                         <div className="postCardMetaContent">
                                             <SlCalender style={iconStyle}/>
-                                            <p>{formattedDate}</p>
+                                            <p>{postcardDate}</p>
                                             <IoPersonOutline style={iconStyle}/>
                                             <p>{authorName}</p>
                                             <FaRegHeart style={iconStyle}/>

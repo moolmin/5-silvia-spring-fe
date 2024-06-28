@@ -26,18 +26,33 @@ const fetchWithToken = async (url, options = {}) => {
     return response.json();
 };
 
+// const formatDate = (isoString) => {
+//     const date = new Date(isoString);
+//
+//     const year = date.getFullYear();
+//     const month = String(date.getMonth() + 1).padStart(2, '0');
+//     const day = String(date.getDate()).padStart(2, '0');
+//     const hours = String(date.getHours()).padStart(2, '0');
+//     const minutes = String(date.getMinutes()).padStart(2, '0');
+//
+//     return `${year}-${month}-${day} ${hours}:${minutes}`;
+// };
+
 const formatDate = (isoString) => {
+    if (!isoString) return 'Loading ..';
+
     const date = new Date(isoString);
 
+    if (isNaN(date)) return 'Loading ..';
+
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더해줍니다.
+    const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
 
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
-
 
 const PostPage = () => {
     const { postId } = useParams();
@@ -71,7 +86,19 @@ const PostPage = () => {
                 setLoading(false);
             }
         };
+
+        const incrementPostViews = async () => {
+            try {
+                await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/views`, {
+                    method: 'PUT'
+                });
+            } catch (error) {
+                console.error('Failed to increment post views:', error.message);
+            }
+        };
+
         fetchPost();
+        incrementPostViews();
     }, [postId]);
 
     // useEffect(() => {
@@ -159,9 +186,6 @@ const PostPage = () => {
         }
     };
 
-
-
-
     const clearLabels = () => {
         setSuccessLabel('');
         setErrorLabel('');
@@ -228,7 +252,6 @@ const PostPage = () => {
                     setComments(prevComments => [...prevComments, newComment]);
                     setCommentText('');
                     setSuccessLabel('🥑 댓글이 작성되었습니다.');
-
                 } else {
                     throw new Error('Failed to add comment');
                 }
@@ -325,8 +348,7 @@ const PostPage = () => {
                                 </div>
                                 {comment.userId && comment.userId.toString() === getLoggedInUserId(users).toString() && (
                                     <div className="CommentBtn">
-                                        <Buttons.PostBtn label="수정"
-                                                         onClick={() => handleCommentEdit(comment.id, comment.commentContent)} />
+                                        <Buttons.PostBtn label="수정" onClick={() => handleCommentEdit(comment.id, comment.commentContent)} />
                                         <Buttons.PostBtn label="삭제" onClick={() => showModal(comment.id)} />
                                     </div>
                                 )}
