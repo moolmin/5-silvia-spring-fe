@@ -4,10 +4,9 @@ import PostForm from '../components/PostForm';
 import { useNavigate } from 'react-router-dom';
 import ToastMessage from "../components/ToastMessage";
 
-// const api_endpoint = process.env.REACT_APP_API_ENDPOINT
-
 const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
+    console.log('Fetching with token:', token);
     const response = await fetch(url, {
         ...options,
         headers: {
@@ -93,9 +92,11 @@ const PostCreatePage = () => {
         setUploading(true);
 
         try {
+            const token = localStorage.getItem('token');
+            console.log('Submitting with token:', token);
             const response = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/posts`, formData, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`,
                     'Accept': 'application/json',
                     'Content-Type': 'multipart/form-data'
                 }
