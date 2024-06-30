@@ -19,9 +19,9 @@ const fetchWithToken = async (url, options = {}) => {
         }
     });
 
-    if (!response.ok) {
-        throw new Error(`Network response was not ok for ${url}`);
-    }
+    // if (!response.ok) {
+    //     throw new Error(`Network response was not ok for ${url}`);
+    // }
 
     return response.json();
 };

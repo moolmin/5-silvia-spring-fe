@@ -100,7 +100,7 @@ const LoginForm = () => {
 
     return (
         <form className="LoginForm" onSubmit={handleSubmit}>
-            <div className="Text32" style={{marginBottom: '51px'}}>Login test</div>
+            <div className="Text32" style={{marginBottom: '51px'}}>Login</div>
             <EmailInputField
                 value={email}
                 onChange={handleEmailChange}
