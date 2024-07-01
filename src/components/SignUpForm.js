@@ -74,11 +74,11 @@ const SignUpForm = () => {
                 if (isDuplicate) {
                     setEmailError('*중복된 이메일입니다.');
                 } else {
-                    setEmailError('');
+                    setEmailError('*중복된 이메일입니다.');
                 }
             } catch (error) {
                 // console.error('Error checking email duplication:', error);
-                setEmailError('이메일 중복 확인 중 오류가 발생했습니다.');
+                setEmailError('*중복된 이메일입니다.');
             }
         }
     };
