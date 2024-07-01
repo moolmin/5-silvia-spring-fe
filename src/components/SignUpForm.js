@@ -72,13 +72,13 @@ const SignUpForm = () => {
                 }
                 const isDuplicate = await response.json();
                 if (isDuplicate) {
-                    setEmailError('*중복된 이메일입니다.');
+                    setEmailError('*중복된 이메일입니다.1');
                 } else {
-                    setEmailError('*중복된 이메일입니다.');
+                    setEmailError('*중복된 이메일입니다.2');
                 }
             } catch (error) {
                 // console.error('Error checking email duplication:', error);
-                setEmailError('*중복된 이메일입니다.');
+                setEmailError('*중복된 이메일입니다.3');
             }
         }
     };
