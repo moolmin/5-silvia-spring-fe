@@ -6,24 +6,33 @@ import Modal from '../components/Modal';
 import axios from 'axios';
 import ToastMessage from '../components/ToastMessage';
 
-// const api_endpoint = process.env.REACT_APP_API_ENDPOINT
-
 const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
-    const response = await fetch(url, {
-        ...options,
-        headers: {
-            ...options.headers,
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
+    try {
+        const response = await fetch(url, {
+            ...options,
+            headers: {
+                ...options.headers,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Network response was not ok for ${url}`);
         }
-    });
 
-    // if (!response.ok) {
-    //     throw new Error(`Network response was not ok for ${url}`);
-    // }
+        const text = await response.text();
 
-    return response.json();
+        try {
+            return JSON.parse(text);
+        } catch (err) {
+            throw new Error(`Failed to parse JSON: ${text}`);
+        }
+    } catch (error) {
+        console.error('Fetch error:', error.message);
+        throw error;
+    }
 };
 
 const formatDate = (isoString) => {
@@ -160,11 +169,9 @@ const PostPage = () => {
             }
         } catch (error) {
             if (commentToDelete) {
-                setSuccessLabel('🥑 댓글이 삭제되었습니다.');
+                setErrorLabel('🥑 댓글 삭제 중 오류가 발생했습니다.');
             } else {
-                // setErrorLabel('🥑 게시글 삭제 중 오류가 발생했습니다.');
-                alert('🥑 게시글이 삭제되었습니다.');
-                navigate('/main');
+                setErrorLabel('🥑 게시글 삭제 중 오류가 발생했습니다.');
             }
             console.error('Error deleting:', error.message || error);
         } finally {
