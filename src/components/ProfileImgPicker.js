@@ -59,7 +59,7 @@ const ProfileImgPicker = ({ onImageUrlChange }) => {
                 }
 
                 // Refresh user profile to get the updated image
-                const updatedUser = await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/accounts/${userId}`);
+                const updatedUser = await fetchWithToken(`${fetchWithToken}/api/accounts/${userId}`);
                 const profileImageUrl = updatedUser.profilePicture;
 
                 setLocalProfileImage(profileImageUrl);
