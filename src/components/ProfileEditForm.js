@@ -55,9 +55,9 @@ const ProfileEditForm = () => {
     const handleImageUrlChange = (newImageUrl) => {
         if (newImageUrl) {
             // Handle the new image URL
-            console.log("New profile image URL:", newImageUrl);
+            // console.log("New profile image URL:", newImageUrl);
         } else {
-            console.error("Received undefined image URL");
+            // console.error("Received undefined image URL");
         }
     };
 

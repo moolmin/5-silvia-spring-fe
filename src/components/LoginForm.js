@@ -72,8 +72,8 @@ const LoginForm = () => {
             body: JSON.stringify({ email, password })
         };
 
-        console.log('Sending login request with email:', email);
-        console.log('Sending login request with password:', password);
+        // console.log('Sending login request with email:', email);
+        // console.log('Sending login request with password:', password);
         // console.log(`${api_endpoint}`)
 
         fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/login`, options)
