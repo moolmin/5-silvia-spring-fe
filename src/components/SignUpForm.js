@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { EmailInputField, PasswordInputField, PasswordConfirmInputField, NicknameInputField } from './InputField';
 import ToastMessage from "./ToastMessage";
 
-// const api_endpoint = process.env.REACT_APP_REACT_APP_API_ENDPOINT
-
 const SignUpForm = () => {
     const [successLabel, setSuccessLabel] = useState('');
     const [errorLabel, setErrorLabel] = useState('');
@@ -70,15 +68,15 @@ const SignUpForm = () => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                const isDuplicate = await response.json();
-                if (isDuplicate) {
+                const data = await response.json();
+                if (data.isDuplicate) {
                     setEmailError('*중복된 이메일입니다.');
                 } else {
-                    // setEmailError('*중복된 이메일입니다.);
+                    setEmailError('');
                 }
             } catch (error) {
-                // console.error('Error checking email duplication:', error);
-                // setEmailError('*중복된 이메일입니다.3');
+                console.error('Error checking email duplication:', error);
+                setEmailError('이메일 확인 중 오류가 발생했습니다.');
             }
         }
     };
