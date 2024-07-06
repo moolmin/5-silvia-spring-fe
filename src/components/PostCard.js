@@ -104,15 +104,19 @@ const PostCard = () => {
         return content.substring(0, length) + '...';
     };
 
-    const truncateToBytes = (str, byteLimit) => {
+    const truncateTitle = (title, byteLength) => {
+        let result = '';
         let bytes = 0;
-        let truncatedStr = '';
-        for (const char of str) {
+
+        for (let i = 0; i < title.length; i++) {
+            const char = title.charAt(i);
             bytes += new Blob([char]).size;
-            if (bytes > byteLimit) break;
-            truncatedStr += char;
+
+            if (bytes > byteLength) break;
+            result += char;
         }
-        return truncatedStr + (bytes > byteLimit ? '...' : '');
+
+        return result + (bytes > byteLength ? '...' : '');
     };
 
     const formatDate = (isoString) => {
@@ -150,6 +154,7 @@ const PostCard = () => {
         }
     };
 
+
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
@@ -172,7 +177,7 @@ const PostCard = () => {
                 {currentPosts.map((post) => {
                     const { id, userId, title, article, postPicture, likes, createAt, views } = post;
                     // const formattedDate = (createAt && typeof createAt === 'string') ? createAt.split('T')[0] : '알 수 없음';
-                    const postcardDate = formatDate(createAt);
+                    const postcardDate = formatDate(createAt)
                     const author = Array.isArray(users) ? users.find(user => user.userId === userId) : undefined;
                     const authorName = author ? author.nickname : 'Unknown';
 
@@ -195,10 +200,11 @@ const PostCard = () => {
                                             <p>{likes}</p>
                                             <FaRegEye style={iconStyle}/>
                                             <p>{views}</p>
+
                                         </div>
                                     </div>
                                     <div className="PostCardTopArea">
-                                        <p>{truncateToBytes(title, 124)}</p>
+                                        <p>{truncateTitle(title, 124)}</p>
                                         <div className="postCardContentPreview">
                                             <p>{truncateContent(article, 80)}</p>
                                         </div>
