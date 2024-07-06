@@ -104,15 +104,16 @@ const PostCard = () => {
         return content.substring(0, length) + '...';
     };
 
-    // const handleShare = (postId) => {
-    //     const postUrl = `${window.location.origin}/post/${postId}`;
-    //     navigator.clipboard.writeText(postUrl).then(() => {
-    //         setSuccessLabel('🥑 게시글 주소가 복사되었습니다.');
-    //     }).catch(err => {
-    //         console.error('Error copying to clipboard', err);
-    //         setErrorLabel('게시글 주소 복사 중 오류가 발생했습니다.');
-    //     });
-    // };
+    const truncateToBytes = (str, byteLimit) => {
+        let bytes = 0;
+        let truncatedStr = '';
+        for (const char of str) {
+            bytes += new Blob([char]).size;
+            if (bytes > byteLimit) break;
+            truncatedStr += char;
+        }
+        return truncatedStr + (bytes > byteLimit ? '...' : '');
+    };
 
     const formatDate = (isoString) => {
         if (!isoString) return 'Loading ..';
@@ -124,9 +125,6 @@ const PostCard = () => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
-        // const hours = String(date.getHours()).padStart(2, '0');
-        // const minutes = String(date.getMinutes()).padStart(2, '0');
-
         return `${year}-${month}-${day}`;
     };
 
@@ -136,77 +134,6 @@ const PostCard = () => {
             await navigator.clipboard.writeText(postUrl);
             setSuccessLabel('🥑 게시글 주소가 복사되었습니다.');
         } catch (err) {
-            // console.error('Error copying to clipboard', err);
-            // setErrorLabel('게시글 주소 복사 중 오류가 발생했습니다.');
-            // Fallback for insecure context or other errorsname: Deploy Springboot App to EC2
-            //
-            // on:
-            //   push:
-            //     branches:
-            //       - deploy-to-ec2
-            //
-            // jobs:
-            //   build-and-deploy:
-            //     runs-on: ubuntu-latest
-            //     steps:
-            //       - name: Checkout code
-            //         uses: actions/checkout@v3
-            //
-            //       - name: Set up JDK 17
-            //         uses: actions/setup-java@v3
-            //         with:
-            //           java-version: '17'
-            //           distribution: 'temurin'
-            //
-            //       - name: Grant execute permission for gradlew
-            //         run: chmod +x gradlew
-            //
-            //       - name: Build with Gradle
-            //         run: ./gradlew bootJar -x test
-            //
-            //       - name: Set up Docker Buildx
-            //         uses: docker/setup-buildx-action@v2
-            //
-            //       - name: Configure AWS credentials
-            //         uses: aws-actions/configure-aws-credentials@v2
-            //         with:
-            //           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            //           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            //           aws-region: ${{ secrets.AWS_REGION }}
-            //
-            //       - name: Login to Amazon ECR
-            //         id: login-ecr
-            //         uses: aws-actions/amazon-ecr-login@v2
-            //
-            //       - name: Build Docker image
-            //         run: docker build --platform linux/amd64 -t avoworld:latest .
-            //
-            //       - name: Tag Docker image
-            //         run: docker tag avoworld:latest ${{ steps.login-ecr.outputs.registry }}/avoworld:${{ github.sha }}
-            //
-            //       - name: Push Docker image to Amazon ECR
-            //         run: docker push ${{ steps.login-ecr.outputs.registry }}/avoworld:${{ github.sha }}
-            //
-            //       - name: Pull Docker image from ECR
-            //         uses: appleboy/ssh-action@master
-            //         with:
-            //           host: ${{ secrets.EC2_HOST }}
-            //           username: ${{ secrets.EC2_USER }}
-            //           key: ${{ secrets.EC2_KEY }}
-            //           script: |
-            //             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_URL }}
-            //             sudo docker pull ${{ secrets.ECR_URL }}/avoworld:${{ github.sha }}
-            //
-            //       - name: SSH into EC2 and deploy
-            //         uses: appleboy/ssh-action@master
-            //         with:
-            //           host: ${{ secrets.EC2_HOST }}
-            //           username: ${{ secrets.EC2_USER }}
-            //           key: ${{ secrets.EC2_KEY }}
-            //           script: |
-            //             sudo docker stop avoworld || true
-            //             sudo docker rm avoworld || true
-            //             sudo docker run -d -p 8080:8080 --name avoworld ${{ secrets.ECR_URL }}/avoworld:${{ github.sha }}
             const textArea = document.createElement('textarea');
             textArea.value = postUrl;
             textArea.style.position = 'fixed'; // Avoid scrolling to bottom
@@ -218,13 +145,10 @@ const PostCard = () => {
                 document.execCommand('copy');
                 setSuccessLabel('🥑 게시글 주소가 복사되었습니다.');
             } catch (fallbackErr) {
-                // console.error('Fallback error copying to clipboard', fallbackErr);
-                // setErrorLabel('게시글 주소 복사 중 오류가 발생했습니다. (Fallback method)');
             }
             document.body.removeChild(textArea);
         }
     };
-
 
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -248,7 +172,7 @@ const PostCard = () => {
                 {currentPosts.map((post) => {
                     const { id, userId, title, article, postPicture, likes, createAt, views } = post;
                     // const formattedDate = (createAt && typeof createAt === 'string') ? createAt.split('T')[0] : '알 수 없음';
-                    const postcardDate = formatDate(createAt)
+                    const postcardDate = formatDate(createAt);
                     const author = Array.isArray(users) ? users.find(user => user.userId === userId) : undefined;
                     const authorName = author ? author.nickname : 'Unknown';
 
@@ -271,11 +195,10 @@ const PostCard = () => {
                                             <p>{likes}</p>
                                             <FaRegEye style={iconStyle}/>
                                             <p>{views}</p>
-
                                         </div>
                                     </div>
                                     <div className="PostCardTopArea">
-                                        <p>{title}</p>
+                                        <p>{truncateToBytes(title, 124)}</p>
                                         <div className="postCardContentPreview">
                                             <p>{truncateContent(article, 80)}</p>
                                         </div>
