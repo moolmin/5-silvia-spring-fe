@@ -10,10 +10,10 @@ const Pagination = ({ postsPerPage, totalPosts, currentPage, paginate }) => {
     }
 
     const visiblePages = (pageNumbers) => {
-        if (totalPages <= 3) return pageNumbers;
-        if (currentPage <= 3) return [1, 2, 3, '...', totalPages];
-        if (currentPage >= totalPages - 2) return [1, '...', totalPages - 2, totalPages - 1, totalPages];
-        return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+        if (totalPages <= 4) return pageNumbers;
+        if (currentPage <= 2) return [1, 2, 3, 4, '...'];
+        if (currentPage >= totalPages - 1) return ['...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+        return ['...', currentPage - 1, currentPage, currentPage + 1, '...'];
     };
 
     const renderedPages = visiblePages(pageNumbers);
