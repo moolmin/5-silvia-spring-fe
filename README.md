@@ -32,7 +32,7 @@
 
 ## 🌐 Architecture
 ![image](https://github.com/user-attachments/assets/f92563a5-a420-4bcc-93bb-488ca6985524)
-* `Github actions`를 활용한 지속적 통합 및 배포
+* `Github actions`를 활용한 배포 자동화 파이프라인 구축
 * **BE**: `deploy`브랜치에서 push 발생시 Spring boot 애플리케이션을 Dockerfile을 사용해 `Docker image`빌드
 * **FE**: `deploy`브랜치에서 push 발생시 React 애플리케이션을 `AWS S3`버킷에 배포
 
