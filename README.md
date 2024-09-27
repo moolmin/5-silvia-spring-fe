@@ -8,8 +8,6 @@
 
 ## 🕹️ Main Feature
 ### 랜딩 - 메인 페이지 
-* 게시글 목록 조회
-
  ![랜딩](https://github.com/user-attachments/assets/48a52f16-8b2e-4567-ac14-617b6aede913) |![메인](https://github.com/user-attachments/assets/705ca46f-1abd-4c02-843b-8b9e0cc2bddc)
 --- | --- | 
 
@@ -19,10 +17,14 @@
 --- | --- | 
 
 
-### 상세 페이지
-* 게시글 상세 조회
-* 댓글 작성, 수정, 삭제
-![상세페이지](https://github.com/user-attachments/assets/33c1e844-ac63-40ac-ba3c-8867f15161e0)
+### 게시물 작성 - 댓글 작성
+ ![게시물 작성](https://github.com/user-attachments/assets/8df0b6b2-9c3c-4b74-bb43-dc65d6a9c5c3) |![댓글](https://github.com/user-attachments/assets/4446a3c5-88c8-4aba-9687-d1c94268d641)
+--- | --- | 
+
+
+
+
+
 
 ## 🔧 Stack
 * **Frontend**: `React` `JavaScript`
