@@ -24,13 +24,22 @@
 
 
 
-
-
 ## 🔧 Stack
-* **Frontend**: `React` `JavaScript`
-* **Backend**: `Springboot`
-* **Database** : `AWS RDS (MySQL)`
-* **DevOps**: `AWS EC2`
+### Frontend
+![React](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white)
+![React](https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+
+### Backend
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F.svg?&style=for-the-badge&logo=Spring%20Boot&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+
+### CI/CD & Infra Tools
+![AWS EC2](https://img.shields.io/badge/Amazon%20EC2-FF9900?style=for-the-badge&logo=Amazon%20EC2&logoColor=white)
+![Amazon S3](https://img.shields.io/badge/amazons3-569A31?style=for-the-badge&logo=amazons3&logoColor=white)
+![GitHubAction](https://img.shields.io/badge/GitHubAction-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED.svg?&style=for-the-badge&logo=Docker&logoColor=white) <br />
+
+
 
 ## 🌐 Architecture
 ![image](https://github.com/user-attachments/assets/f92563a5-a420-4bcc-93bb-488ca6985524)
