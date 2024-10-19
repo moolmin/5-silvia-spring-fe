@@ -13,9 +13,13 @@ const fetchWithToken = async (url, options = {}) => {
         headers: {
             ...options.headers,
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
+            'Content-Type': 'application/json',
+        },
     });
+
+    if (!response.ok) {
+        throw new Error(`Network response was not ok for ${url}`);
+    }
 
     return response.json();
 };
@@ -50,7 +54,8 @@ const PostPage = () => {
     const [users, setUsers] = useState([]);
     const [successLabel, setSuccessLabel] = useState('');
     const [errorLabel, setErrorLabel] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+
+    const isLoggedIn = !!localStorage.getItem('token');
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -60,18 +65,27 @@ const PostPage = () => {
 
         const fetchData = async () => {
             try {
-                const postResponse = await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}`);
+                const postResponse = await fetchWithToken(
+                    `${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}`
+                );
                 setPost(postResponse);
 
-                const usersResponse = await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/accounts`);
+                const usersResponse = await fetchWithToken(
+                    `${process.env.REACT_APP_API_ENDPOINT}/api/accounts`
+                );
                 setUsers(usersResponse || []);
 
-                const commentsResponse = await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments?include_edited=true`);
+                const commentsResponse = await fetchWithToken(
+                    `${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments?include_edited=true`
+                );
                 setComments(commentsResponse);
 
-                await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/views`, {
-                    method: 'PUT'
-                });
+                await fetchWithToken(
+                    `${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/views`,
+                    {
+                        method: 'PUT',
+                    }
+                );
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -80,8 +94,7 @@ const PostPage = () => {
         };
 
         fetchData();
-    }, [postId, isLoggedIn]);
-
+    }, [postId]); 
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -107,7 +120,7 @@ const PostPage = () => {
 
     const getLoggedInUserId = (users) => {
         const email = localStorage.getItem('email');
-        const user = users.find(user => user.email === email);
+        const user = users.find((user) => user.email === email);
         return user ? user.userId : null;
     };
 
@@ -136,23 +149,31 @@ const PostPage = () => {
         const userId = getLoggedInUserId(users);
         try {
             if (commentToDelete) {
-                const comment = comments.find(comment => comment.id === commentToDelete);
+                const comment = comments.find((comment) => comment.id === commentToDelete);
                 if (userId && comment && comment.userId === userId) {
-                    await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments/${commentToDelete}`, {
-                        method: 'DELETE',
-                        credentials: 'include',
-                    });
-                    setComments(prevComments => prevComments.filter(comment => comment.id !== commentToDelete));
+                    await fetchWithToken(
+                        `${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments/${commentToDelete}`,
+                        {
+                            method: 'DELETE',
+                            credentials: 'include',
+                        }
+                    );
+                    setComments((prevComments) =>
+                        prevComments.filter((comment) => comment.id !== commentToDelete)
+                    );
                     setSuccessLabel('🥑 댓글이 삭제되었습니다.');
                 } else {
                     setErrorLabel('🥑 댓글 삭제 권한이 없습니다');
                 }
             } else {
                 if (userId && userId === post.userId) {
-                    await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}`, {
-                        method: 'DELETE',
-                        credentials: 'include',
-                    });
+                    await fetchWithToken(
+                        `${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}`,
+                        {
+                            method: 'DELETE',
+                            credentials: 'include',
+                        }
+                    );
                     setSuccessLabel('🥑 게시글이 삭제되었습니다.');
                     navigate('/main');
                 } else {
@@ -189,28 +210,32 @@ const PostPage = () => {
 
         const userId = getLoggedInUserId(users);
         if (editingCommentId) {
-            // Update existing comment
             try {
                 const response = await axios.put(
                     `${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments/${editingCommentId}`,
                     { commentContent: commentText },
                     {
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
                         },
-                        withCredentials: true
+                        withCredentials: true,
                     }
                 );
 
                 if (response.status >= 200 && response.status < 300) {
-                    const commentsResponse = await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments?include_edited=true`);
+                    const commentsResponse = await fetchWithToken(
+                        `${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments?include_edited=true`
+                    );
                     setComments(commentsResponse);
                     setSuccessLabel('🥑 댓글이 수정되었습니다.');
                 } else {
                     throw new Error('Failed to update comment');
                 }
             } catch (error) {
-                console.error('Error updating comment:', error.response?.data || error.message);
+                console.error(
+                    'Error updating comment:',
+                    error.response?.data || error.message
+                );
                 setErrorLabel('🥑 댓글 수정 중 오류가 발생했습니다.');
             } finally {
                 setEditingCommentId(null);
@@ -224,22 +249,25 @@ const PostPage = () => {
                     { commentContent: commentText, userId: userId },
                     {
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
                         },
-                        withCredentials: true
+                        withCredentials: true,
                     }
                 );
 
                 if (response.status >= 200 && response.status < 300) {
                     const newComment = response.data;
-                    setComments(prevComments => [...prevComments, newComment]);
+                    setComments((prevComments) => [...prevComments, newComment]);
                     setCommentText('');
                     setSuccessLabel('🥑 댓글이 작성되었습니다.');
                 } else {
                     throw new Error('Failed to add comment');
                 }
             } catch (error) {
-                console.error('Error adding comment:', error.response?.data || error.message);
+                console.error(
+                    'Error adding comment:',
+                    error.response?.data || error.message
+                );
                 setErrorLabel('🥑 댓글 작성 중 오류가 발생했습니다.');
             }
         }
@@ -247,19 +275,19 @@ const PostPage = () => {
 
     const formatViews = (views) => {
         if (views >= 1000000) {
-            return (views / 1000000).toFixed(1) + "M";
+            return (views / 1000000).toFixed(1) + 'M';
         } else if (views >= 100000) {
-            return (views / 1000).toFixed(0) + "k";
+            return (views / 1000).toFixed(0) + 'k';
         } else if (views >= 10000) {
-            return (views / 1000).toFixed(1) + "k";
+            return (views / 1000).toFixed(1) + 'k';
         } else if (views >= 1000) {
-            return (views / 1000).toFixed(1) + "k";
+            return (views / 1000).toFixed(1) + 'k';
         } else {
             return views.toString();
         }
     };
 
-    const author = users.find(user => user.userId === post.userId);
+    const author = users.find((user) => user.userId === post.userId);
 
     return (
         <div className="PostPage">
@@ -271,17 +299,26 @@ const PostPage = () => {
                             <div className="PostSubContainerLeft">
                                 {author && (
                                     <>
-                                        <PostComponents.AuthorIcon AuthorImg={author.profilePicture} />
-                                        <PostComponents.AuthorName AuthorName={author.nickname} />
+                                        <PostComponents.AuthorIcon
+                                            AuthorImg={author.profilePicture}
+                                        />
+                                        <PostComponents.AuthorName
+                                            AuthorName={author.nickname}
+                                        />
                                     </>
                                 )}
                                 <div className="PostDateContainer">
-                                    <PostComponents.Date date={formatDate(post.createAt)} />
+                                    <PostComponents.Date
+                                        date={formatDate(post.createAt)}
+                                    />
                                 </div>
                             </div>
                             <div className="PostBtnContainer">
                                 <Buttons.PostBtn label="수정" onClick={handleEdit} />
-                                <Buttons.PostBtn label="삭제" onClick={() => showModal()} />
+                                <Buttons.PostBtn
+                                    label="삭제"
+                                    onClick={() => showModal()}
+                                />
                             </div>
                         </div>
                     </div>
@@ -291,8 +328,14 @@ const PostPage = () => {
                     <PostComponents.PostContent label={post.article} />
                 </div>
                 <div className="PostCountContainer">
-                    <PostComponents.PostCount num={formatViews(post.likes)} label="좋아요" />
-                    <PostComponents.PostCount num={formatViews(comments.length)} label="댓글" />
+                    <PostComponents.PostCount
+                        num={formatViews(post.likes)}
+                        label="좋아요"
+                    />
+                    <PostComponents.PostCount
+                        num={formatViews(comments.length)}
+                        label="댓글"
+                    />
                 </div>
             </div>
             <div className="CommentForm">
@@ -308,7 +351,7 @@ const PostPage = () => {
                 <hr />
                 <div className="CommentBtnContainer">
                     <Buttons.CreateBtn
-                        label={editingCommentId ? "댓글 수정" : "댓글 등록"}
+                        label={editingCommentId ? '댓글 수정' : '댓글 등록'}
                         style={{ marginRight: '18px' }}
                         onClick={handleCommentRegister}
                     />
@@ -316,39 +359,78 @@ const PostPage = () => {
             </div>
             <div className="CommentsArea">
                 {comments.map((comment) => {
-                    const commentAuthor = users.find(user => user.userId === comment.userId);
+                    const commentAuthor = users.find(
+                        (user) => user.userId === comment.userId
+                    );
                     return (
                         <div key={comment.id} className="Comment">
                             <div className="CommentTopArea">
                                 <div className="CommentAuthor">
                                     {commentAuthor && (
                                         <>
-                                            <img src={commentAuthor.profilePicture} alt="Author" className="AuthorIcon" />
-                                            <div className="CommenterName">{commentAuthor.nickname}</div>
+                                            <img
+                                                src={commentAuthor.profilePicture}
+                                                alt="Author"
+                                                className="AuthorIcon"
+                                            />
+                                            <div className="CommenterName">
+                                                {commentAuthor.nickname}
+                                            </div>
                                         </>
                                     )}
-                                    <div className="CommentDateContainer">{formatDate(comment.createAt)}</div>
-                                </div>
-                                {comment.userId && comment.userId.toString() === getLoggedInUserId(users).toString() && (
-                                    <div className="CommentBtn">
-                                        <Buttons.PostBtn label="수정" onClick={() => handleCommentEdit(comment.id, comment.commentContent)} />
-                                        <Buttons.PostBtn label="삭제" onClick={() => showModal(comment.id)} />
+                                    <div className="CommentDateContainer">
+                                        {formatDate(comment.createAt)}
                                     </div>
-                                )}
+                                </div>
+                                {comment.userId &&
+                                    comment.userId.toString() ===
+                                        getLoggedInUserId(users)?.toString() && (
+                                        <div className="CommentBtn">
+                                            <Buttons.PostBtn
+                                                label="수정"
+                                                onClick={() =>
+                                                    handleCommentEdit(
+                                                        comment.id,
+                                                        comment.commentContent
+                                                    )
+                                                }
+                                            />
+                                            <Buttons.PostBtn
+                                                label="삭제"
+                                                onClick={() =>
+                                                    showModal(comment.id)
+                                                }
+                                            />
+                                        </div>
+                                    )}
                             </div>
-                            <div className="CommentContent">{comment.commentContent}</div>
+                            <div className="CommentContent">
+                                {comment.commentContent}
+                            </div>
                         </div>
                     );
                 })}
             </div>
             <Modal
                 isVisible={isModalVisible}
-                ModalLabel={commentToDelete ? "댓글을 삭제하시겠습니까?" : "게시글을 삭제하시겠습니까?"}
-                ModalContent={commentToDelete ? "삭제한 댓글은 복구할 수 없습니다." : "삭제한 게시글은 복구할 수 없습니다."}
+                ModalLabel={
+                    commentToDelete
+                        ? '댓글을 삭제하시겠습니까?'
+                        : '게시글을 삭제하시겠습니까?'
+                }
+                ModalContent={
+                    commentToDelete
+                        ? '삭제한 댓글은 복구할 수 없습니다.'
+                        : '삭제한 게시글은 복구할 수 없습니다.'
+                }
                 onClose={closeModal}
                 onConfirm={confirmDelete}
             />
-            <ToastMessage successLabel={successLabel} errorLabel={errorLabel} clearLabels={clearLabels} />
+            <ToastMessage
+                successLabel={successLabel}
+                errorLabel={errorLabel}
+                clearLabels={clearLabels}
+            />
         </div>
     );
 };
