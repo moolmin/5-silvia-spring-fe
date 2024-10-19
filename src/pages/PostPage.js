@@ -54,8 +54,7 @@ const PostPage = () => {
     const [users, setUsers] = useState([]);
     const [successLabel, setSuccessLabel] = useState('');
     const [errorLabel, setErrorLabel] = useState('');
-
-    const isLoggedIn = !!localStorage.getItem('token');
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -94,7 +93,20 @@ const PostPage = () => {
         };
 
         fetchData();
-    }, [postId]); 
+    }, [postId, isLoggedIn]);
+
+    useEffect(() => {
+        const handleTokenChange = () => {
+            setIsLoggedIn(!!localStorage.getItem('token'));
+        };
+
+        window.addEventListener('storage', handleTokenChange);
+
+        return () => {
+            window.removeEventListener('storage', handleTokenChange);
+        };
+    }, []);
+
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -210,6 +222,7 @@ const PostPage = () => {
 
         const userId = getLoggedInUserId(users);
         if (editingCommentId) {
+            // Update existing comment
             try {
                 const response = await axios.put(
                     `${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments/${editingCommentId}`,
