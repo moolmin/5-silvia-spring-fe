@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { EmailInputField, PasswordInputField, PasswordConfirmInputField, NicknameInputField } from './InputField';
 import ToastMessage from "./ToastMessage";
+import { useNavigate } from 'react-router-dom';
 
 const SignUpForm = () => {
+    const navigate = useNavigate();
     const [successLabel, setSuccessLabel] = useState('');
     const [errorLabel, setErrorLabel] = useState('');
     const [email, setEmail] = useState('');
@@ -147,6 +149,7 @@ const SignUpForm = () => {
 
                 if (response.ok) {
                     setSuccessLabel('🥑 회원가입 성공!');
+                    navigate('/')
                 } else {
                     setErrorLabel('🥑 모든 정보를 입력해주세요');
                 }

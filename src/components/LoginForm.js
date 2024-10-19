@@ -4,16 +4,13 @@ import { EmailInputField, PasswordInputField } from './InputField';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// const api_endpoint = process.env.REACT_APP_API_ENDPOINT
-
-
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
-    const navigate = useNavigate(); // Define navigate
+    const navigate = useNavigate(); 
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -50,11 +47,9 @@ const LoginForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Validate email and password
         validateEmail(email);
         validatePassword(password);
 
-        // Proceed with login if there are no errors
         if (!emailError && !passwordError) {
             login(email, password);
         } else {
@@ -65,16 +60,12 @@ const LoginForm = () => {
     const login = (email, password) => {
         const options = {
             method: 'POST',
-            credentials: 'include', // Include cookies
+            credentials: 'include', 
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ email, password })
         };
-
-        // console.log('Sending login request with email:', email);
-        // console.log('Sending login request with password:', password);
-        // console.log(`${api_endpoint}`)
 
         fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/login`, options)
             .then(response => {
@@ -118,9 +109,11 @@ const LoginForm = () => {
 
             <div className="signUpTextContainer"
                  style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '12px'}}>
-                <p style={{margin: 0, fontSize: '14px'}}>아직 계정이 없나요?</p>
-                <a href="/register" className="Text14" style={{marginLeft: '8px', fontWeight: '800'}}>회원가입</a>
+                {/* <p style={{margin: 0, fontSize: '14px'}}>아직 계정이 없나요?</p> */}
+                <a href="/register" className="Text14" style={{ fontWeight: '800'}}>회원가입</a><span style={{margin: '8px'}}>|</span>
+                <a href="/main" className="Text14" style={{ fontWeight: '800'}}>게스트 접속</a>
             </div>
+            
             <ToastContainer />
         </form>
     );
