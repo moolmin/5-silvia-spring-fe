@@ -1,16 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Gaegu&family=Poor+Story&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Skranji:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Kirang+Haerang&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Reddit+Mono:wght@200..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&family=IBM+Plex+Sans+KR&family=Reddit+Mono:wght@200..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Gaegu&family=Poor+Story&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Skranji:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kirang+Haerang&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Reddit+Mono:wght@200..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gamja+Flower&family=IBM+Plex+Sans+KR&family=Reddit+Mono:wght@200..900&display=swap");
 
 .custom-cursor {
-  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>🥑</text></svg>") 16 0, auto; /*!emojicursor.app*/
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>🥑</text></svg>")
+      16 0,
+    auto; /*!emojicursor.app*/
 }
 
 .landing-background {
-  background-image: url('https://lh3.google.com/u/0/d/1TDP8n3p0V19ToPkTpuS6Om6XHNFAvRhG=w1920-h968-iv1');
+  background-image: url("https://lh3.google.com/u/0/d/1TDP8n3p0V19ToPkTpuS6Om6XHNFAvRhG=w1920-h968-iv1");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -21,7 +23,7 @@
 }
 
 .main-background {
-  background-image: url('https://lh3.googleusercontent.com/fife/ALs6j_FmdsUHLyWuW2C8jbjDCTi-97WCPIpoVvOYwxlCqBh0GfttrbD2weMw6WKmQjmmrg41yGoLSZZDX83Nj1vyJiGsOG8gZucs9t-U3c1P0lTZyiDSjDeCd1r9TH8_OJnfne4m8zOUNg_cr-r_l2kiptwnuFtGz3mboYOTwqfvEgGoyt3pob8vm1MqrDKhCKtm5veLsr-5FgLKkcPQmW7KMZPlFmAvV6XujTLmGNNXvP_j0vNzvzounl8QfrsjFzu2WDTtvj_6SWkMc79GlmU82iViL9b4zpprldbxDKGZdG6Vbdmoyjnp3bu3WeslZgwXTyLhABL8V-W_v57box6d6K7o6Mqa6GH-Nr0eu_2c_7Z9MOrJSJc1Lg0O92Q3H1vVyJwvd8TZjzRhHi-vF6BWJJjZ-_-w1VndpGu8Z5Yy1Q-qjgGFT2N2oq6oNctiZXNwMghFfts0o2mQkkAd_pcbagh6d5XG59uOvRP1EB7-Sez8pYGOC5mIGCtrwNjcjhrTEHEi2NnkOU7KcJJJA6IW4QB2pGGw_GhVGUn7PQSG8iF7PumQ5G5HNJghRpI15LXBZm9_uKnld1-zv7Knu6-xLnC_gx0tvnZ7i9GsLOukof9C8TnJmGYr0P6_5MNmkNYSsdzs59KUD2kEiC4HKqxxlGbde19ObuUOsKTxq0sdxFIA_MZQKxi3Tjv5MdPy5VHBF_phZ8IRMjqkPkFXrgvAI68SB8rTTTAVIwg0AH9Q8QJclgt0NQWizLBYRlNg781f0YCZQiDO2xvfkClX6l5-dSsiM0nuKNvQRIEZG1kgBiANQE1yEVhxl8FNf6txhZO5Jvhu_RKnBPtz8MoKTIyOzmWDQfuC-ijPq3fwgCfDabSP99n7FYAuxuD3wfL_QB9an5nJEcGBrrU_F4388uCv8aQU2dNbmuoHf35wu2kf-g9O9qaNTZT6-_24PY0vgwMGEaGy7u5biCqPFthmOZgW2aLVWaXH012p2Ec7mDMW8C9s5Ot6NW1MqnI2gR4Vz2wsByumZuFWAXZu-TtcziNJl-mBYBlHvf6fxSI4tD6O7GHjnmW_6bUTjiSZf5-o1h7_hI_D8RNsdRRoOsGoNzeK5CgiVlDBy7dqlSa1qwuTNwhUcdGvSbLMzvDBrnSvoi_oMEfHwQSOGdlTFRFUNq-FTjUu-Tvl8sNpEeJetFKFnlu4PuO7AOm_6BjynDumi6UBJodDsxgSJ8tMgCuj_IQA2rIKPCi7GjV1by_bxUHBLlaBeQjs1P_MnkU3w3Xix4n9ABaLYuRU5raJcTLoRiWWAfXeuB2OJhUIqc1tUlKSpvgT1VkjoQYRq-MLdkCuo8XuiTflyJD7FEZ4qFbI-1XiRH1yqx7rdASfs0kRG4XRcbCqjBgtAxHR_UvIvfx18mHLBKhYjfVt_PhXlFv2GWtBV2T2Bn3HW-9OCNXFrnHKQnjTEmktnLuOu0zTSRiCiJ7IHpnJQ3Z6oPJleEMEGFXhobQb_sbYqU3GXvm3PGlxhOzA_kav46zGK9_-ks370RT6ngm9P6cFEONckhdATl8x8qY7b6vMDrOQVL7wTlulRSIpWDTbjO9LeBU6betQezoqr8UyuNkMxObbGEVUzdxmZLjTJuRp4NZrtSexJnKfrmzDXkVAUv1aljt6hUlen3eq-wyQP--Y2tcXTLFYgjIN-q0Esf8q-2SLUkgVmNU67QtTb-x-iFp-ifblO-tZ-yBnHA=w3024-h1714');
+  background-image: url("https://lh3.googleusercontent.com/fife/ALs6j_FmdsUHLyWuW2C8jbjDCTi-97WCPIpoVvOYwxlCqBh0GfttrbD2weMw6WKmQjmmrg41yGoLSZZDX83Nj1vyJiGsOG8gZucs9t-U3c1P0lTZyiDSjDeCd1r9TH8_OJnfne4m8zOUNg_cr-r_l2kiptwnuFtGz3mboYOTwqfvEgGoyt3pob8vm1MqrDKhCKtm5veLsr-5FgLKkcPQmW7KMZPlFmAvV6XujTLmGNNXvP_j0vNzvzounl8QfrsjFzu2WDTtvj_6SWkMc79GlmU82iViL9b4zpprldbxDKGZdG6Vbdmoyjnp3bu3WeslZgwXTyLhABL8V-W_v57box6d6K7o6Mqa6GH-Nr0eu_2c_7Z9MOrJSJc1Lg0O92Q3H1vVyJwvd8TZjzRhHi-vF6BWJJjZ-_-w1VndpGu8Z5Yy1Q-qjgGFT2N2oq6oNctiZXNwMghFfts0o2mQkkAd_pcbagh6d5XG59uOvRP1EB7-Sez8pYGOC5mIGCtrwNjcjhrTEHEi2NnkOU7KcJJJA6IW4QB2pGGw_GhVGUn7PQSG8iF7PumQ5G5HNJghRpI15LXBZm9_uKnld1-zv7Knu6-xLnC_gx0tvnZ7i9GsLOukof9C8TnJmGYr0P6_5MNmkNYSsdzs59KUD2kEiC4HKqxxlGbde19ObuUOsKTxq0sdxFIA_MZQKxi3Tjv5MdPy5VHBF_phZ8IRMjqkPkFXrgvAI68SB8rTTTAVIwg0AH9Q8QJclgt0NQWizLBYRlNg781f0YCZQiDO2xvfkClX6l5-dSsiM0nuKNvQRIEZG1kgBiANQE1yEVhxl8FNf6txhZO5Jvhu_RKnBPtz8MoKTIyOzmWDQfuC-ijPq3fwgCfDabSP99n7FYAuxuD3wfL_QB9an5nJEcGBrrU_F4388uCv8aQU2dNbmuoHf35wu2kf-g9O9qaNTZT6-_24PY0vgwMGEaGy7u5biCqPFthmOZgW2aLVWaXH012p2Ec7mDMW8C9s5Ot6NW1MqnI2gR4Vz2wsByumZuFWAXZu-TtcziNJl-mBYBlHvf6fxSI4tD6O7GHjnmW_6bUTjiSZf5-o1h7_hI_D8RNsdRRoOsGoNzeK5CgiVlDBy7dqlSa1qwuTNwhUcdGvSbLMzvDBrnSvoi_oMEfHwQSOGdlTFRFUNq-FTjUu-Tvl8sNpEeJetFKFnlu4PuO7AOm_6BjynDumi6UBJodDsxgSJ8tMgCuj_IQA2rIKPCi7GjV1by_bxUHBLlaBeQjs1P_MnkU3w3Xix4n9ABaLYuRU5raJcTLoRiWWAfXeuB2OJhUIqc1tUlKSpvgT1VkjoQYRq-MLdkCuo8XuiTflyJD7FEZ4qFbI-1XiRH1yqx7rdASfs0kRG4XRcbCqjBgtAxHR_UvIvfx18mHLBKhYjfVt_PhXlFv2GWtBV2T2Bn3HW-9OCNXFrnHKQnjTEmktnLuOu0zTSRiCiJ7IHpnJQ3Z6oPJleEMEGFXhobQb_sbYqU3GXvm3PGlxhOzA_kav46zGK9_-ks370RT6ngm9P6cFEONckhdATl8x8qY7b6vMDrOQVL7wTlulRSIpWDTbjO9LeBU6betQezoqr8UyuNkMxObbGEVUzdxmZLjTJuRp4NZrtSexJnKfrmzDXkVAUv1aljt6hUlen3eq-wyQP--Y2tcXTLFYgjIN-q0Esf8q-2SLUkgVmNU67QtTb-x-iFp-ifblO-tZ-yBnHA=w3024-h1714");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -31,7 +33,7 @@
 }
 
 .default-background {
-  background-image: url('https://lh3.google.com/u/0/d/1QOl4eWatXl7g-rjCSabt-rw-Uge_Ko3m=w3024-h1714-iv1');
+  background-image: url("https://lh3.google.com/u/0/d/1QOl4eWatXl7g-rjCSabt-rw-Uge_Ko3m=w3024-h1714-iv1");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -70,7 +72,8 @@
 /*  !*margin-bottom: 20px; *!*/
 /*}*/
 
-.LandingText, .LandingLoginContainer {
+.LandingText,
+.LandingLoginContainer {
   flex: 1;
 }
 
@@ -81,12 +84,10 @@
   max-width: 100%;
 }
 
-
 .LandingText img {
   width: 100%;
   height: auto;
 }
-
 
 .LandingText {
   flex: 1;
@@ -109,12 +110,9 @@
   max-width: 400px;
   background-color: rgba(256, 256, 256, 0.85);
   padding: 30px 40px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.07),
-  0 2px 4px rgba(0,0,0,0.07),
-  0 4px 8px rgba(0,0,0,0.07),
-  0 8px 16px rgba(0,0,0,0.07),
-  0 16px 32px rgba(0,0,0,0.07),
-  0 32px 64px rgba(0,0,0,0.07);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
   border-radius: 10px;
   margin: 40px;
   /*margin: 0px 0px 200px 700px;*/
@@ -140,7 +138,8 @@
     max-width: 350px;
   }
 
-  .LandingText, .LandingLoginContainer {
+  .LandingText,
+  .LandingLoginContainer {
     width: 100%;
     margin-bottom: 20px; /* 필요에 따라 간격 조정 */
   }
@@ -160,7 +159,6 @@
 /*  align-items: center; !* 필요에 따라 조정 *!*/
 /*  !*animation: slideIn 5s forwards;*!*/
 /*}*/
-
 
 /*@keyframes slideIn {*/
 /*  0% {*/
@@ -182,9 +180,6 @@
 /*  position: relative;*/
 /*}*/
 
-
-
-
 /*@keyframes fadeIn {*/
 /*  0% {*/
 /*    opacity: 0;*/
@@ -204,7 +199,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('https://lh3.google.com/u/0/d/1oxpEV_WJ30edrPYy__dvFI4Pt8oZiAze=w3024-h1714-iv3');
+  background-image: url("https://lh3.google.com/u/0/d/1oxpEV_WJ30edrPYy__dvFI4Pt8oZiAze=w3024-h1714-iv3");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -216,7 +211,6 @@ nav {
   display: flex;
   gap: 80px;
   margin-top: 80px;
-
 }
 
 .nav-link {
@@ -235,7 +229,6 @@ nav {
   font-weight: bold; /* Make text bold */
   /*text-decoration: underline;*/
   color: #829577;
-
 }
 
 /*.nav-link:hover {*/
@@ -271,7 +264,6 @@ nav {
 /*  object-position: bottom; !* 이미지의 하단이 잘리도록 설정 *!*/
 /*}*/
 
-
 .NaviBackground {
   width: 1000px;
   height: 80px;
@@ -304,8 +296,6 @@ nav {
 /*  z-index: -1; !* Ensure it is behind the main content *!*/
 /*}*/
 
-
-
 .App {
   display: flex;
   flex-direction: column;
@@ -316,7 +306,6 @@ nav {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-
 }
 
 /*.postBackground {*/
@@ -326,7 +315,7 @@ nav {
 /*}*/
 
 body {
-  background-color: #F4F5F7;
+  background-color: #f4f5f7;
   /*background-image: url('src/assets/main_background.png');*/
   /*background-size: cover;*/
   /*background-position: center;*/
@@ -344,7 +333,6 @@ button {
 }
 
 .Header {
-
   width: 600px;
   height: 103px;
   display: flex;
@@ -359,8 +347,6 @@ button {
   border-radius: 20px;
   /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 }
-
-
 
 .HeaderContent {
   width: 544px;
@@ -413,7 +399,7 @@ button {
   position: absolute;
   background-color: #fff;
   min-width: 160px;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   right: 0;
   top: 50px; /* Adjust to align below the profile image */
   border-radius: 10px;
@@ -454,13 +440,10 @@ button {
   display: block;
 }
 
-
-
 /* 추가 */
 .show {
   display: block;
 }
-
 
 .profile-circle {
   cursor: pointer;
@@ -530,7 +513,7 @@ button {
 .InputField {
   width: 330px;
   height: 38px;
-  border: 1.5px solid #C2CFA5;
+  border: 1.5px solid #c2cfa5;
   border-radius: 4px;
   color: black;
   font-size: 14px;
@@ -539,8 +522,6 @@ button {
   padding-left: 10px;
   border-radius: 30px;
 }
-
-
 
 .InputField::placeholder {
   /*margin-left: 20px;*/
@@ -556,7 +537,6 @@ button {
   align-items: center;
   left: 0;
 }
-
 
 .LoginForm {
   display: flex;
@@ -585,8 +565,6 @@ button {
   font-weight: 400;
 }
 
-
-
 .LoginPage {
   display: flex;
   justify-content: center;
@@ -608,10 +586,10 @@ button {
   flex-direction: column;
   justify-content: center;
   cursor: pointer;
-  background-color: #C4C4C4;
+  background-color: #c4c4c4;
 }
 
-#upload-btn input[type='file'] {
+#upload-btn input[type="file"] {
   display: none;
 }
 
@@ -626,7 +604,7 @@ button {
 
 #cross-shape::before,
 #cross-shape::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 1px;
@@ -692,7 +670,6 @@ button {
   object-fit: cover;
 }
 
-
 .SubmitBtnContainer {
   width: 592px;
   display: flex;
@@ -704,7 +681,7 @@ button {
   height: 39px;
   border-radius: 16px;
   font-size: 16px;
-  background-color: #C2CFA5;
+  background-color: #c2cfa5;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -791,7 +768,7 @@ button {
   left: 20px;
   /*transform: translateX(-50%);*/
   padding: 8px 15px;
-  background-color: #CE9F80;
+  background-color: #ce9f80;
   color: white;
   border: none;
   border-radius: 4px;
@@ -817,8 +794,6 @@ button {
   /*position: relative;*/
 }
 
-
-
 .postCardContentPreview {
   /*padding: 20px;*/
 }
@@ -828,14 +803,12 @@ button {
   margin: 5px 0;
 }
 
-
-
 .AuthorIcon {
   width: 36px;
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
   margin: 0px 10px 0px 0px;
 }
 
@@ -843,7 +816,6 @@ button {
   font-size: 15px;
   font-weight: 700;
 }
-
 
 .Date {
   font-size: 14px;
@@ -884,7 +856,6 @@ button {
   display: flex;
   flex-direction: row;
   align-items: center;
-
 }
 
 .PostBtn {
@@ -894,7 +865,7 @@ button {
   background-color: transparent;
   border: 1px solid;
   border-radius: 8px;
-  border-color: #C2CFA5;
+  border-color: #c2cfa5;
   background: rgba(255, 255, 255, 0.6);
   cursor: pointer;
   margin-left: 8px;
@@ -923,7 +894,7 @@ button {
 .PostImage {
   width: 544px;
   height: auto;
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
   margin: 24px;
 }
 
@@ -941,16 +912,14 @@ button {
   width: 116px;
   height: 77px;
   border-radius: 10px;
-  background-color: #C8CFA0;
+  background-color: #c8cfa0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
-
-
-
 
 .PostCountNum {
   font-size: 20px;
@@ -960,7 +929,7 @@ button {
 .PostCountLabel {
   font-size: 16px;
   font-weight: 700;
-  margin-top: 5px ;
+  margin-top: 5px;
 }
 
 .PostCountContainer {
@@ -1086,7 +1055,6 @@ button {
   margin-top: 16px;
   /*border-top: 1px solid rgba(0, 0, 0, 0.16);*/
   /*border-bottom: 1px solid rgba(0, 0, 0, 0.16);*/
-
 }
 
 .PostTitleInput {
@@ -1103,14 +1071,14 @@ button {
   font-size: 16px;
   font-weight: 600;
   background-color: rgba(256, 256, 256, 0.8);
-  border: 1.5px solid #C2CFA5;
+  border: 1.5px solid #c2cfa5;
 }
 
 .PostFormContentGroup {
   display: flex;
   flex-direction: column;
   /*justify-content: flex-start;*/
-  margin-top: 26px
+  margin-top: 26px;
 }
 
 .PostContentLabel {
@@ -1124,9 +1092,8 @@ button {
   height: 271px;
   border-top: 1px solid rgba(0, 0, 0, 0.16);
   border-bottom: 1px solid rgba(0, 0, 0, 0.16);
-  margin-top: 16px
+  margin-top: 16px;
 }
-
 
 .PostContentInput {
   width: 544px;
@@ -1139,7 +1106,7 @@ button {
   border: none;
   padding: 24px;
   background-color: rgba(256, 256, 256, 0.8);
-  border: 1.5px solid #C2CFA5;
+  border: 1.5px solid #c2cfa5;
 }
 
 .PostEditPage {
@@ -1163,8 +1130,7 @@ button {
   margin-top: 12px;
 }
 
-
-button[type='PostImageUploadBtn'] {
+button[type="PostImageUploadBtn"] {
   width: 70px;
   height: 29px;
   font-size: 14px;
@@ -1192,8 +1158,6 @@ button[type='PostImageUploadBtn'] {
   margin: 8px 0 18px 25px;
 }
 
-
-
 .PostFormBtnContainer {
   margin: 10px;
 }
@@ -1219,15 +1183,11 @@ button[type='PostImageUploadBtn'] {
   margin-top: 40px;
 }
 
-
-
 .ProfileEditFormLabel {
   font-size: 15px;
   font-weight: 700;
   /*margin-bottom: 12px;*/
 }
-
-
 
 /*.ProfileEditGroup {*/
 /*  margin-top: 12px;*/
@@ -1248,8 +1208,6 @@ button[type='PostImageUploadBtn'] {
   flex-direction: column;
 }
 
-
-
 .ToastMessage {
   width: 102px;
   height: 46px;
@@ -1257,7 +1215,7 @@ button[type='PostImageUploadBtn'] {
   color: white;
   border-radius: 30px;
   border: none;
-  background-color: #ACA0EB;
+  background-color: #aca0eb;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1319,8 +1277,6 @@ button[type='PostImageUploadBtn'] {
 /*  object-fit: cover;*/
 /*}*/
 
-
-
 .overlay {
   position: absolute;
   width: 100%;
@@ -1331,10 +1287,7 @@ button[type='PostImageUploadBtn'] {
   transition: opacity 0.3s ease;
 }
 
-
-
 /*모달*/
-
 
 .post_modal {
   position: fixed;
@@ -1370,14 +1323,14 @@ button[type='PostImageUploadBtn'] {
   z-index: 1001;
 }
 
-.modal_content h3{
+.modal_content h3 {
   font-size: 24px;
   font-weight: 700;
   padding: 0px;
   margin: 0px;
 }
 
-.modal_content p{
+.modal_content p {
   font-size: 20px;
   font-weight: 400;
   margin: 20px 0px;
@@ -1399,7 +1352,7 @@ button[type='PostImageUploadBtn'] {
 }
 
 #post-modal-submit {
-  background-color: #C2CFA5;
+  background-color: #c2cfa5;
   color: black;
 }
 
@@ -1520,9 +1473,6 @@ button[type='PostImageUploadBtn'] {
   flex-direction: column;
 }
 
-
-
-
 /*.img-picker-button:hover .overlay {*/
 /*  opacity: 1;*/
 /*}*/
@@ -1530,7 +1480,6 @@ button[type='PostImageUploadBtn'] {
 /*.img-picker-button:hover span {*/
 /*  opacity: 1;*/
 /*}*/
-
 
 /*.overlayText {*/
 /*  font-size: 30px;*/
@@ -1553,7 +1502,6 @@ button[type='PostImageUploadBtn'] {
 /*  padding-top: 5px;*/
 /*}*/
 
-
 .profile-img-picker .upload-button {
   display: inline-block;
   width: 149px;
@@ -1568,13 +1516,12 @@ button[type='PostImageUploadBtn'] {
   font-weight: bold;
 }
 
-.ImgBlackFilter{
+.ImgBlackFilter {
   width: 149px;
   height: 149px;
   border-radius: 50%;
   opacity: 0;
 }
-
 
 .ImgBlackFilter:hover {
   background-color: rgba(0, 0, 0, 0.35);
@@ -1605,7 +1552,7 @@ button[type='PostImageUploadBtn'] {
   justify-content: center;
   width: 40px;
   height: 40px;
-  border: 2px solid #CE9F80;
+  border: 2px solid #ce9f80;
   border-radius: 50%;
   cursor: pointer;
   margin-left: 10px;
@@ -1614,11 +1561,9 @@ button[type='PostImageUploadBtn'] {
   left: 360px;
 }
 
-
 .postCardShareBtn:hover {
   background-color: #f0f0f0;
 }
-
 
 /*.icon-share {*/
 /*  color: #96A98B;*/
@@ -1639,12 +1584,9 @@ button[type='PostImageUploadBtn'] {
   justify-content: center;
   background-color: rgba(256, 256, 256, 0.5);
   padding: 40px 60px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.07),
-  0 2px 4px rgba(0,0,0,0.07),
-  0 4px 8px rgba(0,0,0,0.07),
-  0 8px 16px rgba(0,0,0,0.07),
-  0 16px 32px rgba(0,0,0,0.07),
-  0 32px 64px rgba(0,0,0,0.07);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
   border-radius: 10px;
 }
 
@@ -1652,26 +1594,18 @@ button[type='PostImageUploadBtn'] {
   position: relative;
   background-color: rgba(256, 256, 256, 0.5);
   padding: 35px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.07),
-  0 2px 4px rgba(0,0,0,0.07),
-  0 4px 8px rgba(0,0,0,0.07),
-  0 8px 16px rgba(0,0,0,0.07),
-  0 16px 32px rgba(0,0,0,0.07),
-  0 32px 64px rgba(0,0,0,0.07);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
   border-radius: 10px;
 }
-
-
 
 .SignUpContainer {
   background-color: rgba(256, 256, 256, 0.5);
   padding: 35px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.07),
-  0 2px 4px rgba(0,0,0,0.07),
-  0 4px 8px rgba(0,0,0,0.07),
-  0 8px 16px rgba(0,0,0,0.07),
-  0 16px 32px rgba(0,0,0,0.07),
-  0 32px 64px rgba(0,0,0,0.07);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
   border-radius: 10px;
 }
 
@@ -1682,17 +1616,11 @@ button[type='PostImageUploadBtn'] {
   margin-top: 12px;
   background-color: rgba(256, 256, 256, 0.5);
   padding: 35px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.07),
-  0 2px 4px rgba(0,0,0,0.07),
-  0 4px 8px rgba(0,0,0,0.07),
-  0 8px 16px rgba(0,0,0,0.07),
-  0 16px 32px rgba(0,0,0,0.07),
-  0 32px 64px rgba(0,0,0,0.07);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
   border-radius: 10px;
 }
-
-
-
 
 .LoginSubmitBtn {
   width: 150px;
@@ -1700,7 +1628,7 @@ button[type='PostImageUploadBtn'] {
   margin-top: 20px;
   border: none;
   border-radius: 30px;
-  background-color: #C2CFA5;
+  background-color: #c2cfa5;
   color: white;
   font-size: 15px;
   font-weight: 600;
@@ -1712,7 +1640,7 @@ button[type='PostImageUploadBtn'] {
   margin-top: 30px;
   border: none;
   border-radius: 30px;
-  background-color: #C2CFA5;
+  background-color: #c2cfa5;
   color: white;
   font-size: 15px;
   font-weight: 600;
@@ -1720,13 +1648,12 @@ button[type='PostImageUploadBtn'] {
 }
 
 .SubmitBtn:hover {
-  background-color: #96A98B; /* Hover color */
+  background-color: #96a98b; /* Hover color */
 }
 
 .signUpTextContainer p {
   font-size: 16px;
 }
-
 
 /*.Pagination {*/
 /*  display: flex;*/
@@ -1768,7 +1695,6 @@ button[type='PostImageUploadBtn'] {
 /*.pageButton.enter {*/
 /*  opacity: 1;*/
 /*}*/
-
 
 /*.arrowButton {*/
 /*  background: none;*/
@@ -1814,7 +1740,7 @@ button[type='PostImageUploadBtn'] {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #DFD3C3;
+  background-color: #dfd3c3;
   border-radius: 40px;
   padding: 0px 30px;
   margin: 15px 0px;
@@ -1847,7 +1773,7 @@ button[type='PostImageUploadBtn'] {
 }
 
 .page-item.active .page-link {
-  background-color: #96A98B;
+  background-color: #96a98b;
   color: white;
 }
 
@@ -1859,7 +1785,7 @@ button[type='PostImageUploadBtn'] {
   padding: 0px 10px;
   display: flex;
   align-items: center;
-  color: #96A98B;
+  color: #96a98b;
 }
 
 .dots {
@@ -1867,7 +1793,6 @@ button[type='PostImageUploadBtn'] {
   align-items: center;
   justify-content: center;
   padding: 0px 10px;
-
 }
 
 .fade-enter {
@@ -1881,7 +1806,6 @@ button[type='PostImageUploadBtn'] {
   transition: opacity 300ms, transform 300ms;
 }
 
-
 /*///*/
 
 .HeaderProfile {
@@ -1889,10 +1813,6 @@ button[type='PostImageUploadBtn'] {
   flex-direction: row;
   font-size: 16px;
   color: black;
-
-
-
-
 }
 
 .HeaderProfile span {
@@ -1923,3 +1843,18 @@ button[type='PostImageUploadBtn'] {
   margin: 0;
 }
 
+.NotLoggedInMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.13);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10.1px);
+  -webkit-backdrop-filter: blur(10.1px);
+  border: 1px solid rgba(255, 255, 255, 0.51);
+  margin-top: 50px;
+}

@@ -6,8 +6,6 @@ import Modal from '../components/Modal';
 import axios from 'axios';
 import ToastMessage from '../components/ToastMessage';
 
-// const api_endpoint = process.env.REACT_APP_API_ENDPOINT
-
 const fetchWithToken = async (url, options = {}) => {
     const token = localStorage.getItem('token');
     const response = await fetch(url, {
@@ -19,24 +17,8 @@ const fetchWithToken = async (url, options = {}) => {
         }
     });
 
-    if (!response.ok) {
-        throw new Error(`Network response was not ok for ${url}`);
-    }
-
     return response.json();
 };
-
-// const formatDate = (isoString) => {
-//     const date = new Date(isoString);
-//
-//     const year = date.getFullYear();
-//     const month = String(date.getMonth() + 1).padStart(2, '0');
-//     const day = String(date.getDate()).padStart(2, '0');
-//     const hours = String(date.getHours()).padStart(2, '0');
-//     const minutes = String(date.getMinutes()).padStart(2, '0');
-//
-//     return `${year}-${month}-${day} ${hours}:${minutes}`;
-// };
 
 const formatDate = (isoString) => {
     if (!isoString) return 'Loading ..';
@@ -68,9 +50,15 @@ const PostPage = () => {
     const [users, setUsers] = useState([]);
     const [successLabel, setSuccessLabel] = useState('');
     const [errorLabel, setErrorLabel] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
 
     useEffect(() => {
-        const fetchPost = async () => {
+        if (!isLoggedIn) {
+            setLoading(false);
+            return;
+        }
+
+        const fetchData = async () => {
             try {
                 const postResponse = await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}`);
                 setPost(postResponse);
@@ -80,6 +68,10 @@ const PostPage = () => {
 
                 const commentsResponse = await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments?include_edited=true`);
                 setComments(commentsResponse);
+
+                await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/views`, {
+                    method: 'PUT'
+                });
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -87,28 +79,22 @@ const PostPage = () => {
             }
         };
 
-        const incrementPostViews = async () => {
-            try {
-                await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/views`, {
-                    method: 'PUT'
-                });
-            } catch (error) {
-                console.error('Failed to increment post views:', error.message);
-            }
-        };
-
-        fetchPost();
-        incrementPostViews();
-    }, [postId]);
-
-    // useEffect(() => {
-    //     if (successLabel === '🥑 게시글이 삭제되었습니다.') {
-    //         navigate('/main');
-    //     }
-    // }, [successLabel, navigate]);
+        fetchData();
+    }, [postId, isLoggedIn]);
 
     if (loading) {
         return <p>Loading...</p>;
+    }
+
+    if (!isLoggedIn) {
+        return (
+            <div className="NotLoggedInMessage">
+                <p>로그인한 회원만 게시물을 볼 수 있습니다.</p>
+                <button onClick={() => navigate('/login')} className="GoToLoginButton">
+                    로그인 하러가기
+                </button>
+            </div>
+        );
     }
 
     if (error) {
@@ -168,19 +154,14 @@ const PostPage = () => {
                         credentials: 'include',
                     });
                     setSuccessLabel('🥑 게시글이 삭제되었습니다.');
+                    navigate('/main');
                 } else {
                     setErrorLabel('🥑 게시글 삭제 권한이 없습니다');
                 }
             }
         } catch (error) {
-            if (commentToDelete) {
-                setSuccessLabel('🥑 댓글이 삭제되었습니다.');
-            } else {
-                // setErrorLabel('🥑 게시글 삭제 중 오류가 발생했습니다.');
-                alert('🥑 게시글이 삭제되었습니다.');
-                navigate('/main');
-            }
             console.error('Error deleting:', error.message || error);
+            setErrorLabel('🥑 삭제 중 오류가 발생했습니다.');
         } finally {
             closeModal();
         }
@@ -224,11 +205,13 @@ const PostPage = () => {
                 if (response.status >= 200 && response.status < 300) {
                     const commentsResponse = await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/posts/${postId}/comments?include_edited=true`);
                     setComments(commentsResponse);
+                    setSuccessLabel('🥑 댓글이 수정되었습니다.');
                 } else {
                     throw new Error('Failed to update comment');
                 }
             } catch (error) {
                 console.error('Error updating comment:', error.response?.data || error.message);
+                setErrorLabel('🥑 댓글 수정 중 오류가 발생했습니다.');
             } finally {
                 setEditingCommentId(null);
                 setCommentText('');
@@ -257,12 +240,12 @@ const PostPage = () => {
                 }
             } catch (error) {
                 console.error('Error adding comment:', error.response?.data || error.message);
-                alert('An error occurred while adding the comment. Please try again later.');
+                setErrorLabel('🥑 댓글 작성 중 오류가 발생했습니다.');
             }
         }
     };
 
-    function formatViews(views) {
+    const formatViews = (views) => {
         if (views >= 1000000) {
             return (views / 1000000).toFixed(1) + "M";
         } else if (views >= 100000) {
@@ -274,7 +257,7 @@ const PostPage = () => {
         } else {
             return views.toString();
         }
-    }
+    };
 
     const author = users.find(user => user.userId === post.userId);
 
