@@ -70,8 +70,8 @@ const PostCard = () => {
                 const usersData = await fetchWithToken(`${process.env.REACT_APP_API_ENDPOINT}/api/accounts`);
                 setUsers(usersData);
             } catch (error) {
-                console.error('Error fetching users:', error);
-                setErrorLabel('사용자 정보를 가져오는 중 오류가 발생했습니다.');
+                // console.error('Error fetching users:', error);
+                // setErrorLabel('사용자 정보를 가져오는 중 오류가 발생했습니다.');
             }
         };
         fetchPosts();
