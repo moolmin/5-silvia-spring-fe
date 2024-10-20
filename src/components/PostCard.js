@@ -8,7 +8,8 @@ import { FaRegHeart, FaRegEye } from "react-icons/fa";
 import ToastMessage from './ToastMessage';
 import Pagination from './Pagination';
 
-// const api_endpoint = process.env.REACT_APP_API_ENDPOINT
+const token = localStorage.getItem("token");
+const isLoggedIn = !!token;
 
 const fetchWithToken = async (url) => {
     const token = localStorage.getItem('token');
@@ -31,8 +32,8 @@ const PostCard = () => {
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [successLabel, setSuccessLabel] = useState(''); // State for success toast label
-    const [errorLabel, setErrorLabel] = useState(''); // State for error toast label
+    const [successLabel, setSuccessLabel] = useState(''); 
+    const [errorLabel, setErrorLabel] = useState(''); 
     const postsPerPage = 3;
 
     const navigate = useNavigate();
@@ -42,9 +43,13 @@ const PostCard = () => {
     const [currentPage, setCurrentPage] = useState(currentPageParam ? Number(currentPageParam) : 1);
 
     const createClick = () => {
+        if (!isLoggedIn) {
+          setErrorLabel('로그인 회원만 게시글 작성이 가능합니다.');
+          return;
+        }
         navigate('/post/create');
-        setSuccessLabel("새 게시글 작성 페이지로 이동했습니다.");
-    };
+        setSuccessLabel('새 게시글 작성 페이지로 이동했습니다.');
+      };
 
     const iconStyle = {
         color: '#96A98B',
@@ -126,8 +131,8 @@ const PostCard = () => {
         } catch (err) {
             const textArea = document.createElement('textarea');
             textArea.value = postUrl;
-            textArea.style.position = 'fixed'; // Avoid scrolling to bottom
-            textArea.style.opacity = 0; // Hidden element
+            textArea.style.position = 'fixed'; 
+            textArea.style.opacity = 0; 
             document.body.appendChild(textArea);
             textArea.focus();
             textArea.select();
@@ -218,7 +223,7 @@ const PostCard = () => {
                 currentPage={currentPage}
                 paginate={setCurrentPage}
             />
-            <ToastMessage successLabel={successLabel} errorLabel={errorLabel} clearLabels={clearLabels} /> {/* Use the ToastMessage component */}
+            <ToastMessage successLabel={successLabel} errorLabel={errorLabel} clearLabels={clearLabels} />
         </div>
     );
 };
