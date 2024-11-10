@@ -3,6 +3,7 @@
 
 ## 📖 Description
 아보월드는 아보카도 정보 공유를 위한 커뮤니티입니다.<br />
+* [서비스 바로가기](https://d1jlocd3s0jxr6.cloudfront.net)
 * [React 프론트엔드 레포지토리](https://github.com/moolmin/avoworld-fe)
 * [Spring 백엔드 레포지토리](https://github.com/moolmin/avoworld-be)
 
