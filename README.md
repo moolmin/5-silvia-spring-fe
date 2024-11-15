@@ -9,16 +9,19 @@
 
 ## 🕹️ Main Feature
 ### 랜딩 - 메인 페이지 
+게시물의 링크를 복사해서 공유하고, 제목을 검색할 수 있습니다.
  ![랜딩](https://github.com/user-attachments/assets/48a52f16-8b2e-4567-ac14-617b6aede913) |![메인](https://github.com/user-attachments/assets/705ca46f-1abd-4c02-843b-8b9e0cc2bddc)
 --- | --- | 
 
 
 ### 로그인 - 회원가입 페이지 
+회원가입에서 등록한 프로필 사진은 S3버킷에 업로드되며, JWT 토큰 기반으로 안전하게 로그인할 수 있습니다.
  ![Image 8-26-24 at 3 49 PM](https://github.com/user-attachments/assets/65466ee4-6ff4-4c60-8c85-71beb9df0f79) |![screencapture-d1jlocd3s0jxr6-cloudfront-net-register-2024-08-26-15_50_04](https://github.com/user-attachments/assets/7e349d7f-bad1-4cd7-8be6-deedb3f6f6d5)
 --- | --- | 
 
 
 ### 게시물 작성 - 댓글 작성
+게시물과 댓글의 CRUD가 가능합니다.
  ![게시물 작성](https://github.com/user-attachments/assets/8df0b6b2-9c3c-4b74-bb43-dc65d6a9c5c3) |![댓글](https://github.com/user-attachments/assets/4446a3c5-88c8-4aba-9687-d1c94268d641)
 --- | --- | 
 
